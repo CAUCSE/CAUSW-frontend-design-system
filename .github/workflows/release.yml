@@ -40,7 +40,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: changeset publish
           version: pnpm version-packages
           commit: 'release: bump version packages'
           title: 'Release: Version Packages'
