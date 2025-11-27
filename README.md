@@ -98,6 +98,43 @@ import { Button } from '@causw/components';
 
 아이콘 컴포넌트 (예정)
 
+## 버전 관리 및 배포
+
+이 프로젝트는 [Changesets](https://github.com/changesets/changesets)를 사용하여 버전을 관리합니다.
+
+### 변경사항 추가
+
+코드를 수정한 후:
+
+```bash
+pnpm changeset
+```
+
+1. 변경된 패키지 선택
+2. 변경 유형 선택 (major/minor/patch)
+3. 변경사항 설명 작성
+
+### 버전 업데이트
+
+```bash
+pnpm version-packages
+```
+
+- package.json 버전 자동 업데이트
+- CHANGELOG.md 자동 생성
+
+### 배포 (로컬)
+
+```bash
+pnpm release
+```
+
+### 자동 배포 (GitHub Actions)
+
+main 브랜치에 push하면:
+- Changesets가 자동으로 버전 업데이트 PR 생성
+- PR 병합 시 자동으로 npm에 배포 (NPM_TOKEN 설정 필요)
+
 ## 기여하기
 
 이 프로젝트는 중앙대학교 컴퓨터공학부 학생회를 위한 프로젝트입니다.
