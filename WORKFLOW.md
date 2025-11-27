@@ -180,7 +180,7 @@ pnpm release
 
 - ❌ package.json 버전 수동 수정
 - ❌ CHANGELOG.md 수동 작성
-- ❌ Changeset 없이 코드 변경
+- ❌ 기능/버그 수정 시 Changeset 없이 코드 변경
 - ❌ node_modules 커밋
 
 ### 반드시 할 것
@@ -208,6 +208,21 @@ pnpm build
 # 해당 파일 삭제 후 재생성
 rm .changeset/[파일명].md
 pnpm changeset
+```
+
+### Changeset이 필요 없는 경우
+
+```bash
+# 문서만 수정
+git commit -m "docs: update README"
+
+# 테스트만 수정
+git commit -m "test: add Button tests"
+
+# 설정 파일만 수정
+git commit -m "chore: update tsconfig"
+
+# 이런 경우 changeset 없이 바로 push 가능!
 ```
 
 ### 의존성 버전 불일치

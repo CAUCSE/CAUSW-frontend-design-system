@@ -314,8 +314,25 @@ pnpm changeset
 
 **Q: Changeset을 건너뛰고 싶어요**
 ```bash
-# 문서나 테스트만 수정한 경우, changeset 불필요
-# PR 제목에 [skip ci] 추가 가능
+# Changeset이 필요 없는 경우:
+# - 문서만 수정 (docs:)
+# - 테스트만 수정 (test:)
+# - 설정 파일만 수정 (chore:)
+# - 코드 포맷팅만 변경 (style:)
+# - Storybook만 수정
+
+# 이런 경우 changeset 없이 커밋 가능
+git commit -m "docs: update README"
+git push
+```
+
+**Q: 실수로 changeset을 만들었어요**
+```bash
+# .changeset 폴더에서 해당 파일 삭제
+rm .changeset/funny-pandas-jump.md
+
+# 또는 수정
+code .changeset/funny-pandas-jump.md
 ```
 
 ## 참고 자료
