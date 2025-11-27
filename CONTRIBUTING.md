@@ -15,7 +15,7 @@ CAUSW Design System에 기여해주셔서 감사합니다!
 
 ### 필수 요구사항
 
-- Node.js >= 18.0.0
+- Node.js >= 20.0.0 (LTS)
 - pnpm >= 9.0.0
 
 ### 설치

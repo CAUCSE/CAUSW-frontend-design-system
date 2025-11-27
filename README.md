@@ -23,7 +23,7 @@ design-system/
 
 ### 필수 요구사항
 
-- Node.js >= 18.0.0
+- Node.js >= 20.0.0
 - pnpm >= 9.0.0
 
 ### 설치
