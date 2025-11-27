@@ -13,6 +13,7 @@ jobs:
       contents: write
       packages: write
       id-token: write  # Trusted Publishing을 위해 필요
+      pull-requests: write  # PR 생성을 위해 필요
 
     steps:
       - uses: actions/checkout@v4
