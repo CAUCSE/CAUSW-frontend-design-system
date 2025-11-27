@@ -1,0 +1,23 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Tests
+*.test.*
+*.spec.*
+__tests__/
+
+# Config files
+tsconfig.json
+vitest.config.ts
+.eslintrc.*
+
+# Development
+.turbo
+node_modules/
+*.log
+
+# Other
+.DS_Store
+*.map

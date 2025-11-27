@@ -1,0 +1,17 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Config files
+tsconfig.json
+.eslintrc.*
+
+# Development
+.turbo
+node_modules/
+*.log
+
+# Other
+.DS_Store
+*.map
