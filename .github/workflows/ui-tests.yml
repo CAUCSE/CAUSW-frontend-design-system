@@ -33,6 +33,9 @@ jobs:
       - name: Run tests
         id: test
         shell: bash
+        env:
+          NO_COLOR: 1
+          FORCE_COLOR: 0
         run: |
           set -o pipefail
           pnpm test-storybook 2>&1 | tee test-output.txt
@@ -44,26 +47,43 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const testOutput = fs.readFileSync('test-output.txt', 'utf8');
+            let testOutput = fs.readFileSync('test-output.txt', 'utf8');
             const exitCode = '${{ steps.test.outputs.exit_code }}';
             const passed = exitCode === '0';
             
+            // Remove ANSI escape codes
+            testOutput = testOutput.replace(/\x1b\[[0-9;]*m/g, '');
+            
+            // Extract summary info
+            const testFilesMatch = testOutput.match(/Test Files\s+(\d+)\s+passed/);
+            const testsMatch = testOutput.match(/Tests\s+(\d+)\s+passed/);
+            const durationMatch = testOutput.match(/Duration\s+([\d.]+s)/);
+            
+            const testFiles = testFilesMatch ? testFilesMatch[1] : '?';
+            const tests = testsMatch ? testsMatch[1] : '?';
+            const duration = durationMatch ? durationMatch[1] : '?';
+            
             const icon = passed ? '✅' : '❌';
-            const status = passed ? 'passed' : 'failed';
+            const status = passed ? 'Passed' : 'Failed';
             
             const body = `## ${icon} UI Test Results
 
-            **Status:** Tests ${status}
+**Status:** ${status}
 
-            <details>
-            <summary>📋 Test Output</summary>
+| Metric | Value |
+|--------|-------|
+| Test Files | ${testFiles} passed |
+| Tests | ${tests} passed |
+| Duration | ${duration} |
 
-            \`\`\`
-            ${testOutput.slice(-3000)}
-            \`\`\`
+<details>
+<summary>📋 Full Test Output</summary>
 
-            </details>
-            `;
+\`\`\`
+${testOutput.slice(-3000).trim()}
+\`\`\`
+
+</details>`;
 
             // Find existing comment
             const { data: comments } = await github.rest.issues.listComments({
