@@ -1,0 +1,99 @@
+name: UI Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      # Make sure to grab the latest version of the Playwright image
+      # https://playwright.dev/docs/docker#pull-the-image
+      image: mcr.microsoft.com/playwright:v1.52.0-noble
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Run tests
+        id: test
+        run: |
+          pnpm test-storybook 2>&1 | tee test-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Create test result comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const testOutput = fs.readFileSync('test-output.txt', 'utf8');
+            const exitCode = '${{ steps.test.outputs.exit_code }}';
+            const passed = exitCode === '0';
+            
+            const icon = passed ? '✅' : '❌';
+            const status = passed ? 'passed' : 'failed';
+            
+            const body = `## ${icon} UI Test Results
+
+            **Status:** Tests ${status}
+
+            <details>
+            <summary>📋 Test Output</summary>
+
+            \`\`\`
+            ${testOutput.slice(-3000)}
+            \`\`\`
+
+            </details>
+            `;
+
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('UI Test Results')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      - name: Fail if tests failed
+        if: steps.test.outputs.exit_code != '0'
+        run: exit 1
+
