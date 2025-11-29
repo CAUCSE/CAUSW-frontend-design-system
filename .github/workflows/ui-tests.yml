@@ -32,7 +32,9 @@ jobs:
 
       - name: Run tests
         id: test
+        shell: bash
         run: |
+          set -o pipefail
           pnpm test-storybook 2>&1 | tee test-output.txt
           echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
         continue-on-error: true
