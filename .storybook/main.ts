@@ -8,7 +8,11 @@ const config: StorybookConfig = {
     '../packages/**/*.stories.mdx',
   ],
 
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+  addons: [
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-vitest")
+  ],
 
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
