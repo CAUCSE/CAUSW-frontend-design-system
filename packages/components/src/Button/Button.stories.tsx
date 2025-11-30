@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from 'storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
 
 const meta = {
@@ -41,6 +42,12 @@ export const Secondary: Story = {
     children: 'Secondary Button',
     variant: 'secondary',
   },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.ownerDocument.body);
+    await userEvent.click(await canvas.findByRole('button', { name: 'Secondary Button' }));
+    await userEvent.dblClick(await canvas.findByRole('button', { name: 'Secondary Button' }));
+  }
 };
 
 export const Outline: Story = {

@@ -1,0 +1,74 @@
+{
+  "Storybook Component Template": {
+    "prefix": "story",
+    "scope": "typescriptreact",
+    "body": [
+      "import type { Meta, StoryObj } from '@storybook/react-vite';",
+      "",
+      "import { ${TM_FILENAME_BASE/(.*)\\.stories$/${1}/} } from './${TM_FILENAME_BASE/(.*)\\.stories$/${1}/}';",
+      "",
+      "const meta = {",
+      "  title: '${1:Components}/${TM_FILENAME_BASE/(.*)\\.stories$/${1}/}',",
+      "  component: ${TM_FILENAME_BASE/(.*)\\.stories$/${1}/},",
+      "  parameters: {",
+      "    layout: 'centered',",
+      "  },",
+      "  tags: ['autodocs'],",
+      "  argTypes: {",
+      "    $2",
+      "  },",
+      "} satisfies Meta<typeof ${TM_FILENAME_BASE/(.*)\\.stories$/${1}/}>;",
+      "",
+      "export default meta;",
+      "type Story = StoryObj<typeof meta>;",
+      "",
+      "export const Default: Story = {",
+      "  args: {",
+      "    $3",
+      "  },",
+      "};"
+    ],
+    "description": "Storybook 컴포넌트 스토리 기본 템플릿"
+  },
+
+  "Storybook Story Variant": {
+    "prefix": "story-variant",
+    "scope": "typescriptreact",
+    "body": [
+      "export const ${1:VariantName}: Story = {",
+      "  args: {",
+      "    $2",
+      "  },",
+      "};"
+    ],
+    "description": "Storybook 스토리 변형 추가"
+  },
+
+  "Storybook Story with Play": {
+    "prefix": "story-play",
+    "scope": "typescriptreact",
+    "body": [
+      "export const ${1:WithInteraction}: Story = {",
+      "  args: {",
+      "    $2",
+      "  },",
+      "",
+      "  play: async ({ canvasElement }) => {",
+      "    const canvas = within(canvasElement.ownerDocument.body);",
+      "    await userEvent.click(await canvas.findByRole('${3:button}', { name: '${4:Button}' }));",
+      "  },",
+      "};"
+    ],
+    "description": "Storybook 인터랙션 테스트가 포함된 스토리"
+  },
+
+  "Storybook Test Imports": {
+    "prefix": "story-test-import",
+    "scope": "typescriptreact",
+    "body": [
+      "import { userEvent, within } from 'storybook/test';"
+    ],
+    "description": "Storybook 테스트 유틸리티 import"
+  }
+}
+
