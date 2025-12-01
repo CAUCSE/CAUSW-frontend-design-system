@@ -64,26 +64,8 @@ jobs:
             const duration = durationMatch ? durationMatch[1] : '?';
             
             const icon = passed ? '✅' : '❌';
-            const status = passed ? 'Passed' : 'Failed';
             
-            const body = `## ${icon} UI Test Results
-
-**Status:** ${status}
-
-| Metric | Value |
-|--------|-------|
-| Test Files | ${testFiles} passed |
-| Tests | ${tests} passed |
-| Duration | ${duration} |
-
-<details>
-<summary>📋 Full Test Output</summary>
-
-\`\`\`
-${testOutput.slice(-3000).trim()}
-\`\`\`
-
-</details>`;
+            const body = `## ${icon} UI Tests: ${testFiles} files, ${tests} tests passed (${duration})`;
 
             // Find existing comment
             const { data: comments } = await github.rest.issues.listComments({
@@ -94,7 +76,7 @@ ${testOutput.slice(-3000).trim()}
             
             const botComment = comments.find(comment => 
               comment.user.type === 'Bot' && 
-              comment.body.includes('UI Test Results')
+              comment.body.includes('UI Tests:')
             );
 
             if (botComment) {
