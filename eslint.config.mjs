@@ -4,6 +4,7 @@ import tsParser from "@typescript-eslint/parser";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import storybook from "eslint-plugin-storybook";
+import prettier from "eslint-config-prettier";
 
 const config = [
 
@@ -50,6 +51,9 @@ const config = [
       "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   },
+
+  // Prettier와 충돌하는 ESLint 규칙 비활성화
+  prettier,
 ];
 
 export default config;
