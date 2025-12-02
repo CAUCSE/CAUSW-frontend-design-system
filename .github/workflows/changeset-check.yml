@@ -1,0 +1,87 @@
+name: Changeset Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changeset
+        id: changeset
+        run: |
+          # Get changed files in .changeset directory (excluding config.json and README.md)
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '.changeset/*.md' | grep -v 'README.md' || true)
+          
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "has_changeset=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changeset=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR
+        if: steps.changeset.outputs.has_changeset == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## ⚠️ Changeset 누락
+
+이 PR에 changeset이 포함되어 있지 않습니다.
+
+패키지 버전 관리를 위해 다음 명령어로 changeset을 추가해주세요:
+
+\`\`\`bash
+pnpm changeset
+\`\`\`
+
+> 문서 수정, 테스트 추가 등 버전 변경이 필요 없는 경우 이 메시지를 무시해도 됩니다.`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Changeset 누락')
+            );
+
+            if (!botComment) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      - name: Remove comment if changeset exists
+        if: steps.changeset.outputs.has_changeset == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Changeset 누락')
+            );
+
+            if (botComment) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id
+              });
+            }
+
