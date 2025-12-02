@@ -4,6 +4,7 @@ import tsParser from "@typescript-eslint/parser";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import storybook from "eslint-plugin-storybook";
+
 const config = [
 
   // 공통 ignore 패턴
@@ -21,11 +22,6 @@ const config = [
         ecmaVersion: 2020,
         sourceType: "module",
         ecmaFeatures: { jsx: true },
-      },
-
-      globals: {
-        window: "readonly",
-        document: "readonly",
       },
     },
 
@@ -47,6 +43,7 @@ const config = [
       ...reactHooks.configs.recommended.rules,
       ...storybook.configs.recommended.rules,
 
+      "no-undef": "off", // TypeScript가 이미 타입 체크를 하므로 불필요
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
