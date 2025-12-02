@@ -29,17 +29,19 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const body = `## ⚠️ Changeset 누락
-
-이 PR에 changeset이 포함되어 있지 않습니다.
-
-패키지 버전 관리를 위해 다음 명령어로 changeset을 추가해주세요:
-
-\`\`\`bash
-pnpm changeset
-\`\`\`
-
-> 문서 수정, 테스트 추가 등 버전 변경이 필요 없는 경우 이 메시지를 무시해도 됩니다.`;
+            const body = [
+              '## ⚠️ Changeset 누락',
+              '',
+              '이 PR에 changeset이 포함되어 있지 않습니다.',
+              '',
+              '패키지 버전 관리를 위해 다음 명령어로 changeset을 추가해주세요:',
+              '',
+              '```bash',
+              'pnpm changeset',
+              '```',
+              '',
+              '> 문서 수정, 테스트 추가 등 버전 변경이 필요 없는 경우 이 메시지를 무시해도 됩니다.'
+            ].join('\n');
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
@@ -84,4 +86,3 @@ pnpm changeset
                 comment_id: botComment.id
               });
             }
-
