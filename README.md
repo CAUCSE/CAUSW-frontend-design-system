@@ -111,7 +111,7 @@ export default {
 
 **3. 사용 가능한 유틸리티 클래스**
 
-| 카테고리 | 예시 |
+| 카테고리 | 예시 |ss
 |---------|------|
 | 색상 | `bg-primary-500`, `text-primary-700`, `border-error` |
 | 상태 색상 | `bg-success`, `text-warning`, `border-info` |
