@@ -21,7 +21,8 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@causw/tokens": "workspace:*"
+    "@causw/tokens": "workspace:*",
+    "@causw/icons": "workspace:*"
   },
   "peerDependencies": {
     "react": "^18.2.0",

@@ -72,11 +72,53 @@ import { Button, colors, spacing } from '@causw/design-system';
 
 ### @causw/tokens
 
-디자인 토큰 (색상, 간격, 타이포그래피)
+디자인 토큰 (색상, 간격, 타이포그래피) 및 Tailwind CSS Preset
 
 ```typescript
 import { colors, spacing, typography } from '@causw/tokens';
 ```
+
+#### Tailwind CSS Preset 사용하기
+
+CAUSW 디자인 시스템의 색상, 간격, 타이포그래피를 Tailwind CSS에서 사용하려면 다음과 같이 설정하세요.
+
+**1. 패키지 설치**
+
+```bash
+pnpm add @causw/tokens tailwindcss
+```
+
+**2-A. Tailwind CSS v4 (CSS-first 설정)**
+
+```css
+/* src/global.css */
+@import 'tailwindcss';
+@config '@causw/tokens/tailwind.config';
+```
+
+**2-B. Tailwind CSS v3 또는 JS 설정 방식**
+
+```typescript
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+import { caswPreset } from '@causw/tokens/tailwind-preset';
+
+export default {
+  presets: [caswPreset],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+} satisfies Config;
+```
+
+**3. 사용 가능한 유틸리티 클래스**
+
+| 카테고리 | 예시 |
+|---------|------|
+| 색상 | `bg-primary-500`, `text-primary-700`, `border-error` |
+| 상태 색상 | `bg-success`, `text-warning`, `border-info` |
+| 간격 | `p-4`, `m-8`, `gap-6` |
+| 폰트 | `font-sans`, `font-mono` |
+| 폰트 크기 | `text-sm`, `text-lg`, `text-2xl` |
+| 폰트 굵기 | `font-normal`, `font-medium`, `font-bold` |
 
 ### @causw/core
 
@@ -90,9 +132,15 @@ import { logger } from '@causw/core';
 
 UI 컴포넌트
 
+```bash
+pnpm add @causw/components @causw/tokens
+```
+
 ```typescript
 import { Button } from '@causw/components';
 ```
+
+> **참고:** 컴포넌트가 올바르게 스타일링되려면 `@causw/tokens`의 Tailwind Preset 설정이 필요합니다. 위의 [@causw/tokens](#causwtoken) 섹션을 참고하세요.
 
 ### @causw/icons
 
