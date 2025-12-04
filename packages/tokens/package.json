@@ -11,23 +11,18 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./tailwind-preset": {
-      "types": "./dist/tailwind-preset.d.ts",
-      "import": "./dist/tailwind-preset.mjs",
-      "require": "./dist/tailwind-preset.js"
-    },
-    "./tailwind.config": {
-      "types": "./dist/tailwind.config.d.ts",
-      "import": "./dist/tailwind.config.mjs",
-      "require": "./dist/tailwind.config.js"
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.mjs",
+      "require": "./dist/config/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts src/tailwind-preset.ts src/tailwind.config.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts src/tailwind-preset.ts src/tailwind.config.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts src/config/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts src/config/index.ts --format cjs,esm --dts --watch",
     "lint": "eslint src",
     "test": "echo \"No tests yet\""
   },

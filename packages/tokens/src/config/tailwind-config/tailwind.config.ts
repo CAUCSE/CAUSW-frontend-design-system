@@ -16,11 +16,18 @@ import { caswPreset } from './tailwind-preset';
  * ```ts
  * // tailwind.config.ts
  * import caswConfig from '@causw/tokens/tailwind.config';
- * export default caswConfig;
+ * export default {
+ *   ...caswConfig,
+ *   content: [...caswConfig.content, './src/**\/*.{js,ts,jsx,tsx}'],
+ * };
  * ```
  */
 export const caswConfig: Config = {
-  content: [], // 사용처에서 오버라이드 필요
+  content: [
+    // CAUSW 컴포넌트 패키지의 빌드된 파일 스캔
+    './node_modules/@causw/components/dist/**/*.{js,mjs}',
+    './node_modules/@causw/tokens/dist/**/*.{js,mjs}',
+  ],
   presets: [caswPreset as Config],
 };
 

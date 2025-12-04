@@ -1,3 +1,1 @@
-export * from './colors';
-export * from './spacing';
-export * from './typography';
+export { typography, colors, spacing } from './tokens';

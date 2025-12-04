@@ -96,22 +96,26 @@ pnpm add @causw/tokens tailwindcss
 @config '@causw/tokens/tailwind.config';
 ```
 
-**2-B. Tailwind CSS v3 또는 JS 설정 방식**
+**2-B. Tailwind CSS v3 또는 JS 설정 방식 (권장)**
 
 ```typescript
 // tailwind.config.ts
 import type { Config } from 'tailwindcss';
-import { caswPreset } from '@causw/tokens/tailwind-preset';
+import caswConfig from '@causw/tokens/tailwind.config';
 
 export default {
-  presets: [caswPreset],
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  ...caswConfig,
+  content: [
+    ...caswConfig.content,   // @causw/components, @causw/tokens 클래스 자동 포함
+  ],
 } satisfies Config;
 ```
 
+> 💡 `caswConfig.content`에 `@causw/components`가 이미 포함되어 있습니다. 사용자 소스 경로만 추가하면 됩니다.
+
 **3. 사용 가능한 유틸리티 클래스**
 
-| 카테고리 | 예시 |ss
+| 카테고리 | 예시 |
 |---------|------|
 | 색상 | `bg-primary-500`, `text-primary-700`, `border-error` |
 | 상태 색상 | `bg-success`, `text-warning`, `border-info` |
