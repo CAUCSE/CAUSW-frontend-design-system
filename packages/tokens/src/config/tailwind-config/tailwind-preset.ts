@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
-import { colors } from '../tokens/colors';
-import { spacing } from '../tokens/spacing';
-import { typography } from '../tokens/typography';
+import { colors } from '../../tokens/colors';
+import { spacing } from '../../tokens/spacing';
+import { typography } from '../../tokens/typography';
 
 /**
  * CAUSW Design System Tailwind CSS Preset
