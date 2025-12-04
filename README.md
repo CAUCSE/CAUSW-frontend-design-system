@@ -166,15 +166,6 @@ pnpm changeset
 2. 변경 유형 선택 (major/minor/patch)
 3. 변경사항 설명 작성
 
-### 버전 업데이트
-
-```bash
-pnpm version-packages
-```
-
-- package.json 버전 자동 업데이트
-- CHANGELOG.md 자동 생성
-
 ### 배포 (로컬)
 
 ```bash
