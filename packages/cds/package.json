@@ -1,6 +1,6 @@
 {
   "name": "@causw/design-system",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "CAUSW Design System - Complete design system for CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 0.0.4
+
+### Patch Changes
+
+- 7240209: tailwindConfig가 제대로 export 되지 않았던 이슈 핸들링
+
 ## 0.0.3
 
 ### Patch Changes

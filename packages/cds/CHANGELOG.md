@@ -1,5 +1,16 @@
 # @causw/design-system
 
+## 0.0.6
+
+### Patch Changes
+
+- 7240209: tailwindConfig가 제대로 export 되지 않았던 이슈 핸들링
+- Updated dependencies [7240209]
+  - @causw/components@0.0.4
+  - @causw/tokens@0.0.4
+  - @causw/icons@0.0.4
+  - @causw/core@0.0.2
+
 ## 0.0.5
 
 ### Patch Changes
