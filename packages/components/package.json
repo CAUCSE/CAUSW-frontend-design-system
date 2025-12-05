@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --external react",
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --treeshake",
     "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
     "lint": "eslint src"
   },
