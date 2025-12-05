@@ -1,5 +1,16 @@
 # @causw/design-system
 
+## 0.0.9
+
+### Patch Changes
+
+- 334d9f7: default export 제거
+- Updated dependencies [334d9f7]
+  - @causw/components@0.0.7
+  - @causw/core@0.0.5
+  - @causw/icons@0.0.7
+  - @causw/tokens@0.0.7
+
 ## 0.0.8
 
 ### Patch Changes

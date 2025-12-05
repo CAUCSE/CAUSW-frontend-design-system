@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.5
+
+### Patch Changes
+
+- 334d9f7: default export 제거
+
 ## 0.0.4
 
 ### Patch Changes
