@@ -26,11 +26,6 @@
     "lint": "eslint src",
     "test": "echo \"No tests yet\""
   },
-  "devDependencies": {
-    "tailwindcss": "^4.1.17",
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/CAUCSE/CAUSW-frontend-design-system",
