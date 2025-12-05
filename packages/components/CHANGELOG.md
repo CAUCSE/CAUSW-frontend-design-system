@@ -1,5 +1,15 @@
 # @causw/components
 
+## 0.0.5
+
+### Patch Changes
+
+- c1c42fb: 각 패키지의 사이드이펙트 명시
+- Updated dependencies [c1c42fb]
+- Updated dependencies [11e72c7]
+  - @causw/tokens@0.0.5
+  - @causw/icons@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes

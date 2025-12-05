@@ -1,5 +1,17 @@
 # @causw/design-system
 
+## 0.0.7
+
+### Patch Changes
+
+- c1c42fb: 각 패키지의 사이드이펙트 명시
+- Updated dependencies [c1c42fb]
+- Updated dependencies [11e72c7]
+  - @causw/components@0.0.5
+  - @causw/tokens@0.0.5
+  - @causw/icons@0.0.5
+  - @causw/core@0.0.3
+
 ## 0.0.6
 
 ### Patch Changes

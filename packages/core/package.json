@@ -1,6 +1,6 @@
 {
   "name": "@causw/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Core utilities and logging for CAUSW Design System - CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

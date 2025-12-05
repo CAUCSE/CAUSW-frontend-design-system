@@ -1,5 +1,12 @@
 # @causw/tokens
 
+## 0.0.5
+
+### Patch Changes
+
+- c1c42fb: 각 패키지의 사이드이펙트 명시
+- 11e72c7: typo 수정
+
 ## 0.0.4
 
 ### Patch Changes
