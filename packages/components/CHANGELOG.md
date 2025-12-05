@@ -1,5 +1,14 @@
 # @causw/components
 
+## 0.0.8
+
+### Patch Changes
+
+- c0a7711: config 파일 export 위치 변경
+- Updated dependencies [c0a7711]
+  - @causw/tokens@0.0.8
+  - @causw/icons@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes

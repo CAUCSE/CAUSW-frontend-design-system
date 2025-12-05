@@ -1,5 +1,16 @@
 # @causw/design-system
 
+## 0.0.10
+
+### Patch Changes
+
+- c0a7711: config 파일 export 위치 변경
+- Updated dependencies [c0a7711]
+  - @causw/components@0.0.8
+  - @causw/tokens@0.0.8
+  - @causw/icons@0.0.8
+  - @causw/core@0.0.6
+
 ## 0.0.9
 
 ### Patch Changes

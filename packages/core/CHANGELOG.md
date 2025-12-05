@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.6
+
+### Patch Changes
+
+- c0a7711: config 파일 export 위치 변경
+
 ## 0.0.5
 
 ### Patch Changes
