@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.4
+
+### Patch Changes
+
+- 3c60768: config 경로 문제 핸들링
+
 ## 0.0.3
 
 ### Patch Changes

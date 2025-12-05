@@ -1,5 +1,14 @@
 # @causw/components
 
+## 0.0.6
+
+### Patch Changes
+
+- 3c60768: config 경로 문제 핸들링
+- Updated dependencies [3c60768]
+  - @causw/icons@0.0.6
+  - @causw/tokens@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes

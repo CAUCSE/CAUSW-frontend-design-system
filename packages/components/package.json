@@ -1,6 +1,6 @@
 {
   "name": "@causw/components",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "UI components for CAUSW Design System - CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

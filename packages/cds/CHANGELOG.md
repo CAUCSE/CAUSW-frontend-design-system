@@ -1,5 +1,16 @@
 # @causw/design-system
 
+## 0.0.8
+
+### Patch Changes
+
+- 3c60768: config 경로 문제 핸들링
+- Updated dependencies [3c60768]
+  - @causw/components@0.0.6
+  - @causw/core@0.0.4
+  - @causw/icons@0.0.6
+  - @causw/tokens@0.0.6
+
 ## 0.0.7
 
 ### Patch Changes
