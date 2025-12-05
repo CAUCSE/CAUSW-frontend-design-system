@@ -1,5 +1,11 @@
 # @causw/tokens
 
+## 0.0.7
+
+### Patch Changes
+
+- 334d9f7: default export 제거
+
 ## 0.0.6
 
 ### Patch Changes
