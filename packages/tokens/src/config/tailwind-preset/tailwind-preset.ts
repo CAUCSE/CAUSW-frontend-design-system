@@ -23,8 +23,9 @@ export const causwPreset: Partial<Config> = {
       colors,
       spacing,
       fontFamily: {
-        sans: typography.fontFamily.base,
+        sans: typography.fontFamily.sans,
         mono: typography.fontFamily.mono,
+        serif: typography.fontFamily.serif,
       },
       fontSize: typography.fontSize,
       fontWeight: typography.fontWeight,
