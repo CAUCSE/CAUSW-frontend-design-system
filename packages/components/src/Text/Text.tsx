@@ -9,15 +9,26 @@ import type {
 
 export type { TextVariant, TextSize, FixedSize, TextColor };
 
-export interface TextProps extends React.HTMLAttributes<HTMLElement> {
-  variant?: TextVariant;
-  size?: TextSize;
-  fixedSize?: FixedSize;
+type BaseTextProps = React.HTMLAttributes<HTMLElement> & {
   point?: boolean;
   color?: TextColor;
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'label';
   children: React.ReactNode;
-}
+};
+
+type ResponsiveTextProps = {
+  variant?: Exclude<TextVariant, 'fixed'>;
+  size?: TextSize;
+  fixedSize?: never;
+};
+
+type FixedTextProps = {
+  variant: 'fixed';
+  size?: never;
+  fixedSize: FixedSize;
+};
+
+export type TextProps = BaseTextProps & (ResponsiveTextProps | FixedTextProps);
 
 export const Text = React.forwardRef<HTMLElement, TextProps>(
   (
@@ -34,7 +45,13 @@ export const Text = React.forwardRef<HTMLElement, TextProps>(
     },
     ref,
   ) => {
-    const classes = textStyles({ variant, size, fixedSize, point, color });
+    const classes = textStyles({
+      variant,
+      size: size as TextSize,
+      fixedSize,
+      point,
+      color,
+    });
 
     return React.createElement(
       Component,
