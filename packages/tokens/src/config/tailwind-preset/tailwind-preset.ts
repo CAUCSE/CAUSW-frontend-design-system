@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { borderRadius } from '../../tokens/borderRadius';
 import { colors } from '../../tokens/colors';
 import { typography } from '../../tokens/typography';
 
@@ -19,6 +20,7 @@ import { typography } from '../../tokens/typography';
 export const causwPreset: Partial<Config> = {
   theme: {
     extend: {
+      borderRadius,
       colors,
       fontFamily: {
         sans: typography.fontFamily.sans,
