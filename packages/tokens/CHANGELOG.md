@@ -1,5 +1,11 @@
 # @causw/tokens
 
+## 0.0.9
+
+### Patch Changes
+
+- cdfb32b: foundation token 정의 및 Text 컴포넌트 구현
+
 ## 0.0.8
 
 ### Patch Changes
