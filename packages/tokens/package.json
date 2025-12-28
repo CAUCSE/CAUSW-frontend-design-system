@@ -21,8 +21,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts src/config/index.ts --format cjs,esm --dts --treeshake",
+    "dev": "tsup src/index.ts src/config/index.ts --format cjs,esm --dts --watch",
     "lint": "eslint src",
     "test": "echo \"No tests yet\""
   },

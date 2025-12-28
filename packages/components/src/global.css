@@ -1,14 +1,3 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 @import 'tailwindcss';
 @config '@causw/tokens/config';
-
-@theme {
-    --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
-        system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
-        'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', sans-serif;
-    --font-mono: 'Pretendard Variable', Pretendard, ui-monospace, SFMono-Regular,
-        'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-    --font-serif: 'Pretendard Variable', Pretendard, ui-serif, Georgia, Cambria,
-        'Times New Roman', Times, serif;
-}
