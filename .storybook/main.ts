@@ -5,8 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 const config: StorybookConfig = {
   stories: [
-    '../packages/components/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    '../packages/components/src/**/*.stories.mdx',
+    '../packages/core/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
 
   addons: [

@@ -1,7 +1,7 @@
 {
   "name": "@causw/core",
-  "version": "0.0.6",
-  "description": "Core utilities and logging for CAUSW Design System - CAU Software Community Service",
+  "version": "0.0.7",
+  "description": "Core components and utilities for CAUSW Design System - CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -10,15 +10,27 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./styles": {
+      "import": "./src/styles/global.css",
+      "require": "./src/styles/global.css"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "src/styles"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --treeshake",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
     "lint": "eslint src"
+  },
+  "dependencies": {
+    "@causw/tokens": "workspace:*",
+    "@causw/icons": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18"
   },
   "repository": {
     "type": "git",

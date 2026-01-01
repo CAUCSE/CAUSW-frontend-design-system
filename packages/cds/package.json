@@ -24,7 +24,6 @@
   "dependencies": {
     "@causw/core": "workspace:*",
     "@causw/tokens": "workspace:*",
-    "@causw/components": "workspace:*",
     "@causw/icons": "workspace:*"
   },
   "repository": {
