@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.8
+
+### Patch Changes
+
+- f2e03a0: components -> core 패키지로 변경
+
 ## 0.0.6
 
 ### Patch Changes
