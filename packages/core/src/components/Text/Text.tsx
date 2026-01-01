@@ -6,6 +6,7 @@ import type {
   FixedSize,
   TextColor,
 } from './Text.styles';
+import { mergeStyles } from '../../utils';
 
 export type { TextVariant, TextSize, FixedSize, TextColor };
 
@@ -52,7 +53,7 @@ export const Text = ({
   return React.createElement(
     Component,
     {
-      className: `${classes} ${className}`.trim(),
+      className: mergeStyles(classes, className),
       ...props,
     },
     children,
