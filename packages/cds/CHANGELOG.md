@@ -1,5 +1,13 @@
 # @causw/design-system
 
+## 0.0.12
+
+### Patch Changes
+
+- f2e03a0: components -> core 패키지로 변경
+- Updated dependencies [f2e03a0]
+  - @causw/core@0.0.8
+
 ## 0.0.11
 
 ### Patch Changes
