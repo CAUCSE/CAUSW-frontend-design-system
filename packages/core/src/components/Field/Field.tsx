@@ -66,7 +66,7 @@ const FieldLabel = ({
       typography={typography}
       textColor={textColor}
       htmlFor={id}
-      className={className}
+      className={mergeStyles('px-1', className)}
       {...labelProps}
     >
       {children}
