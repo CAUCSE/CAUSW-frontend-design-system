@@ -19,13 +19,13 @@ type BaseTextProps = React.HTMLAttributes<HTMLElement> & {
 
 type ResponsiveTextProps = {
   variant?: Exclude<TextVariant, 'fixed'>;
-  size?: TextSize;
+  textSize?: TextSize;
   fixedSize?: never;
 };
 
 type FixedTextProps = {
   variant: 'fixed';
-  size?: never;
+  textSize?: never;
   fixedSize: FixedSize;
 };
 
@@ -33,7 +33,7 @@ export type TextProps = BaseTextProps & (ResponsiveTextProps | FixedTextProps);
 
 export const Text = ({
   variant = 'body',
-  size = 'sm',
+  textSize = 'sm',
   fixedSize,
   point = false,
   textColor = 'gray-700',
@@ -44,7 +44,7 @@ export const Text = ({
 }: TextProps) => {
   const classes = textStyles({
     variant,
-    size: size as TextSize,
+    textSize: textSize as TextSize,
     fixedSize,
     point,
     textColor,

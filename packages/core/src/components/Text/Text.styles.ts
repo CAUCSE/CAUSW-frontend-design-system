@@ -260,7 +260,7 @@ const fixedStyles: Record<FixedSize, StyleConfig> = {
 
 export interface TextStylesOptions {
   variant: TextVariant;
-  size: TextSize;
+  textSize: TextSize;
   fixedSize?: FixedSize;
   point: boolean;
   textColor: TextColor;
@@ -268,7 +268,7 @@ export interface TextStylesOptions {
 
 export function textStyles({
   variant,
-  size,
+  textSize,
   fixedSize,
   point,
   textColor,
@@ -280,7 +280,7 @@ export function textStyles({
   if (variant === 'fixed' && fixedSize) {
     config = fixedStyles[fixedSize];
   } else if (variant !== 'fixed') {
-    const variantConfig = variantStyles[variant][size];
+    const variantConfig = variantStyles[variant][textSize];
     config = point ? variantConfig.point : variantConfig.normal;
   } else {
     config = fixedStyles[16];

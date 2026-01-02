@@ -22,7 +22,7 @@ const meta = {
       ],
       description: 'Typography variant',
     },
-    size: {
+    textSize: {
       control: 'select',
       options: ['sm', 'md'],
       description: 'Size for responsive variants',
@@ -63,7 +63,7 @@ export const CaptionSmall: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'caption',
-    size: 'sm',
+    textSize: 'sm',
   },
 };
 
@@ -71,7 +71,7 @@ export const CaptionMedium: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'caption',
-    size: 'md',
+    textSize: 'md',
   },
 };
 
@@ -79,7 +79,7 @@ export const CaptionPoint: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'caption',
-    size: 'sm',
+    textSize: 'sm',
     point: true,
   },
 };
@@ -89,7 +89,7 @@ export const Body2Small: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'body2',
-    size: 'sm',
+    textSize: 'sm',
   },
 };
 
@@ -97,7 +97,7 @@ export const Body2Medium: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'body2',
-    size: 'md',
+    textSize: 'md',
   },
 };
 
@@ -106,7 +106,7 @@ export const BodySmall: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'body',
-    size: 'sm',
+    textSize: 'sm',
   },
 };
 
@@ -114,7 +114,7 @@ export const BodyMedium: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'body',
-    size: 'md',
+    textSize: 'md',
   },
 };
 
@@ -122,7 +122,7 @@ export const BodyPoint: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'body',
-    size: 'sm',
+    textSize: 'sm',
     point: true,
   },
 };
@@ -132,7 +132,7 @@ export const SubtitleSmall: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'subtitle',
-    size: 'sm',
+    textSize: 'sm',
   },
 };
 
@@ -140,7 +140,7 @@ export const SubtitlePoint: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'subtitle',
-    size: 'md',
+    textSize: 'md',
     point: true,
   },
 };
@@ -150,7 +150,7 @@ export const TitleSmall: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'title',
-    size: 'sm',
+    textSize: 'sm',
     as: 'h2',
   },
 };
@@ -159,7 +159,7 @@ export const TitleMedium: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'title',
-    size: 'md',
+    textSize: 'md',
     as: 'h1',
   },
 };
@@ -169,7 +169,7 @@ export const HeadSmall: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'head',
-    size: 'sm',
+    textSize: 'sm',
     as: 'h1',
   },
 };
@@ -178,7 +178,7 @@ export const HeadMedium: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
     variant: 'head',
-    size: 'md',
+    textSize: 'md',
     as: 'h1',
   },
 };
@@ -215,40 +215,40 @@ export const AllVariants: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Text variant="head" size="md" as="h1">
+      <Text variant="head" textSize="md" as="h1">
         Head MD - 48px Bold
       </Text>
-      <Text variant="head" size="sm" as="h2">
+      <Text variant="head" textSize="sm" as="h2">
         Head SM - 30px Bold
       </Text>
-      <Text variant="title" size="md" as="h2">
+      <Text variant="title" textSize="md" as="h2">
         Title MD - 32px Bold
       </Text>
-      <Text variant="title" size="sm" as="h3">
+      <Text variant="title" textSize="sm" as="h3">
         Title SM - 22px Bold
       </Text>
-      <Text variant="subtitle" size="md">
+      <Text variant="subtitle" textSize="md">
         Subtitle MD - 20px Medium
       </Text>
-      <Text variant="subtitle" size="sm">
+      <Text variant="subtitle" textSize="sm">
         Subtitle SM - 18px Medium
       </Text>
-      <Text variant="body" size="md">
+      <Text variant="body" textSize="md">
         Body MD - 18px Medium
       </Text>
-      <Text variant="body" size="sm">
+      <Text variant="body" textSize="sm">
         Body SM - 16px Regular
       </Text>
-      <Text variant="body2" size="md">
+      <Text variant="body2" textSize="md">
         Body2 MD - 16px Medium
       </Text>
-      <Text variant="body2" size="sm">
+      <Text variant="body2" textSize="sm">
         Body2 SM - 14px Regular
       </Text>
-      <Text variant="caption" size="md">
+      <Text variant="caption" textSize="md">
         Caption MD - 14px Medium
       </Text>
-      <Text variant="caption" size="sm">
+      <Text variant="caption" textSize="sm">
         Caption SM - 12px Regular
       </Text>
     </div>
@@ -262,16 +262,16 @@ export const PointComparison: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <Text variant="body" size="sm">
+      <Text variant="body" textSize="sm">
         Body SM - Normal
       </Text>
-      <Text variant="body" size="sm" point>
+      <Text variant="body" textSize="sm" point>
         Body SM - Point (Bold)
       </Text>
-      <Text variant="subtitle" size="sm">
+      <Text variant="subtitle" textSize="sm">
         Subtitle SM - Normal
       </Text>
-      <Text variant="subtitle" size="sm" point>
+      <Text variant="subtitle" textSize="sm" point>
         Subtitle SM - Point (Bold)
       </Text>
     </div>
