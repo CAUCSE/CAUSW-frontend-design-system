@@ -75,26 +75,48 @@ const FieldLabel = ({
 };
 
 // Field.Text (Input wrapper)
-export type FieldTextProps = ComponentProps<'input'>;
-const FieldText = ({ className, ...props }: FieldTextProps) => {
+export type FieldTextProps = ComponentProps<'input'> & {
+  /** Icon to display on the left side of input */
+  leftIcon?: React.ReactNode;
+  /** Icon to display on the right side of input */
+  rightIcon?: React.ReactNode;
+};
+
+const FieldText = ({
+  className,
+  leftIcon,
+  rightIcon,
+  ...props
+}: FieldTextProps) => {
   const { id, disabled, error } = useField();
 
+  const inputStyles = mergeStyles(
+    'flex-1 w-full bg-transparent outline-none',
+    'typo-body-sm',
+    'text-gray-700 placeholder:text-gray-400',
+    'caret-gray-600',
+  );
+
+  const wrapperStyles = mergeStyles(
+    'flex items-center gap-3',
+    'rounded-md px-4 py-3',
+    'bg-white',
+    'focus-within:ring-2 focus-within:ring-gray-600',
+    disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
+    error && 'ring-2 ring-red-400 focus-within:ring-red-400',
+    className,
+  );
+
   return (
-    <input
-      id={id}
-      disabled={disabled}
-      className={mergeStyles(
-        'typo-body-sm',
-        'rounded-md p-4',
-        'bg-white',
-        'text-gray-700 placeholder:text-gray-400',
-        'focus:ring-2 focus:ring-gray-600 focus:outline-none',
-        disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
-        error && 'ring-2 ring-red-400 focus:ring-red-400',
-        className,
+    <div className={wrapperStyles}>
+      {leftIcon && (
+        <span className="flex-shrink-0 text-gray-400">{leftIcon}</span>
       )}
-      {...props}
-    />
+      <input id={id} disabled={disabled} className={inputStyles} {...props} />
+      {rightIcon && (
+        <span className="flex-shrink-0 text-gray-400">{rightIcon}</span>
+      )}
+    </div>
   );
 };
 
