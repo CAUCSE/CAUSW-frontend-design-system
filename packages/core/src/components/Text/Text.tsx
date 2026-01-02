@@ -1,54 +1,30 @@
 import React from 'react';
 import { textStyles } from './Text.styles';
-import type {
-  TextVariant,
-  TextSize,
-  FixedSize,
-  TextColor,
-} from './Text.styles';
+import type { Typography, TextColor } from './Text.styles';
 import { mergeStyles } from '../../utils';
 
-export type { TextVariant, TextSize, FixedSize, TextColor };
+export type { Typography, TextColor };
 
-type BaseTextProps = React.HTMLAttributes<HTMLElement> & {
-  point?: boolean;
+export type TextProps = React.HTMLAttributes<HTMLElement> & {
+  /** Typography preset - format: {variant}-{size}[-point] */
+  typography?: Typography;
+  /** Text color */
   textColor?: TextColor;
+  /** HTML element to render */
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'label';
+  /** Content */
   children: React.ReactNode;
 };
 
-type ResponsiveTextProps = {
-  variant?: Exclude<TextVariant, 'fixed'>;
-  textSize?: TextSize;
-  fixedSize?: never;
-};
-
-type FixedTextProps = {
-  variant: 'fixed';
-  textSize?: never;
-  fixedSize: FixedSize;
-};
-
-export type TextProps = BaseTextProps & (ResponsiveTextProps | FixedTextProps);
-
 export const Text = ({
-  variant = 'body',
-  textSize = 'sm',
-  fixedSize,
-  point = false,
+  typography = 'body-sm',
   textColor = 'gray-700',
   as: Component = 'span',
   children,
   className = '',
   ...props
 }: TextProps) => {
-  const classes = textStyles({
-    variant,
-    textSize: textSize as TextSize,
-    fixedSize,
-    point,
-    textColor,
-  });
+  const classes = textStyles({ typography, textColor });
 
   return React.createElement(
     Component,
