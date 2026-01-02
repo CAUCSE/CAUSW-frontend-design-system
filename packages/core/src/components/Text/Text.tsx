@@ -12,7 +12,7 @@ export type { TextVariant, TextSize, FixedSize, TextColor };
 
 type BaseTextProps = React.HTMLAttributes<HTMLElement> & {
   point?: boolean;
-  color?: TextColor;
+  textColor?: TextColor;
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'label';
   children: React.ReactNode;
 };
@@ -36,7 +36,7 @@ export const Text = ({
   size = 'sm',
   fixedSize,
   point = false,
-  color = 'gray-700',
+  textColor = 'gray-700',
   as: Component = 'span',
   children,
   className = '',
@@ -47,7 +47,7 @@ export const Text = ({
     size: size as TextSize,
     fixedSize,
     point,
-    color,
+    textColor,
   });
 
   return React.createElement(

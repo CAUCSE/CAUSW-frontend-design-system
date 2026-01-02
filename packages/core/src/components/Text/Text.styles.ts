@@ -1,3 +1,5 @@
+import { mergeStyles } from '../../utils';
+
 export type TextVariant =
   | 'caption'
   | 'body2'
@@ -62,24 +64,24 @@ const variantStyles: Record<
   caption: {
     sm: {
       normal: {
-        fontSize: 'text-12',
+        fontSize: 'text-2xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-regular',
       },
       point: {
-        fontSize: 'text-12',
+        fontSize: 'text-2xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-semibold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-14',
+        fontSize: 'text-xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-medium',
       },
       point: {
-        fontSize: 'text-14',
+        fontSize: 'text-xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-semibold',
       },
@@ -88,24 +90,24 @@ const variantStyles: Record<
   body2: {
     sm: {
       normal: {
-        fontSize: 'text-14',
+        fontSize: 'text-xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-regular',
       },
       point: {
-        fontSize: 'text-14',
+        fontSize: 'text-xs',
         lineHeight: 'leading-normal',
         fontWeight: 'font-semibold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-16',
+        fontSize: 'text-base',
         lineHeight: 'leading-normal',
         fontWeight: 'font-medium',
       },
       point: {
-        fontSize: 'text-16',
+        fontSize: 'text-base',
         lineHeight: 'leading-normal',
         fontWeight: 'font-semibold',
       },
@@ -114,24 +116,24 @@ const variantStyles: Record<
   body: {
     sm: {
       normal: {
-        fontSize: 'text-16',
+        fontSize: 'text-base',
         lineHeight: 'leading-tight',
         fontWeight: 'font-regular',
       },
       point: {
-        fontSize: 'text-16',
+        fontSize: 'text-base',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-18',
+        fontSize: 'text-lg',
         lineHeight: 'leading-normal',
         fontWeight: 'font-medium',
       },
       point: {
-        fontSize: 'text-18',
+        fontSize: 'text-lg',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
@@ -140,24 +142,24 @@ const variantStyles: Record<
   subtitle: {
     sm: {
       normal: {
-        fontSize: 'text-18',
+        fontSize: 'text-lg',
         lineHeight: 'leading-normal',
         fontWeight: 'font-medium',
       },
       point: {
-        fontSize: 'text-18',
+        fontSize: 'text-lg',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-20',
+        fontSize: 'text-xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-medium',
       },
       point: {
-        fontSize: 'text-20',
+        fontSize: 'text-xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
@@ -166,24 +168,24 @@ const variantStyles: Record<
   title: {
     sm: {
       normal: {
-        fontSize: 'text-22',
+        fontSize: 'text-2xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
       point: {
-        fontSize: 'text-22',
+        fontSize: 'text-2xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-32',
+        fontSize: 'text-5xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
       point: {
-        fontSize: 'text-32',
+        fontSize: 'text-5xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
@@ -192,24 +194,24 @@ const variantStyles: Record<
   head: {
     sm: {
       normal: {
-        fontSize: 'text-30',
+        fontSize: 'text-4xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
       point: {
-        fontSize: 'text-30',
+        fontSize: 'text-4xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
     },
     md: {
       normal: {
-        fontSize: 'text-48',
+        fontSize: 'text-6xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
       point: {
-        fontSize: 'text-48',
+        fontSize: 'text-6xl',
         lineHeight: 'leading-normal',
         fontWeight: 'font-bold',
       },
@@ -220,37 +222,37 @@ const variantStyles: Record<
 // Fixed variant 스타일
 const fixedStyles: Record<FixedSize, StyleConfig> = {
   12: {
-    fontSize: 'text-12',
+    fontSize: 'text-2xs',
     lineHeight: 'leading-normal',
     fontWeight: 'font-medium',
   },
   14: {
-    fontSize: 'text-14',
+    fontSize: 'text-xs',
     lineHeight: 'leading-normal',
     fontWeight: 'font-medium',
   },
   15: {
-    fontSize: 'text-15',
+    fontSize: 'text-sm',
     lineHeight: 'leading-normal',
     fontWeight: 'font-semibold',
   },
   16: {
-    fontSize: 'text-16',
+    fontSize: 'text-base',
     lineHeight: 'leading-normal',
     fontWeight: 'font-medium',
   },
   18: {
-    fontSize: 'text-18',
+    fontSize: 'text-lg',
     lineHeight: 'leading-normal',
     fontWeight: 'font-medium',
   },
   20: {
-    fontSize: 'text-20',
+    fontSize: 'text-xl',
     lineHeight: 'leading-normal',
     fontWeight: 'font-semibold',
   },
   24: {
-    fontSize: 'text-24',
+    fontSize: 'text-3xl',
     lineHeight: 'leading-normal',
     fontWeight: 'font-bold',
   },
@@ -261,7 +263,7 @@ export interface TextStylesOptions {
   size: TextSize;
   fixedSize?: FixedSize;
   point: boolean;
-  color: TextColor;
+  textColor: TextColor;
 }
 
 export function textStyles({
@@ -269,10 +271,10 @@ export function textStyles({
   size,
   fixedSize,
   point,
-  color,
+  textColor,
 }: TextStylesOptions): string {
   const baseStyles = 'font-sans';
-  const colorClass = colorClasses[color];
+  const colorClass = colorClasses[textColor];
   let config: StyleConfig;
 
   if (variant === 'fixed' && fixedSize) {
@@ -284,5 +286,11 @@ export function textStyles({
     config = fixedStyles[16];
   }
 
-  return `${baseStyles} ${colorClass} ${config.fontSize} ${config.lineHeight} ${config.fontWeight}`.trim();
+  return mergeStyles([
+    baseStyles,
+    colorClass,
+    config.fontSize,
+    config.lineHeight,
+    config.fontWeight,
+  ]);
 }

@@ -40,17 +40,17 @@ export const typography = {
     ],
   },
   fontSize: {
-    12: '0.75rem',
-    14: '0.875rem',
-    15: '0.9375rem',
-    16: '1rem',
-    18: '1.125rem',
-    20: '1.25rem',
-    22: '1.375rem',
-    24: '1.5rem',
-    30: '1.875rem',
-    32: '2rem',
-    48: '3rem',
+    '2xs': '0.75rem', // 12px
+    xs: '0.875rem', // 14px
+    sm: '0.9375rem', // 15px
+    base: '1rem', // 16px
+    lg: '1.125rem', // 18px
+    xl: '1.25rem', // 20px
+    '2xl': '1.375rem', // 22px
+    '3xl': '1.5rem', // 24px
+    '4xl': '1.875rem', // 30px
+    '5xl': '2rem', // 32px
+    '6xl': '3rem', // 48px
   },
   fontWeight: {
     regular: '400',
