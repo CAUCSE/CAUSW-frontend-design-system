@@ -261,7 +261,7 @@ export interface TextStylesOptions {
   size: TextSize;
   fixedSize?: FixedSize;
   point: boolean;
-  color: TextColor;
+  textColor: TextColor;
 }
 
 export function textStyles({
@@ -269,10 +269,10 @@ export function textStyles({
   size,
   fixedSize,
   point,
-  color,
+  textColor,
 }: TextStylesOptions): string {
   const baseStyles = 'font-sans';
-  const colorClass = colorClasses[color];
+  const colorClass = colorClasses[textColor];
   let config: StyleConfig;
 
   if (variant === 'fixed' && fixedSize) {
