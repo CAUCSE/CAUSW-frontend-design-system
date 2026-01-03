@@ -1,1 +1,6 @@
-export { TextArea, type TextAreaProps } from './TextArea';
+export {
+  TextArea,
+  type TextAreaProps,
+  type TextAreaInputProps,
+  type TextAreaFooterProps,
+} from './TextArea';
