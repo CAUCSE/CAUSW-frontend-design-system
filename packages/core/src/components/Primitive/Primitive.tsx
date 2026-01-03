@@ -10,21 +10,19 @@ export interface PrimitiveProps {
 }
 
 type PrimitivePropsWithRef<E extends React.ElementType> =
-  React.ComponentPropsWithRef<E> & PrimitiveProps;
+  React.ComponentProps<E> & PrimitiveProps;
 
 function createPrimitive<E extends React.ElementType>(node: E) {
-  const Node = React.forwardRef(
-    (props: PrimitivePropsWithRef<React.ElementType>, ref) => {
-      const { asChild, ...primitiveProps } = props;
-      const Comp = asChild ? Slot : node;
+  const Node = (props: PrimitivePropsWithRef<React.ElementType>) => {
+    const { asChild, ...primitiveProps } = props;
+    const Comp = asChild ? Slot : node;
 
-      return <Comp {...primitiveProps} ref={ref} />;
-    },
-  );
+    return <Comp {...primitiveProps} />;
+  };
 
   Node.displayName = `Primitive.${node}`;
 
-  return Node as React.ForwardRefExoticComponent<PrimitivePropsWithRef<E>>;
+  return Node satisfies React.FC<PrimitivePropsWithRef<E>>;
 }
 
 export const Primitive = {
