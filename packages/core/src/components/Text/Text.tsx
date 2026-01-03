@@ -5,16 +5,19 @@ import { mergeStyles } from '../../utils';
 
 export type { Typography, TextColor };
 
-export type TextProps = React.HTMLAttributes<HTMLElement> & {
+/** Base text styling props - reusable for other components */
+export interface TextStyleProps {
   /** Typography preset - format: {variant}-{size}[-point] */
   typography?: Typography;
   /** Text color */
   textColor?: TextColor;
   /** HTML element to render */
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'label';
-  /** Content */
-  children: React.ReactNode;
-};
+}
+
+/** Full Text component props */
+export interface TextProps
+  extends React.HTMLAttributes<HTMLElement>, TextStyleProps {}
 
 export const Text = ({
   typography = 'body-sm',
