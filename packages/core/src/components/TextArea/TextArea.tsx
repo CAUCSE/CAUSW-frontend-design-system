@@ -1,57 +1,73 @@
 import React from 'react';
 import { mergeStyles } from '../../utils';
-import { useFieldContext } from '../../hooks';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
-export interface TextAreaProps extends React.ComponentProps<'textarea'> {
-  /** Whether to allow vertical resizing @default true */
-  resize?: boolean;
-  /** Error state (overrides Field context) */
-  error?: boolean;
+// TextArea Root
+export interface TextAreaProps
+  extends React.HTMLAttributes<HTMLDivElement>, PrimitiveProps {
+  children: React.ReactNode;
 }
 
-export const TextArea = ({
-  id: idProp,
-  disabled: disabledProp,
-  error: errorProp,
-  className,
+export const TextArea = ({ className, children, ...props }: TextAreaProps) => {
+  const wrapperStyles = mergeStyles(
+    'rounded-md p-4',
+    'bg-white',
+    'focus-within:ring-2 focus-within:ring-gray-600',
+    className,
+  );
+
+  return (
+    <Primitive.div className={wrapperStyles} {...props}>
+      {children}
+    </Primitive.div>
+  );
+};
+
+// TextArea.Input
+export interface TextAreaInputProps extends React.ComponentProps<'textarea'> {
+  /** Whether to allow vertical resizing @default true */
+  resize?: boolean;
+}
+
+const TextAreaInput = ({
   resize = true,
+  className,
   ...props
-}: TextAreaProps) => {
-  // Optional Field context - works with or without Field
-  const field = useFieldContext();
-
-  const id = idProp ?? field?.id;
-  const disabled = disabledProp ?? field?.disabled ?? false;
-  const error = errorProp ?? field?.error ?? false;
-
+}: TextAreaInputProps) => {
   const textareaStyles = mergeStyles(
     'w-full bg-transparent outline-none',
     'typo-body-sm',
     'text-gray-700 placeholder:text-gray-400',
     'caret-gray-600',
     resize ? 'resize-y' : 'resize-none',
-  );
-
-  const wrapperStyles = mergeStyles(
-    'rounded-md p-4',
-    'bg-white',
-    'focus-within:ring-2 focus-within:ring-gray-600',
-    disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
-    error && 'ring-2 ring-red-400 focus-within:ring-red-400',
     className,
   );
 
+  return <textarea className={textareaStyles} {...props} />;
+};
+
+// TextArea.Footer
+export interface TextAreaFooterProps
+  extends React.HTMLAttributes<HTMLDivElement>, PrimitiveProps {
+  children: React.ReactNode;
+}
+
+const TextAreaFooter = ({
+  className,
+  children,
+  ...props
+}: TextAreaFooterProps) => {
   return (
-    <div className={wrapperStyles}>
-      <textarea
-        id={id}
-        disabled={disabled}
-        className={textareaStyles}
-        rows={4}
-        {...props}
-      />
-    </div>
+    <Primitive.div className={mergeStyles('mt-2', className)} {...props}>
+      {children}
+    </Primitive.div>
   );
 };
 
+// Compound component assembly
+TextArea.Input = TextAreaInput;
+TextArea.Footer = TextAreaFooter;
+
 TextArea.displayName = 'TextArea';
+TextAreaInput.displayName = 'TextArea.Input';
+TextAreaFooter.displayName = 'TextArea.Footer';
