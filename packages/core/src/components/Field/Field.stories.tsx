@@ -68,7 +68,9 @@ export const WithTextArea: Story = {
   render: () => (
     <Field>
       <Field.Label>자기소개</Field.Label>
-      <TextArea placeholder="자기소개를 작성해주세요" />
+      <TextArea>
+        <TextArea.Input placeholder="자기소개를 작성해주세요" />
+      </TextArea>
       <Field.Description>최대 500자까지 입력 가능합니다.</Field.Description>
     </Field>
   ),
