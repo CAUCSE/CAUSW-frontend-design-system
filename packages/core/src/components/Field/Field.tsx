@@ -1,6 +1,6 @@
-import React, { ComponentProps, createContext, useContext, useId } from 'react';
+import React, { createContext, useContext, useId } from 'react';
 import { mergeStyles } from '../../utils';
-import { Text, type Typography, type TextColor } from '../Text';
+import { Text, type TextStyleProps } from '../Text';
 
 // Field Context
 interface FieldContextValue {
@@ -45,24 +45,22 @@ export const Field = ({
 };
 
 // Field.Label
-export type FieldLabelProps = React.ComponentProps<'label'> & {
-  children: React.ReactNode;
-  typography?: Typography;
-  textColor?: TextColor;
-};
+export interface FieldLabelProps
+  extends React.ComponentProps<'label'>, TextStyleProps {}
 
 const FieldLabel = ({
   children,
   className,
   typography = 'body-sm-point',
   textColor = 'gray-700',
+  as = 'label',
   ...labelProps
 }: FieldLabelProps) => {
   const { id } = useField();
 
   return (
     <Text
-      as="label"
+      as={as}
       typography={typography}
       textColor={textColor}
       htmlFor={id}
@@ -75,12 +73,12 @@ const FieldLabel = ({
 };
 
 // Field.Text (Input wrapper)
-export type FieldTextProps = ComponentProps<'input'> & {
+export interface FieldTextProps extends React.ComponentProps<'input'> {
   /** Icon to display on the left side of input */
   leftIcon?: React.ReactNode;
   /** Icon to display on the right side of input */
   rightIcon?: React.ReactNode;
-};
+}
 
 const FieldText = ({
   className,
@@ -121,12 +119,16 @@ const FieldText = ({
 };
 
 // Field.Description
-export type FieldDescriptionProps = {
+export interface FieldDescriptionProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-};
+}
 
-const FieldDescription = ({ children, className }: FieldDescriptionProps) => {
+const FieldDescription = ({
+  children,
+  className,
+  ...props
+}: FieldDescriptionProps) => {
   const { id, error } = useField();
 
   return (
@@ -135,6 +137,7 @@ const FieldDescription = ({ children, className }: FieldDescriptionProps) => {
       textColor={error ? 'red-400' : 'gray-400'}
       id={`${id}-description`}
       className={className}
+      {...props}
     >
       {children}
     </Text>
