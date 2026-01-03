@@ -43,7 +43,8 @@ const FieldLabel = ({
   as = 'label',
   ...labelProps
 }: FieldLabelProps) => {
-  const { id } = useFieldContext();
+  const fieldContext = useFieldContext();
+  const id = fieldContext?.id;
 
   return (
     <Text
@@ -70,7 +71,10 @@ const FieldDescription = ({
   className,
   ...props
 }: FieldDescriptionProps) => {
-  const { id, error } = useFieldContext();
+  const fieldContext = useFieldContext();
+
+  const id = fieldContext?.id;
+  const error = fieldContext?.error;
 
   if (error) return null;
 
@@ -98,7 +102,10 @@ const FieldErrorDescription = ({
   className,
   ...props
 }: FieldErrorDescriptionProps) => {
-  const { id, error } = useFieldContext();
+  const fieldContext = useFieldContext();
+
+  const id = fieldContext?.id;
+  const error = fieldContext?.error;
 
   if (!error) return null;
 
