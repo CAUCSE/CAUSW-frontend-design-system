@@ -13,10 +13,10 @@ export const FieldContext = createContext<FieldContextValue | null>(null);
  * Hook to access Field context.
  * Returns null if not within a Field - allows input components to work independently.
  */
-export function useFieldContext() {
+export const useFieldContext = () => {
   const context = useContext(FieldContext);
   if (!context) {
     throw new Error('Field compound components must be used within a Field');
   }
   return context;
-}
+};
