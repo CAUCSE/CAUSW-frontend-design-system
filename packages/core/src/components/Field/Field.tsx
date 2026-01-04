@@ -13,7 +13,7 @@ export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
   error?: boolean;
 }
 
-export const Field = ({
+const FieldRoot = ({
   children,
   disabled = false,
   error = false,
@@ -122,12 +122,14 @@ const FieldErrorDescription = ({
   );
 };
 
-// Compound component assembly
-Field.Label = FieldLabel;
-Field.Description = FieldDescription;
-Field.ErrorDescription = FieldErrorDescription;
-
-Field.displayName = 'Field';
+// Compound Component
+FieldRoot.displayName = 'Field';
 FieldLabel.displayName = 'Field.Label';
 FieldDescription.displayName = 'Field.Description';
 FieldErrorDescription.displayName = 'Field.ErrorDescription';
+
+export const Field = Object.assign(FieldRoot, {
+  Label: FieldLabel,
+  Description: FieldDescription,
+  ErrorDescription: FieldErrorDescription,
+});

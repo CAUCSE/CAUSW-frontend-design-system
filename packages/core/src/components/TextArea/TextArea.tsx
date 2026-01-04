@@ -8,7 +8,7 @@ export interface TextAreaProps
   children: React.ReactNode;
 }
 
-export const TextArea = ({ className, children, ...props }: TextAreaProps) => {
+const TextAreaRoot = ({ className, children, ...props }: TextAreaProps) => {
   const wrapperStyles = mergeStyles(
     'rounded-md p-4',
     'bg-white',
@@ -64,10 +64,12 @@ const TextAreaFooter = ({
   );
 };
 
-// Compound component assembly
-TextArea.Input = TextAreaInput;
-TextArea.Footer = TextAreaFooter;
-
-TextArea.displayName = 'TextArea';
+// Compound Component
+TextAreaRoot.displayName = 'TextArea';
 TextAreaInput.displayName = 'TextArea.Input';
 TextAreaFooter.displayName = 'TextArea.Footer';
+
+export const TextArea = Object.assign(TextAreaRoot, {
+  Input: TextAreaInput,
+  Footer: TextAreaFooter,
+});
