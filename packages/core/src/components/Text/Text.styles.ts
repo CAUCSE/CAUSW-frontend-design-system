@@ -49,6 +49,8 @@ export type TextColor =
   | 'white'
   | 'black';
 
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+
 const colorClasses: Record<TextColor, string> = {
   'gray-50': 'text-gray-50',
   'gray-100': 'text-gray-100',
@@ -67,6 +69,13 @@ const colorClasses: Record<TextColor, string> = {
   'red-400': 'text-red-400',
   white: 'text-white-main',
   black: 'text-black-main',
+};
+
+const alignClasses: Record<TextAlign, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+  justify: 'text-justify',
 };
 
 // Typography preset styles mapping
@@ -116,15 +125,18 @@ const typographyStyles: Record<Typography, string> = {
 export interface TextStylesOptions {
   typography: Typography;
   textColor: TextColor;
+  align?: TextAlign;
 }
 
 export function textStyles({
   typography,
   textColor,
+  align,
 }: TextStylesOptions): string {
   const baseStyles = 'font-sans';
   const colorClass = colorClasses[textColor];
   const typographyClass = typographyStyles[typography];
+  const alignClass = align ? alignClasses[align] : '';
 
-  return mergeStyles([baseStyles, colorClass, typographyClass]);
+  return mergeStyles([baseStyles, colorClass, typographyClass, alignClass]);
 }
