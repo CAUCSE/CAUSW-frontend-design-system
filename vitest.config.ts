@@ -7,6 +7,15 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  resolve: {
+    alias: {
+      react: path.resolve(dirname, 'node_modules/react'),
+      'react-dom': path.resolve(dirname, 'node_modules/react-dom'),
+    },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
   test: {
     globals: true,
     environment: 'jsdom',
