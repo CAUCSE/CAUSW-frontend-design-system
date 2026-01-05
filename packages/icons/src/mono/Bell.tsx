@@ -1,10 +1,19 @@
 import type { MonoIconProps } from '../types';
+import { DEFAULT_SIZE, MONO_COLORS } from '../types';
 
-export const Bell = ({ title, ...props }: MonoIconProps) => (
+export const Bell = ({
+  size = DEFAULT_SIZE,
+  active = false,
+  title,
+  ...props
+}: MonoIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
-    fill="currentColor"
+    width={size}
+    height={size}
+    fill={active ? MONO_COLORS.active : MONO_COLORS.inactive}
+    color={active ? MONO_COLORS.active : MONO_COLORS.inactive}
     aria-hidden={title ? undefined : true}
     aria-label={title}
     role={title ? 'img' : undefined}

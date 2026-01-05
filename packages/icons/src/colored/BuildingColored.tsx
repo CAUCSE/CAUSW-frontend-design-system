@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Building = ({
+export const BuildingColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -51,4 +51,4 @@ export const Building = ({
   </svg>
 );
 
-Building.displayName = 'Building';
+BuildingColored.displayName = 'BuildingColored';

@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Document = ({
+export const DocumentColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -64,4 +64,4 @@ export const Document = ({
   </svg>
 );
 
-Document.displayName = 'Document';
+DocumentColored.displayName = 'DocumentColored';

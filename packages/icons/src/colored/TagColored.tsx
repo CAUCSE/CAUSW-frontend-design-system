@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Tag = ({
+export const TagColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -25,4 +25,4 @@ export const Tag = ({
   </svg>
 );
 
-Tag.displayName = 'Tag';
+TagColored.displayName = 'TagColored';

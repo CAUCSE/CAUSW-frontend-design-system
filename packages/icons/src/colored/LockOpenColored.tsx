@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const LockOpen = ({
+export const LockOpenColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -55,4 +55,4 @@ export const LockOpen = ({
   </svg>
 );
 
-LockOpen.displayName = 'LockOpen';
+LockOpenColored.displayName = 'LockOpenColored';

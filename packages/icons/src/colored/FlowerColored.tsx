@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Flower = ({
+export const FlowerColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -108,4 +108,4 @@ export const Flower = ({
   </svg>
 );
 
-Flower.displayName = 'Flower';
+FlowerColored.displayName = 'FlowerColored';

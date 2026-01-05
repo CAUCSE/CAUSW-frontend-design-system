@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Flag = ({
+export const FlagColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -53,4 +53,4 @@ export const Flag = ({
   </svg>
 );
 
-Flag.displayName = 'Flag';
+FlagColored.displayName = 'FlagColored';

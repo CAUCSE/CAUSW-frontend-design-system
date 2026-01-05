@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Scholar = ({
+export const ScholarColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -53,4 +53,4 @@ export const Scholar = ({
   </svg>
 );
 
-Scholar.displayName = 'Scholar';
+ScholarColored.displayName = 'ScholarColored';

@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Locker = ({
+export const LockerColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -65,4 +65,4 @@ export const Locker = ({
   </svg>
 );
 
-Locker.displayName = 'Locker';
+LockerColored.displayName = 'LockerColored';

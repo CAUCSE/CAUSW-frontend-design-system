@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Gear = ({
+export const GearColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -39,4 +39,4 @@ export const Gear = ({
   </svg>
 );
 
-Gear.displayName = 'Gear';
+GearColored.displayName = 'GearColored';

@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const Speaker = ({
+export const SpeakerColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -57,4 +57,4 @@ export const Speaker = ({
   </svg>
 );
 
-Speaker.displayName = 'Speaker';
+SpeakerColored.displayName = 'SpeakerColored';

@@ -28,17 +28,27 @@ function generateMonoComponent(
   const innerContent = svgContent
     .replace(/<svg[^>]*>/, '')
     .replace(/<\/svg>/, '')
-    // fill 색상을 currentColor로 변환 (mono 아이콘)
+    // fill, stroke 색상 제거
     .replace(/fill="[^"]+"/g, '')
+    .replace(/stroke="#[A-Fa-f0-9]+"/g, 'stroke="currentColor"')
     .trim();
 
   return `import type { MonoIconProps } from '../types';
+import { DEFAULT_SIZE, MONO_COLORS } from '../types';
 
-export const ${componentName} = ({ title, ...props }: MonoIconProps) => (
+export const ${componentName} = ({
+  size = DEFAULT_SIZE,
+  active = false,
+  title,
+  ...props
+}: MonoIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="${viewBox}"
-    fill="currentColor"
+    width={size}
+    height={size}
+    fill={active ? MONO_COLORS.active : MONO_COLORS.inactive}
+    color={active ? MONO_COLORS.active : MONO_COLORS.inactive}
     aria-hidden={title ? undefined : true}
     aria-label={title}
     role={title ? 'img' : undefined}
@@ -106,35 +116,7 @@ function convertToJsxAttributes(content: string): string {
     .replace(/xmlns:xlink=/g, 'xmlnsXlink=');
 }
 
-// mono와 colored 아이콘 이름 자동 감지
-async function detectConflictingIcons(): Promise<Set<string>> {
-  const monoDir = path.join(SVG_DIR, 'mono');
-  const coloredDir = path.join(SVG_DIR, 'colored');
-
-  const monoFiles = await glob('*.svg', { cwd: monoDir });
-  const coloredFiles = await glob('*.svg', { cwd: coloredDir });
-
-  const monoNames = new Set<string>(
-    monoFiles.map((f: string) => toPascalCase(path.basename(f, '.svg'))),
-  );
-  const coloredNames = new Set<string>(
-    coloredFiles.map((f: string) => toPascalCase(path.basename(f, '.svg'))),
-  );
-
-  const conflicts = new Set<string>();
-  for (const name of coloredNames) {
-    if (monoNames.has(name)) {
-      conflicts.add(name);
-    }
-  }
-
-  return conflicts;
-}
-
-async function generateIcons(
-  type: 'mono' | 'colored',
-  conflictingIcons: Set<string>,
-) {
+async function generateIcons(type: 'mono' | 'colored') {
   const svgDir = path.join(SVG_DIR, type);
   const outDir = path.join(SRC_DIR, type);
 
@@ -150,8 +132,8 @@ async function generateIcons(
     const baseName = path.basename(file, '.svg');
     let componentName = toPascalCase(baseName);
 
-    // colored 아이콘 중 mono와 이름이 겹치면 Colored 접미사 추가
-    if (type === 'colored' && conflictingIcons.has(componentName)) {
+    // 모든 colored 아이콘에 Colored 접미사 추가
+    if (type === 'colored') {
       componentName = `${componentName}Colored`;
     }
 
@@ -187,19 +169,16 @@ async function main() {
 
   console.log('[icons] generating...');
 
-  // 충돌 아이콘 자동 감지
-  const conflictingIcons = await detectConflictingIcons();
-
   let monoExports: string[] = [];
   let coloredExports: string[] = [];
 
   if (!coloredOnly) {
-    monoExports = await generateIcons('mono', conflictingIcons);
+    monoExports = await generateIcons('mono');
     console.log(`[icons] mono: ${monoExports.length} icons`);
   }
 
   if (!monoOnly) {
-    coloredExports = await generateIcons('colored', conflictingIcons);
+    coloredExports = await generateIcons('colored');
     console.log(`[icons] colored: ${coloredExports.length} icons`);
   }
 
