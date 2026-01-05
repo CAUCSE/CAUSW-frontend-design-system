@@ -10,14 +10,28 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./mono": {
+      "types": "./dist/mono/index.d.ts",
+      "import": "./dist/mono/index.mjs",
+      "require": "./dist/mono/index.js"
+    },
+    "./colored": {
+      "types": "./dist/colored/index.d.ts",
+      "import": "./dist/colored/index.mjs",
+      "require": "./dist/colored/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --external react --treeshake",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
+    "generate": "tsx scripts/generate.ts",
+    "generate:mono": "tsx scripts/generate.ts --mono",
+    "generate:colored": "tsx scripts/generate.ts --colored",
+    "prebuild": "pnpm generate",
+    "build": "tsup src/index.ts src/mono/index.ts src/colored/index.ts --format cjs,esm --dts --external react --treeshake",
+    "dev": "tsup src/index.ts src/mono/index.ts src/colored/index.ts --format cjs,esm --dts --external react --watch",
     "lint": "eslint src",
     "test": "echo \"No tests yet\""
   },
@@ -30,5 +44,11 @@
     "access": "public",
     "provenance": true
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=19"
+  },
+  "devDependencies": {
+    "glob": "^13.0.0"
+  }
 }
