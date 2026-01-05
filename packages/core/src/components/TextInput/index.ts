@@ -1,1 +1,5 @@
-export { TextInput, type TextInputProps } from './TextInput';
+export {
+  TextInput,
+  type TextInputProps,
+  type TextInputVariant,
+} from './TextInput';
