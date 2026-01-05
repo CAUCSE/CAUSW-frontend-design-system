@@ -104,3 +104,46 @@ export const WithFieldDisabled: Story = {
     </Field>
   ),
 };
+
+// Underline variant
+export const Underline: Story = {
+  render: () => (
+    <TextInput variant="underline" placeholder="이름을 입력하세요" />
+  ),
+};
+
+export const UnderlineWithIcons: Story = {
+  render: () => (
+    <TextInput
+      variant="underline"
+      leftIcon={<SearchIcon />}
+      placeholder="검색어를 입력하세요"
+    />
+  ),
+};
+
+export const UnderlineError: Story = {
+  render: () => (
+    <TextInput
+      variant="underline"
+      error
+      placeholder="에러 상태"
+      defaultValue="잘못된 값"
+    />
+  ),
+};
+
+export const VariantComparison: Story = {
+  render: () => (
+    <div className="flex w-80 flex-col gap-6">
+      <div>
+        <p className="mb-2 text-sm text-gray-500">Default</p>
+        <TextInput placeholder="기본 스타일" />
+      </div>
+      <div>
+        <p className="mb-2 text-sm text-gray-500">Underline</p>
+        <TextInput variant="underline" placeholder="언더라인 스타일" />
+      </div>
+    </div>
+  ),
+};
