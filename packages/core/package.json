@@ -33,7 +33,8 @@
     "tailwind-merge": "^3.4.0"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "repository": {
     "type": "git",
