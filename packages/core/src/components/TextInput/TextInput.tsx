@@ -4,8 +4,12 @@ import { useFieldContext } from '../../hooks';
 import { TextStyleProps } from '../Text';
 import { textStyles } from '../Text/Text.styles';
 
+export type TextInputVariant = 'default' | 'underline';
+
 export interface TextInputProps
   extends React.ComponentProps<'input'>, TextStyleProps {
+  /** Input variant style */
+  variant?: TextInputVariant;
   /** Icon to display on the left side of input */
   leftIcon?: React.ReactNode;
   /** Icon to display on the right side of input */
@@ -21,6 +25,7 @@ export const TextInput = ({
   className,
   leftIcon,
   rightIcon,
+  variant = 'default',
   typography = 'body2-sm',
   textColor = 'gray-700',
   ...props
@@ -35,18 +40,35 @@ export const TextInput = ({
   const classes = textStyles({ typography, textColor });
 
   const inputStyles = mergeStyles(
-    'w-full outline-none',
+    'w-full bg-transparent outline-none',
     'placeholder:text-gray-400',
     'caret-gray-600',
   );
 
+  const variantStyles: Record<TextInputVariant, string> = {
+    default: mergeStyles(
+      'rounded-md p-4',
+      'bg-white',
+      'focus-within:ring-2 focus-within:ring-gray-600',
+    ),
+    underline: mergeStyles(
+      'py-2 px-0',
+      'border-b border-gray-400',
+      'bg-transparent',
+      'focus-within:border-gray-600',
+    ),
+  };
+
   const wrapperStyles = mergeStyles(
-    'flex items-center gap-3',
-    'rounded-md p-4',
-    'bg-white',
-    'focus-within:ring-2 focus-within:ring-gray-600',
-    disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
-    error && 'ring-2 ring-red-400 focus-within:ring-red-400',
+    'flex items-center gap-2 self-stretch',
+    variantStyles[variant],
+    disabled && 'cursor-not-allowed opacity-50',
+    error &&
+      variant === 'default' &&
+      'ring-2 ring-red-400 focus-within:ring-red-400',
+    error &&
+      variant === 'underline' &&
+      'border-red-400 focus-within:border-red-400',
     className,
   );
 
