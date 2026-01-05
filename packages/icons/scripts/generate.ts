@@ -28,6 +28,8 @@ function generateMonoComponent(
   const innerContent = svgContent
     .replace(/<svg[^>]*>/, '')
     .replace(/<\/svg>/, '')
+    // fill 색상을 currentColor로 변환 (mono 아이콘)
+    .replace(/fill="[^"]+"/g, '')
     .trim();
 
   return `import type { MonoIconProps } from '../types';
