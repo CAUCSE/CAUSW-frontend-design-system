@@ -157,6 +157,10 @@ importers:
         version: 3.4.0
 
   packages/icons:
+    dependencies:
+      react:
+        specifier: '>=19'
+        version: 19.2.3
     devDependencies:
       glob:
         specifier: ^13.0.0
