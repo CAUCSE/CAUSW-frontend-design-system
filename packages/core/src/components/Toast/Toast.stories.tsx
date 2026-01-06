@@ -22,8 +22,8 @@ const meta: Meta<typeof Toast> = {
       control: 'select',
       options: ['default'],
     },
-    message: { control: 'text' },
-    open: { control: 'boolean' },
+    message: { type: 'string', control: 'text' },
+    open: { type: 'boolean', control: 'boolean' },
     duration: {
       control: { type: 'number', min: 1000, step: 1000 },
       description: '토스트가 떠있는 시간(ms)입니다.',
