@@ -13,7 +13,7 @@ const meta: Meta<typeof Avatar> = {
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 export const Default: Story = {
-  render: () => <Avatar variant="sm" />,
+  render: () => <Avatar variant="md" />,
 };
 export const Sizes: Story = {
   render: () => (
@@ -25,10 +25,6 @@ export const Sizes: Story = {
       <Avatar variant="xl" src={SAMPLE_SRC} />
     </div>
   ),
-};
-
-export const WithFallback: Story = {
-  render: () => <Avatar fallback="FALLBACK" />,
 };
 
 export const WithNoProfile: Story = {
