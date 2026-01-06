@@ -2,7 +2,39 @@
 @import 'tailwindcss';
 @config '@causw/tokens/config';
 
-
 * {
-    letter-spacing: -0.02rem;
+  letter-spacing: -0.02rem;
+}
+
+@theme {
+  --animate-toast-hide: toast-hide 100ms ease-in forwards;
+  --animate-toast-slide-in: toast-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-toast-swipe-out: toast-swipe-out 100ms ease-out forwards;
+
+  @keyframes toast-hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes toast-slide-in {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toast-swipe-out {
+    from {
+      transform: translateY(var(--radix-toast-swipe-end-y));
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
 }
