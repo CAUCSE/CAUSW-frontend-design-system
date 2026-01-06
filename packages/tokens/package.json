@@ -1,6 +1,6 @@
 {
   "name": "@causw/tokens",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Design tokens for CAUSW Design System - CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
