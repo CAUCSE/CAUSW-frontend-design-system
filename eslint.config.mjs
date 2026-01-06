@@ -2,7 +2,6 @@ import js from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import reactPlugin from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
 import storybook from "eslint-plugin-storybook";
 import prettier from "eslint-config-prettier";
 
@@ -33,7 +32,6 @@ const config = [
     plugins: {
       "@typescript-eslint": tsPlugin,
       react: reactPlugin,
-      "react-hooks": reactHooks,
       storybook,
     },
 
@@ -41,7 +39,6 @@ const config = [
       ...js.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
       ...storybook.configs.recommended.rules,
 
       "no-undef": "off", // TypeScript가 이미 타입 체크를 하므로 불필요

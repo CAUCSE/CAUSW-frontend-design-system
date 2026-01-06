@@ -65,6 +65,11 @@ const meta = {
       ],
       description: 'Text color',
     },
+    align: {
+      control: 'select',
+      options: ['left', 'center', 'right', 'justify'],
+      description: 'Text alignment',
+    },
     as: {
       control: 'select',
       options: [
@@ -294,6 +299,30 @@ export const ColorPalette: Story = {
       </Text>
       <Text typography="body-sm" textColor="red-400">
         red-400
+      </Text>
+    </div>
+  ),
+};
+
+// Text Alignment
+export const Alignment: Story = {
+  args: {
+    children: '',
+  },
+  render: () => (
+    <div className="flex w-[600px] flex-col gap-4 border border-gray-400 p-4">
+      <Text as="p" align="left" typography="body-sm">
+        왼쪽 정렬 (left) - 텍스트가 왼쪽에 정렬됩니다.
+      </Text>
+      <Text as="p" align="center" typography="body-sm">
+        가운데 정렬 (center) - 텍스트가 가운데에 정렬됩니다.
+      </Text>
+      <Text as="p" align="right" typography="body-sm">
+        오른쪽 정렬 (right) - 텍스트가 오른쪽에 정렬됩니다.
+      </Text>
+      <Text as="p" align="justify" typography="body-sm">
+        양쪽 정렬 (justify) - 텍스트가 양쪽 끝에 맞춰 정렬됩니다. 긴 텍스트에서
+        효과가 더 잘 보입니다.
       </Text>
     </div>
   ),

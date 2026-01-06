@@ -1,6 +1,6 @@
 {
   "name": "@causw/core",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Core components and utilities for CAUSW Design System - CAU Software Community Service",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,11 +29,13 @@
     "@causw/icons": "workspace:*",
     "@causw/tokens": "workspace:*",
     "@radix-ui/react-toast": "^1.2.15",
+    "@radix-ui/react-slot": "^1.2.4",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "repository": {
     "type": "git",

@@ -49,6 +49,8 @@ export type TextColor =
   | 'white'
   | 'black';
 
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+
 const colorClasses: Record<TextColor, string> = {
   'gray-50': 'text-gray-50',
   'gray-100': 'text-gray-100',
@@ -69,62 +71,72 @@ const colorClasses: Record<TextColor, string> = {
   black: 'text-black-main',
 };
 
+const alignClasses: Record<TextAlign, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+  justify: 'text-justify',
+};
+
 // Typography preset styles mapping
 const typographyStyles: Record<Typography, string> = {
   // Caption variants
-  'caption-sm': 'text-2xs leading-normal font-regular',
-  'caption-sm-point': 'text-2xs leading-normal font-semibold',
-  'caption-md': 'text-xs leading-normal font-medium',
-  'caption-md-point': 'text-xs leading-normal font-semibold',
+  'caption-sm': 'typo-caption-sm',
+  'caption-sm-point': 'typo-caption-sm-point',
+  'caption-md': 'typo-caption-md',
+  'caption-md-point': 'typo-caption-md-point',
 
   // Body2 variants
-  'body2-sm': 'text-xs leading-normal font-regular',
-  'body2-sm-point': 'text-xs leading-normal font-semibold',
-  'body2-md': 'text-base leading-normal font-medium',
-  'body2-md-point': 'text-base leading-normal font-semibold',
+  'body2-sm': 'typo-body2-sm',
+  'body2-sm-point': 'typo-body2-sm-point',
+  'body2-md': 'typo-body2-md',
+  'body2-md-point': 'typo-body2-md-point',
 
   // Body variants
-  'body-sm': 'text-base leading-tight font-regular',
-  'body-sm-point': 'text-base leading-normal font-bold',
-  'body-md': 'text-lg leading-normal font-medium',
-  'body-md-point': 'text-lg leading-normal font-bold',
+  'body-sm': 'typo-body-sm',
+  'body-sm-point': 'typo-body-sm-point',
+  'body-md': 'typo-body-md',
+  'body-md-point': 'typo-body-md-point',
 
   // Subtitle variants
-  'subtitle-sm': 'text-lg leading-normal font-medium',
-  'subtitle-sm-point': 'text-lg leading-normal font-bold',
-  'subtitle-md': 'text-xl leading-normal font-medium',
-  'subtitle-md-point': 'text-xl leading-normal font-bold',
+  'subtitle-sm': 'typo-subtitle-sm',
+  'subtitle-sm-point': 'typo-subtitle-sm-point',
+  'subtitle-md': 'typo-subtitle-md',
+  'subtitle-md-point': 'typo-subtitle-md-point',
 
   // Title variants (always bold)
-  'title-sm': 'text-2xl leading-normal font-bold',
-  'title-md': 'text-5xl leading-normal font-bold',
+  'title-sm': 'typo-title-sm',
+  'title-md': 'typo-title-md',
 
   // Head variants (always bold)
-  'head-sm': 'text-4xl leading-normal font-bold',
-  'head-md': 'text-6xl leading-normal font-bold',
+  'head-sm': 'typo-head-sm',
+  'head-md': 'typo-head-md',
 
   // Fixed size variants
-  'fixed-12': 'text-2xs leading-normal font-medium',
-  'fixed-14': 'text-xs leading-normal font-medium',
-  'fixed-15': 'text-sm leading-normal font-semibold',
-  'fixed-16': 'text-base leading-normal font-medium',
-  'fixed-18': 'text-lg leading-normal font-medium',
-  'fixed-20': 'text-xl leading-normal font-semibold',
-  'fixed-24': 'text-3xl leading-normal font-bold',
+  'fixed-12': 'typo-fixed-12',
+  'fixed-14': 'typo-fixed-14',
+  'fixed-15': 'typo-fixed-15',
+  'fixed-16': 'typo-fixed-16',
+  'fixed-18': 'typo-fixed-18',
+  'fixed-20': 'typo-fixed-20',
+  'fixed-24': 'typo-fixed-24',
 };
 
 export interface TextStylesOptions {
   typography: Typography;
   textColor: TextColor;
+  align?: TextAlign;
 }
 
 export function textStyles({
   typography,
   textColor,
+  align,
 }: TextStylesOptions): string {
   const baseStyles = 'font-sans';
   const colorClass = colorClasses[textColor];
   const typographyClass = typographyStyles[typography];
+  const alignClass = align ? alignClasses[align] : '';
 
-  return mergeStyles([baseStyles, colorClass, typographyClass]);
+  return mergeStyles([baseStyles, colorClass, typographyClass, alignClass]);
 }

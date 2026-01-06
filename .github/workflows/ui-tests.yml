@@ -38,7 +38,7 @@ jobs:
           FORCE_COLOR: 0
         run: |
           set -o pipefail
-          pnpm test-storybook 2>&1 | tee test-output.txt
+          pnpm test-storybook --run 2>&1 | tee test-output.txt
           echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
         continue-on-error: true
 

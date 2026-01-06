@@ -1,1 +1,2 @@
-export { mergeStyles } from './mergeStyles';
+export * from './mergeStyles';
+export * from './polymorphic';
