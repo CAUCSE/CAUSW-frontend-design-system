@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Chip } from './Chip';
+import React from 'react';
+import { ChipColor, ChipVariant } from './Chip.styles';
 
 // Demo icons
 const StarIcon = () => (
@@ -26,34 +28,78 @@ export default meta;
 type Story = StoryObj<typeof Chip>;
 
 export const Default: Story = {
-  render: () => <Chip>Default</Chip>,
-};
-
-export const RoleVariants: Story = {
-  name: 'Variants (role)',
   render: () => (
     <div className="flex gap-2">
-      <Chip>Text</Chip>
-      <Chip variant="dropdown">Dropdown</Chip>
-      <Chip variant="closable">Closable</Chip>
+      <Chip>text</Chip>
+      <Chip color="lightgray">text</Chip>
+      <Chip color="darkgray">text</Chip>
     </div>
   ),
 };
-
-export const Appearances: Story = {
+export const RoleVariants: Story = {
+  name: 'Variants',
   render: () => (
     <div className="flex gap-2">
-      <Chip appearance="solid">Solid</Chip>
-      <Chip appearance="outline">Outline</Chip>
+      <Chip>text</Chip>
+      <Chip variant="dropdown" color="lightgray">
+        Dropdown
+      </Chip>
+      <Chip variant="closable" color="darkgray">
+        Closable
+      </Chip>
+    </div>
+  ),
+};
+export const Dropdown: Story = {
+  render: () => (
+    <div className="flex gap-2">
+      <Chip variant="dropdown">text</Chip>
+      <Chip variant="dropdown" color="lightgray">
+        text
+      </Chip>
+      <Chip variant="dropdown" color="darkgray">
+        text
+      </Chip>
+    </div>
+  ),
+};
+export const Closable: Story = {
+  render: () => (
+    <div className="flex gap-2">
+      <Chip variant="closable">text</Chip>
+      <Chip variant="closable" color="lightgray">
+        text
+      </Chip>
+      <Chip variant="closable" color="darkgray">
+        text
+      </Chip>
     </div>
   ),
 };
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-2">
-      <Chip size="sm">Small</Chip>
-      <Chip size="md">Medium</Chip>
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex items-center gap-2">
+        <Chip size="sm">text sm</Chip>
+        <Chip size="md">text md</Chip>
+      </div>
+      <div className="flex items-center gap-2">
+        <Chip variant="dropdown" size="sm" color="lightgray">
+          text sm
+        </Chip>
+        <Chip variant="dropdown" size="md" color="lightgray">
+          text md
+        </Chip>
+      </div>
+      <div className="flex items-center gap-2">
+        <Chip variant="closable" size="sm" color="darkgray">
+          text sm
+        </Chip>
+        <Chip variant="closable" size="md" color="darkgray">
+          text md
+        </Chip>
+      </div>
     </div>
   ),
 };
@@ -64,15 +110,6 @@ export const Colors: Story = {
       <Chip color="white">text</Chip>
       <Chip color="lightgray">text</Chip>
       <Chip color="darkgray">text</Chip>
-    </div>
-  ),
-};
-
-export const Selected: Story = {
-  render: () => (
-    <div className="flex gap-2">
-      <Chip selected>Selected</Chip>
-      <Chip>Not selected</Chip>
     </div>
   ),
 };
@@ -105,10 +142,8 @@ export const WithIcons: Story = {
 
 export const DropdownClickable: Story = {
   render: () => (
-    <Chip asChild variant="dropdown">
-      <button type="button" onClick={() => alert('toggle')}>
-        Dropdown Button Chip
-      </button>
+    <Chip variant="dropdown" onClick={() => alert('toggle')}>
+      Dropdown Chip
     </Chip>
   ),
 };
@@ -121,22 +156,36 @@ export const ClosableWithHandler: Story = {
   ),
 };
 
-export const AsButton: Story = {
-  render: () => (
-    <Chip asChild>
-      <button type="button" onClick={() => alert('clicked')}>
-        Button Chip
-      </button>
-    </Chip>
-  ),
-};
+export const DropdownToClosable: Story = {
+  render: () => {
+    function ClosableChip() {
+      const [variant, setVariant] = React.useState<ChipVariant>('dropdown');
+      const [color, setColor] = React.useState<ChipColor>('white');
+      const [label, setLabel] = React.useState('선택하세요');
 
-export const AsLink: Story = {
-  render: () => (
-    <Chip asChild>
-      <a href="#" onClick={(e) => e.preventDefault()}>
-        Link Chip
-      </a>
-    </Chip>
-  ),
+      const handleClick = () => {
+        setVariant('closable');
+        setColor('darkgray');
+        setLabel('선택됨');
+      };
+
+      const handleRemove = () => {
+        setVariant('dropdown');
+        setColor('lightgray');
+        setLabel('선택하세요');
+      };
+
+      return (
+        <Chip
+          variant={variant}
+          color={color}
+          onClick={handleClick}
+          onRemove={handleRemove}
+        >
+          {label}
+        </Chip>
+      );
+    }
+    return ClosableChip();
+  },
 };

@@ -1,7 +1,6 @@
 import { mergeStyles } from '../../utils';
 export type ChipVariant = 'default' | 'dropdown' | 'closable';
 export type ChipSize = 'sm' | 'md';
-export type ChipAppearance = 'solid' | 'outline';
 export type ChipColor = 'white' | 'lightgray' | 'darkgray';
 
 const baseStyles =
@@ -12,42 +11,28 @@ const sizeStyles: Record<ChipSize, string> = {
   md: 'px-[14px] py-[6px] typo-fixed-16',
 };
 
-const colorStyles: Record<ChipColor, Record<ChipAppearance, string>> = {
-  white: {
-    solid: 'bg-white text-gray-700',
-    outline: 'border border-gray-300 text-gray-700',
-  },
-  lightgray: {
-    solid: 'bg-[#F5F6F8] text-gray-500',
-    outline: 'border border-gray-300 text-gray-600',
-  },
-  darkgray: {
-    solid: 'bg-[#364153] text-white',
-    outline: 'border border-[#364153] text-[#364153]',
-  },
+const colorStyles: Record<ChipColor, string> = {
+  white: 'bg-white text-gray-700',
+  lightgray: 'bg-[#F5F6F8] text-gray-500',
+  darkgray: 'bg-[#364153] text-white',
 };
 
 export interface ChipStylesOptions {
   size: ChipSize;
-  appearance: ChipAppearance;
   color: ChipColor;
   disabled?: boolean;
-  selected?: boolean;
 }
 
 export function chipStyles({
-  size,
-  appearance,
   color,
+  size,
   disabled = false,
-  selected = false,
 }: ChipStylesOptions) {
   return mergeStyles(
     baseStyles,
     sizeStyles[size],
-    colorStyles[color][appearance],
+    colorStyles[color],
     disabled ? 'cursor-not-allowed' : 'cursor-default',
-    selected ? 'ring-2 ring-gray-600 ring-offset-1' : '',
   );
 }
 
