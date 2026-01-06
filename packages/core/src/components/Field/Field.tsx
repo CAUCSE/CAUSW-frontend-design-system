@@ -5,6 +5,8 @@ import {
   FieldContext,
   useFieldContext,
 } from '../../hooks/field/useFieldContext';
+import { PolymorphicProps } from '../../utils/polymorphic';
+import { TextElement } from '../Text/Text';
 
 // Field Root
 export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,23 +34,24 @@ const FieldRoot = ({
 };
 
 // Field.Label
-export interface FieldLabelProps
-  extends React.ComponentProps<'label'>, TextStyleProps {}
 
-const FieldLabel = ({
+export type FieldLabelProps<E extends TextElement = 'label'> = PolymorphicProps<
+  E,
+  TextStyleProps
+>;
+
+const FieldLabel = <E extends TextElement = 'label'>({
   children,
   className,
   typography = 'body-sm-point',
   textColor = 'gray-700',
-  as = 'label',
   ...labelProps
-}: FieldLabelProps) => {
+}: FieldLabelProps<E>) => {
   const fieldContext = useFieldContext();
   const id = fieldContext?.id;
 
   return (
     <Text
-      as={as}
       typography={typography}
       textColor={textColor}
       htmlFor={id}
