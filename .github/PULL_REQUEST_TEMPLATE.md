@@ -12,10 +12,10 @@
 - 
 
 
-## 🎯 Related Issues
-> 연결된 이슈가 있다면 기재해주세요.
+## 🎯 Key points to review
+> 이 부분들을 중점적으로 리뷰해주세요.
 
-- Closes #00
+- 
 
 
 ## 🧪 Test & Verification
