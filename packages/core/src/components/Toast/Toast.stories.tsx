@@ -1,17 +1,42 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryContext, StoryObj } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
 import { Toast, ToastProvider, ToastViewport } from './Toast';
 
 const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',
   component: Toast,
+  subcomponents: { ToastProvider, ToastViewport },
   parameters: {
     layout: 'centered',
+    docs: {
+      source: {
+        transform: (
+          _code: string,
+          storyContext: StoryContext<React.ComponentProps<typeof Toast>>,
+        ) => {
+          const { args } = storyContext;
+          return `
+            const [open, setOpen] = useState(false);
+
+            return (
+              <ToastProvider>
+                <Toast 
+                  open={open} 
+                  onOpenChange={setOpen} 
+                  message="${args.message}"
+                  ${args.duration ? `duration={${args.duration}}` : ''}
+                />
+                <ToastViewport />
+              </ToastProvider>
+              )`;
+        },
+      },
+    },
   },
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <ToastProvider swipeDirection="down">
+      <ToastProvider>
         <Story />
         <ToastViewport />
       </ToastProvider>
@@ -72,7 +97,6 @@ export const Opened: Story = {
     variant: 'default',
     open: true,
   },
-
   render: (args) => <InteractiveToast {...args} />,
 };
 
