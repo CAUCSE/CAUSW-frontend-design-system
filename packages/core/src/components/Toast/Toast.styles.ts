@@ -5,7 +5,8 @@ import { TextColor } from '../Text';
 export type ToastVariant = 'default';
 
 const containerStyles: Record<ToastVariant, string> = {
-  default: 'w-[20rem] rounded-md bg-gray-700 px-4 py-3',
+  default:
+    'w-[20rem] md:w-[26.25rem] max-w-[calc(100vw-2rem)] rounded-md bg-gray-700 px-4 py-3',
 };
 
 export const colorStyles: Record<ToastVariant, TextColor> = {
