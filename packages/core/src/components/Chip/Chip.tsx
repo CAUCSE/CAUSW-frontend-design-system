@@ -46,7 +46,6 @@ export const Chip = ({
   color = 'white',
   disabled = false,
   asChild,
-  className,
   leftIcon,
   rightIcon,
   onRemove,
@@ -54,7 +53,8 @@ export const Chip = ({
   type,
   ...props
 }: ChipProps) => {
-  const classes = chipStyles({ size, color, disabled });
+  const innerGap = 'gap-2';
+  const classes = mergeStyles(chipStyles({ size, color, disabled }), innerGap);
 
   const presetRightIcon =
     variant === 'dropdown' ? (
@@ -65,42 +65,44 @@ export const Chip = ({
 
   const finalRightIcon = rightIcon ?? presetRightIcon;
 
-  const innerGap = 'gap-2';
-
   return (
     <Primitive.button
       asChild={asChild}
       type={type ?? 'button'}
       disabled={disabled}
       aria-disabled={disabled || undefined}
-      className={mergeStyles(classes, className)}
+      className={classes}
       {...props}
     >
-      <span className={mergeStyles('inline-flex items-center', innerGap)}>
-        {leftIcon && (
-          <span className={chipIconStyles(disabled)}>{leftIcon}</span>
-        )}
+      {asChild ? (
+        children
+      ) : (
+        <>
+          {leftIcon && (
+            <span className={chipIconStyles(disabled)}>{leftIcon}</span>
+          )}
 
-        <span>{children}</span>
+          <span>{children}</span>
 
-        {finalRightIcon &&
-          (variant === 'closable' ? (
-            <button
-              type="button"
-              className={chipIconStyles(disabled)}
-              disabled={disabled}
-              aria-label="remove"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove?.();
-              }}
-            >
-              {finalRightIcon}
-            </button>
-          ) : (
-            <span className={chipIconStyles(disabled)}>{finalRightIcon}</span>
-          ))}
-      </span>
+          {finalRightIcon &&
+            (variant === 'closable' ? (
+              <button
+                type="button"
+                className={chipIconStyles(disabled)}
+                disabled={disabled}
+                aria-label="remove"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove?.();
+                }}
+              >
+                {finalRightIcon}
+              </button>
+            ) : (
+              <span className={chipIconStyles(disabled)}>{finalRightIcon}</span>
+            ))}
+        </>
+      )}
     </Primitive.button>
   );
 };
