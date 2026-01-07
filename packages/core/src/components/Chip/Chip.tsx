@@ -51,10 +51,10 @@ export const Chip = ({
   onRemove,
   children,
   type,
+  className,
   ...props
 }: ChipProps) => {
-  const innerGap = 'gap-2';
-  const classes = mergeStyles(chipStyles({ size, color, disabled }), innerGap);
+  const classes = mergeStyles(chipStyles({ size, color, disabled }), className);
 
   const presetRightIcon =
     variant === 'dropdown' ? (
@@ -82,7 +82,7 @@ export const Chip = ({
             <span className={chipIconStyles(disabled)}>{leftIcon}</span>
           )}
 
-          <span>{children}</span>
+          <span className="truncate">{children}</span>
 
           {finalRightIcon &&
             (variant === 'closable' ? (

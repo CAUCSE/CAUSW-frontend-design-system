@@ -4,7 +4,7 @@ export type ChipSize = 'sm' | 'md';
 export type ChipColor = 'white' | 'lightgray' | 'darkgray';
 
 const baseStyles =
-  'inline-flex items-center rounded-[12px] select-none whitespace-nowrap transition-colors ';
+  'inline-flex items-center rounded-[12px] select-none whitespace-nowrap transition-colors gap-2 ';
 
 const sizeStyles: Record<ChipSize, string> = {
   sm: 'px-2 py-1 typo-fixed-14',
