@@ -32,7 +32,7 @@ export function chipStyles({
     baseStyles,
     sizeStyles[size],
     colorStyles[color],
-    disabled ? 'cursor-not-allowed' : 'cursor-default',
+    disabled ? 'cursor-not-allowed' : 'cursor-pointer',
   );
 }
 
