@@ -5,3 +5,6 @@ export * from './TextArea';
 export * from './Radio';
 export * from './Toggle';
 export * from './Checkbox';
+export * from './Button';
+export * from './CTAButton';
+export * from './FloatingActionButton';
