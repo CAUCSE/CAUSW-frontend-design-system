@@ -49,7 +49,6 @@ export function buttonStyles({
     disabled ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer',
     sizeStyles[size],
     active ? colorStyles[color].active : colorStyles[color].base,
-    disabled && 'opacity-50 pointer-events-none',
     fullWidth && 'w-full',
   );
 }
