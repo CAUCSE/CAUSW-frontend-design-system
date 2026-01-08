@@ -33,7 +33,7 @@ export function FloatingActionButton({
       {...props}
     >
       {leftIcon && <span className="flex items-center">{leftIcon}</span>}
-      <span>{children}</span>
+      {children && <span>{children}</span>}
       {rightIcon && <span className="flex items-center">{rightIcon}</span>}
     </button>
   );
