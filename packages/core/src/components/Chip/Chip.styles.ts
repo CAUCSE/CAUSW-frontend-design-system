@@ -1,10 +1,9 @@
 import { mergeStyles } from '../../utils';
-export type ChipVariant = 'default' | 'dropdown' | 'closable';
 export type ChipSize = 'sm' | 'md';
 export type ChipColor = 'white' | 'lightgray' | 'darkgray';
 
 const baseStyles =
-  'inline-flex items-center rounded-[12px] select-none whitespace-nowrap transition-colors gap-2 ';
+  'inline-flex items-center rounded-[12px] select-none whitespace-nowrap transition-colors ';
 
 const sizeStyles: Record<ChipSize, string> = {
   sm: 'px-2 py-1 typo-fixed-14',
@@ -32,13 +31,6 @@ export function chipStyles({
     baseStyles,
     sizeStyles[size],
     colorStyles[color],
-    disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-  );
-}
-
-export function chipIconStyles(disabled?: boolean) {
-  return mergeStyles(
-    'inline-flex items-center justify-center',
-    disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+    disabled ? 'pointer-events-none' : 'cursor-pointer',
   );
 }
