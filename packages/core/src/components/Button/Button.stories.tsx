@@ -47,41 +47,11 @@ export const Default: Story = {
 export const WithIcon: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-2">
-      <Button
-        color="white"
-        leftIcon={
-          <button
-            type="button"
-            className="cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              alert('전화 아이콘 클릭');
-            }}
-          >
-            <PhoneIcon />
-          </button>
-        }
-        onClick={() => alert('전화 버튼 클릭')}
-      >
+      <Button color="white" leftIcon={<PhoneIcon />}>
         전화
       </Button>
 
-      <Button
-        color="white"
-        leftIcon={
-          <button
-            type="button"
-            className="cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              alert('메시지 아이콘 클릭');
-            }}
-          >
-            <MessageIcon />
-          </button>
-        }
-        onClick={() => alert('메시지 버튼 클릭')}
-      >
+      <Button color="white" leftIcon={<MessageIcon />}>
         메시지
       </Button>
     </div>
