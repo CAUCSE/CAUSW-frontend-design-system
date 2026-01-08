@@ -33,8 +33,6 @@ const FieldRoot = ({
   );
 };
 
-// Field.Label
-
 export type FieldLabelProps<E extends TextElement = 'label'> = PolymorphicProps<
   E,
   TextStyleProps
@@ -63,7 +61,6 @@ const FieldLabel = <E extends TextElement = 'label'>({
   );
 };
 
-// Field.Description - only shows when NOT in error state
 export interface FieldDescriptionProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
@@ -94,7 +91,6 @@ const FieldDescription = ({
   );
 };
 
-// Field.ErrorDescription - only shows when in error state
 export interface FieldErrorDescriptionProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
@@ -125,7 +121,6 @@ const FieldErrorDescription = ({
   );
 };
 
-// Compound Component
 FieldRoot.displayName = 'Field';
 FieldLabel.displayName = 'Field.Label';
 FieldDescription.displayName = 'Field.Description';

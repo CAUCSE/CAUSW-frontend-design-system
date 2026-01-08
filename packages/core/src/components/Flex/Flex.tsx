@@ -3,7 +3,6 @@ import { flexStyles, type FlexStylesOptions } from './Flex.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-// ✅ ESLint fix: Use type alias instead of empty interface extension
 export type FlexBaseProps = FlexStylesOptions;
 
 export type FlexProps<E extends ElementType = 'div'> = PolymorphicProps<
@@ -11,10 +10,6 @@ export type FlexProps<E extends ElementType = 'div'> = PolymorphicProps<
   FlexBaseProps
 >;
 
-/**
- * Flex is a layout component that provides a shorthand for Flexbox properties.
- * It is similar to Stack but offers more granular control over wrapping and direction.
- */
 export const Flex = <E extends ElementType = 'div'>({
   as,
   direction,

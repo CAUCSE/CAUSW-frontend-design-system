@@ -3,7 +3,6 @@ import { stackStyles, type StackStylesOptions } from './Stack.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-// ✅ ESLint fix: Use type alias instead of empty interface extension
 export type StackBaseProps = StackStylesOptions;
 
 export type StackProps<E extends ElementType = 'div'> = PolymorphicProps<

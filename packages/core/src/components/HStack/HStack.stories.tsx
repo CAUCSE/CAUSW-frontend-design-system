@@ -58,7 +58,6 @@ export const Default: Story = {
     const item1 = canvas.getByText('Item 1');
     await expect(item1).toBeInTheDocument();
     const stack = item1.parentElement;
-    // HStack은 기본적으로 horizontal(row)이어야 함
     await expect(stack).toHaveClass('flex-row');
   },
 };

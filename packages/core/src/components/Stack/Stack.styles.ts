@@ -5,7 +5,6 @@ export type StackGap = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type StackAlign = 'start' | 'center' | 'end' | 'stretch';
 export type StackJustify = 'start' | 'center' | 'end' | 'between';
 
-// ✅ Style Mappings
 const directionClasses: Record<StackDirection, string> = {
   horizontal: 'flex-row',
   vertical: 'flex-col',
@@ -34,7 +33,6 @@ const justifyClasses: Record<StackJustify, string> = {
   between: 'justify-between',
 };
 
-// ✅ Options Interface
 export interface StackStylesOptions {
   direction?: StackDirection;
   gap?: StackGap;
@@ -42,7 +40,6 @@ export interface StackStylesOptions {
   justify?: StackJustify;
 }
 
-// ✅ Style Generator Function
 export function stackStyles({
   direction = 'vertical',
   gap = 'md',

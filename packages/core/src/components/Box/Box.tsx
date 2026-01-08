@@ -3,7 +3,6 @@ import { boxStyles, type BoxStylesOptions } from './Box.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-// ✅ ESLint fix: Use type alias instead of empty interface extension
 export type BoxBaseProps = BoxStylesOptions;
 
 export type BoxProps<E extends ElementType = 'div'> = PolymorphicProps<
@@ -11,10 +10,6 @@ export type BoxProps<E extends ElementType = 'div'> = PolymorphicProps<
   BoxBaseProps
 >;
 
-/**
- * Box is a fundamental layout component that handles padding, margin, display, and background styles.
- * It supports polymorphic rendering via the `as` prop.
- */
 export const Box = <E extends ElementType = 'div'>({
   as,
   padding,

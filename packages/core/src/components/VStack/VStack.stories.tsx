@@ -58,7 +58,6 @@ export const Default: Story = {
     const item1 = canvas.getByText('Item 1');
     await expect(item1).toBeInTheDocument();
 
-    // VStack은 기본적으로 vertical(col)이어야 함
     const stack = item1.parentElement;
     await expect(stack).toHaveClass('flex-col');
   },
@@ -93,7 +92,6 @@ export const LayoutExample: Story = {
   args: {
     gap: 'md',
     justify: 'between',
-    // 시각적 확인을 위해 높이와 배경 추가 (justify-between 확인용)
     className:
       'w-[300px] h-[400px] bg-slate-50 border border-slate-300 p-4 rounded-xl',
   },

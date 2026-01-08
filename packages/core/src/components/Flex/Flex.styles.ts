@@ -12,7 +12,6 @@ export type FlexJustify =
   | 'evenly';
 export type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
-// ✅ Style Mappings
 const directionClasses: Record<FlexDirection, string> = {
   row: 'flex-row',
   'row-reverse': 'flex-row-reverse',
@@ -52,7 +51,6 @@ const wrapClasses: Record<FlexWrap, string> = {
   'wrap-reverse': 'flex-wrap-reverse',
 };
 
-// ✅ Options Interface
 export interface FlexStylesOptions {
   direction?: FlexDirection;
   gap?: FlexGap;
@@ -61,7 +59,6 @@ export interface FlexStylesOptions {
   wrap?: FlexWrap;
 }
 
-// ✅ Style Generator Function
 export function flexStyles({
   direction = 'row',
   gap = 'md',

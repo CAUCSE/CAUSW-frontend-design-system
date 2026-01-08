@@ -1,7 +1,6 @@
 import { mergeStyles } from '../../utils';
 import { borderRadius } from '@causw/tokens';
 
-// ✅ Sync types with tokens automatically
 export type BoxRadius = 'none' | keyof typeof borderRadius;
 export type BoxPadding = 'none' | 'xs' | 'sm' | 'md' | 'lg';
 export type BoxDisplay =
@@ -13,7 +12,6 @@ export type BoxDisplay =
   | 'none';
 export type BoxBackground = 'default' | 'subtle' | 'inverse' | 'transparent';
 
-// ✅ Style Mappings (Token Key -> Tailwind Class)
 const paddingClasses: Record<BoxPadding, string> = {
   none: 'p-0',
   xs: 'p-1', // 4px
@@ -49,7 +47,6 @@ const backgroundClasses: Record<BoxBackground, string> = {
   transparent: 'bg-transparent',
 };
 
-// ✅ Options Interface
 export interface BoxStylesOptions {
   padding?: BoxPadding;
   radius?: BoxRadius;
@@ -57,7 +54,6 @@ export interface BoxStylesOptions {
   background?: BoxBackground;
 }
 
-// ✅ Style Generator Function
 export function boxStyles({
   padding = 'none',
   radius = 'none',
