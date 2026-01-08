@@ -41,7 +41,7 @@ export type TextColor =
   | 'gray-700'
   | 'gray-800'
   | 'gray-900'
-  | 'blue-50'
+  | 'blue-100'
   | 'blue-500'
   | 'blue-700'
   | 'red-100'
@@ -62,7 +62,7 @@ const colorClasses: Record<TextColor, string> = {
   'gray-700': 'text-gray-700',
   'gray-800': 'text-gray-800',
   'gray-900': 'text-gray-900',
-  'blue-50': 'text-blue-50',
+  'blue-100': 'text-blue-100',
   'blue-500': 'text-blue-500',
   'blue-700': 'text-blue-700',
   'red-100': 'text-red-100',
