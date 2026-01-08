@@ -1,12 +1,8 @@
 import { mergeStyles } from '../../utils';
 
-export type CTAButtonColor =
-  | 'blue'
-  | 'red'
-  | 'dark'
-  | 'light'
-  | 'white'
-  | 'disabled';
+export type CTAButtonColor = 'blue' | 'red' | 'dark' | 'light' | 'white';
+
+type CTAButtonInternalColor = CTAButtonColor | 'disabled';
 
 const baseStyles =
   'inline-flex items-center justify-center ' +
@@ -19,7 +15,7 @@ const widthStyles = {
   full: 'w-full',
 };
 
-const colorStyles: Record<CTAButtonColor, string> = {
+const colorStyles: Record<CTAButtonInternalColor, string> = {
   blue: 'bg-blue-100 text-blue-700',
   red: 'bg-red-400 text-white',
   dark: 'bg-gray-700 text-white',
