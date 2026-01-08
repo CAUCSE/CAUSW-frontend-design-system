@@ -9,3 +9,7 @@ export * from './Box';
 export * from './Stack';
 export * from './VStack';
 export * from './HStack';
+export * from './Flex';
+export * from './Grid';
+export * from './Separator';
+export * from './Spacer';
