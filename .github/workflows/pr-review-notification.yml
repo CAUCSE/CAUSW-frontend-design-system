@@ -47,14 +47,14 @@ jobs:
           
           # 리뷰 내용 처리 (비어있을 수 있음)
           if [ -n "$REVIEW_BODY" ]; then
-            REVIEW_PREVIEW=$(echo "$REVIEW_BODY" | head -c 200)
-            if [ ${#REVIEW_BODY} -gt 200 ]; then
+            REVIEW_PREVIEW=$(echo "$REVIEW_BODY" | head -c 500)
+            if [ ${#REVIEW_BODY} -gt 500 ]; then
               REVIEW_PREVIEW="${REVIEW_PREVIEW}..."
             fi
             REVIEW_PREVIEW=$(echo "$REVIEW_PREVIEW" | jq -Rs .)
-            DESCRIPTION="**리뷰어**: ${REVIEW_AUTHOR}\n**상태**: ${REVIEW_TYPE}\n\n**코멘트**:\n${REVIEW_PREVIEW}"
+            DESCRIPTION="**리뷰어**: ${REVIEW_AUTHOR}\n**상태**: ${REVIEW_TYPE}\n\n> ${REVIEW_PREVIEW}"
           else
-            DESCRIPTION="**리뷰어**: ${REVIEW_AUTHOR}\n**상태**: ${REVIEW_TYPE}"
+            DESCRIPTION="**리뷰어**: ${REVIEW_AUTHOR}\n**상태**: ${REVIEW_TYPE}\n\n_코멘트 없음_"
           fi
           
           # JSON escape

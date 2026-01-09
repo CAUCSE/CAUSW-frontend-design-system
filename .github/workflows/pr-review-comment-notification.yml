@@ -1,0 +1,75 @@
+name: Discord PR Code Review Comment Notification
+on:
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          COMMENT_URL: ${{ github.event.comment.html_url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          DIFF_HUNK: ${{ github.event.comment.diff_hunk }}
+          FILE_PATH: ${{ github.event.comment.path }}
+        run: |
+          # Discord front-end 역할 ID
+          DISCORD_ROLE_ID="1351886402911998012"
+          
+          # 코멘트 내용 처리 (500자 제한)
+          COMMENT_PREVIEW=$(echo "$COMMENT_BODY" | head -c 500)
+          if [ ${#COMMENT_BODY} -gt 500 ]; then
+            COMMENT_PREVIEW="${COMMENT_PREVIEW}..."
+          fi
+          
+          # Diff context 간략히 표시 (마지막 3줄만)
+          DIFF_PREVIEW=$(echo "$DIFF_HUNK" | tail -n 3)
+          
+          # JSON escape
+          COMMENT_PREVIEW=$(echo "$COMMENT_PREVIEW" | jq -Rs .)
+          DIFF_PREVIEW=$(echo "$DIFF_PREVIEW" | jq -Rs .)
+          PR_TITLE_ESCAPED=$(echo "$PR_TITLE" | jq -Rs .)
+          
+          # Discord webhook 전송
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "content": "<@&'"$DISCORD_ROLE_ID"'> 코드 리뷰 코멘트가 달렸습니다!",
+            "embeds": [
+              {
+                "title": '"$PR_TITLE_ESCAPED"',
+                "url": "'"$PR_URL"'",
+                "color": 16753920,
+                "fields": [
+                  {
+                    "name": "📁 파일",
+                    "value": "`'"$FILE_PATH"'`",
+                    "inline": false
+                  },
+                  {
+                    "name": "💬 코멘트 작성자",
+                    "value": "'"$COMMENT_AUTHOR"'",
+                    "inline": true
+                  },
+                  {
+                    "name": "🔗 링크",
+                    "value": "[바로가기]('"$COMMENT_URL"')",
+                    "inline": true
+                  },
+                  {
+                    "name": "📝 코멘트 내용",
+                    "value": '"$COMMENT_PREVIEW"',
+                    "inline": false
+                  },
+                  {
+                    "name": "📄 코드 컨텍스트",
+                    "value": "```\n'"$DIFF_PREVIEW"'\n```",
+                    "inline": false
+                  }
+                ]
+              }
+            ]
+          }' $DISCORD_WEBHOOK_URL
