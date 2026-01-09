@@ -3,7 +3,7 @@ import { Select } from './Select';
 import { Separator } from '../Separator';
 
 const meta = {
-  title: 'Core/Select',
+  title: 'Components/Select',
   component: Select,
   parameters: {
     layout: 'centered',
