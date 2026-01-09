@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
-import { Separator } from '../Separator';
 
 const meta = {
   title: 'Components/Select',
