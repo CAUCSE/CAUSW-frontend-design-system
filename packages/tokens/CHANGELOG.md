@@ -1,5 +1,11 @@
 # @causw/tokens
 
+## 0.0.11
+
+### Patch Changes
+
+- 92424d9: Components(chip,avatar) addition
+
 ## 0.0.10
 
 ### Patch Changes
