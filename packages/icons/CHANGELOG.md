@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 0.0.9
+
+### Patch Changes
+
+- e3b27c9: icon 구현 및 storybook 설정
+
 ## 0.0.8
 
 ### Patch Changes
