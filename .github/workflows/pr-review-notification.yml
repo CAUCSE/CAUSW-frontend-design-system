@@ -26,22 +26,22 @@ jobs:
             "approved")
               REVIEW_TYPE="✅ 승인"
               EMBED_COLOR=3066993
-              MESSAGE="<@&${DISCORD_ROLE_ID}> PR이 승인되었습니다!"
+              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님의 PR이 승인되었습니다!"
               ;;
             "changes_requested")
               REVIEW_TYPE="🔄 변경 요청"
               EMBED_COLOR=15158332
-              MESSAGE="<@&${DISCORD_ROLE_ID}> 변경 요청이 있습니다!"
+              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 변경 요청이 있습니다!"
               ;;
             "commented")
               REVIEW_TYPE="💬 리뷰 코멘트"
               EMBED_COLOR=5814783
-              MESSAGE="<@&${DISCORD_ROLE_ID}> 새로운 리뷰가 달렸습니다!"
+              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 새로운 리뷰가 달렸습니다!"
               ;;
             *)
               REVIEW_TYPE="📝 리뷰"
               EMBED_COLOR=10181046
-              MESSAGE="<@&${DISCORD_ROLE_ID}> 새로운 리뷰가 달렸습니다!"
+              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 새로운 리뷰가 달렸습니다!"
               ;;
           esac
           
