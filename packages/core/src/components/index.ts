@@ -16,3 +16,4 @@ export * from './Flex';
 export * from './Grid';
 export * from './Separator';
 export * from './Spacer';
+export * from './Select';
