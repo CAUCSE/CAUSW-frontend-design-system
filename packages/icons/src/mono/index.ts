@@ -5,6 +5,8 @@ export { Book } from './Book';
 export { Calendar } from './Calendar';
 export { Call } from './Call';
 export { Camera } from './Camera';
+export { ChevronLeft } from './ChevronLeft';
+export { ChevronRight } from './ChevronRight';
 export { Close } from './Close';
 export { CloseFilled } from './CloseFilled';
 export { Comment } from './Comment';
