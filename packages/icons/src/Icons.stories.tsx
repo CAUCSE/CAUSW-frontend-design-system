@@ -2,6 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as MonoIcons from './mono';
 import * as ColoredIcons from './colored';
 
+interface PlaygroundArgs {
+  icon: string;
+  size: number;
+  active: boolean;
+  color: string;
+}
+
 const meta = {
   title: 'Icons/Gallery',
   parameters: {
@@ -12,6 +19,7 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type PlaygroundStory = StoryObj<Meta<PlaygroundArgs>>;
 
 // 아이콘 이름 목록
 const monoIconNames = Object.keys(MonoIcons) as (keyof typeof MonoIcons)[];
@@ -21,11 +29,12 @@ const coloredIconNames = Object.keys(
 const allIconNames = [...monoIconNames, ...coloredIconNames];
 
 // Playground
-export const Playground: Story = {
+export const Playground: PlaygroundStory = {
   args: {
     icon: 'Heart',
     size: 24,
     active: false,
+    color: '',
   },
   argTypes: {
     icon: {
@@ -41,8 +50,12 @@ export const Playground: Story = {
       control: 'boolean',
       description: '활성 상태 (mono만 적용)',
     },
+    color: {
+      control: 'color',
+      description: '커스텀 색상 (mono만 적용, 지정시 active 무시)',
+    },
   },
-  render: ({ icon, size, active }) => {
+  render: ({ icon, size, active, color }) => {
     const isColored = (icon as string).endsWith('Colored');
 
     if (isColored) {
@@ -51,7 +64,8 @@ export const Playground: Story = {
     }
 
     const Icon = MonoIcons[icon as keyof typeof MonoIcons];
-    return <Icon size={size} active={active} />;
+    const colorProps = color ? { fill: color, color } : {};
+    return <Icon size={size} active={active} {...colorProps} />;
   },
 };
 
