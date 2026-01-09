@@ -5,40 +5,75 @@ on:
     branches: [main, develop]
 
 jobs:
-  test:
+  # 변경 사항 확인 작업 (컨테이너 없이 실행되어 빠름)
+  check-changes:
     runs-on: ubuntu-latest
-    container:
-      # Make sure to grab the latest version of the Playwright image
-      # https://playwright.dev/docs/docker#pull-the-image
-      image: mcr.microsoft.com/playwright:v1.57.0-noble
-
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      changed_files: ${{ steps.check.outputs.changed_files }}
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Check for changed files
+        id: check
+        run: |
+          # 비교를 위해 base 브랜치 정보 가져오기 (depth=1)
+          git fetch origin ${{ github.base_ref }} --depth=1
+          
+          # 변경된 파일 목록 추출 (.ts, .tsx, .stories.tsx 파일만)
+          # grep으로 필터링하고 tr로 줄바꿈을 공백으로 변환
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(ts|tsx|stories\.tsx)$' | tr '\n' ' ')
+          
+          echo "Changed files: $CHANGED_FILES"
+          
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            echo "changed_files=" >> $GITHUB_OUTPUT
+            echo "변경된 관련 파일이 없습니다."
+          else
+            echo "should_run=true" >> $GITHUB_OUTPUT
+            echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "관련 파일 변경이 감지되었습니다."
+          fi
 
+  # 테스트 실행 작업 (관련 변경 사항이 있을 때만 실행)
+  test:
+    needs: check-changes
+    # check-changes 작업에서 should_run이 'true'일 때만 실행
+    if: needs.check-changes.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.57.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
           cache: 'pnpm'
-
+      
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
+      
       - name: Build packages
         run: pnpm build
-
+      
       - name: Run tests
         id: test
         shell: bash
         env:
           NO_COLOR: 1
           FORCE_COLOR: 0
+          CHANGED_FILES: ${{ needs.check-changes.outputs.changed_files }}
         run: |
           set -o pipefail
-          pnpm test-storybook --run 2>&1 | tee test-output.txt
+          echo "Running tests for: $CHANGED_FILES"
+          # 추출된 변경 파일들에 대해서만 관련 테스트 실행 (--related)
+          pnpm vitest run --project=storybook --related $CHANGED_FILES 2>&1 | tee test-output.txt
           echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
         continue-on-error: true
 
@@ -51,10 +86,10 @@ jobs:
             const exitCode = '${{ steps.test.outputs.exit_code }}';
             const passed = exitCode === '0';
             
-            // Remove ANSI escape codes
+            // ANSI 색상 코드 제거
             testOutput = testOutput.replace(/\x1b\[[0-9;]*m/g, '');
             
-            // Extract summary info
+            // 테스트 결과 요약 정보 추출
             const testFilesMatch = testOutput.match(/Test Files\s+(\d+)\s+passed/);
             const testsMatch = testOutput.match(/Tests\s+(\d+)\s+passed/);
             const durationMatch = testOutput.match(/Duration\s+([\d.]+s)/);
@@ -64,10 +99,9 @@ jobs:
             const duration = durationMatch ? durationMatch[1] : '?';
             
             const icon = passed ? '✅' : '❌';
-            
             const body = `## ${icon} UI Tests: ${testFiles} files, ${tests} tests passed (${duration})`;
 
-            // Find existing comment
+            // 기존 봇 댓글 찾기
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -79,6 +113,7 @@ jobs:
               comment.body.includes('UI Tests:')
             );
 
+            // 기존 댓글이 있으면 업데이트, 없으면 새로 작성
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
