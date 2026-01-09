@@ -59,15 +59,21 @@ jobs:
             # Discord front-end 역할 ID
             DISCORD_ROLE_ID="1351886402911998012"
             
-            # Discord webhook URL
-            curl -X POST -H "Content-Type: application/json" -d '{
-              "content": "<@&'"$DISCORD_ROLE_ID"'> 새로운 PR이 생성되었습니다! 리뷰 부탁드립니다.",
-              "embeds": [
-                {
-                  "title": "'"$PR_TITLE"'",
-                  "url": "'"$PR_URL"'",
-                  "description": "작성자: **'"$PR_AUTHOR"'**\n"
-                }
-              ]
-            }' $DISCORD_WEBHOOK_URL
+            # JSON payload 생성 Use jq for safety
+            jq -n \
+              --arg role_id "$DISCORD_ROLE_ID" \
+              --arg title "$PR_TITLE" \
+              --arg pr_url "$PR_URL" \
+              --arg pr_author "$PR_AUTHOR" \
+              '{
+                content: ("<@&" + $role_id + "> **" + $pr_author + "**님의 새로운 PR이 생성되었습니다! 리뷰 부탁드립니다."),
+                embeds: [{
+                  title: $title,
+                  url: $pr_url,
+                  description: ("작성자: **" + $pr_author + "**\n")
+                }]
+              }' > payload.json
+
+            # Discord webhook 전송
+            curl -H "Content-Type: application/json" -d @payload.json "$DISCORD_WEBHOOK_URL"
           fi
