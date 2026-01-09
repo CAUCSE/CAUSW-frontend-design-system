@@ -4,17 +4,18 @@ export type ButtonSize = 'sm' | 'md';
 export type ButtonColor = 'white' | 'gray' | 'red';
 
 const baseStyles =
-  'inline-flex items-center justify-center gap-[6px] ' +
-  'whitespace-nowrap rounded-[8px] ' +
+  'inline-flex items-center justify-center gap-[0.375rem] ' +
+  'whitespace-nowrap rounded-[0.5rem] ' +
   'transition-colors duration-150 ' +
   'disabled:opacity-50 disabled:pointer-events-none';
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-w-[48px] h-[30px] px-2 typo-body2-sm-point',
-  md: 'h-[38px] px-3 typo-body2-sm-point',
+  sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body2-sm-point',
+  md: 'h-[2.375rem] px-[0.75rem] typo-body2-sm-point',
 };
 
 const colorStyles: Record<ButtonColor, { base: string; active: string }> = {
+  // base와 active에 대한 설정이 아직 정해지지 않음
   white: {
     base: 'bg-white text-gray-400',
     active: 'bg-white text-gray-400',
