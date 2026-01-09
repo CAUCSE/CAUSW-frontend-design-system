@@ -3,155 +3,161 @@
 @config '@causw/tokens/config';
 
 * {
-  letter-spacing: -0.02rem;
+    letter-spacing: -0.02rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
-  /* Caption variants */
-  .typo-caption-sm {
-    @apply text-2xs font-regular font-sans leading-normal;
-  }
 
-  .typo-caption-sm-point {
-    @apply text-2xs font-sans leading-normal font-semibold;
-  }
+    /* Caption variants */
+    .typo-caption-sm {
+        @apply text-2xs font-regular font-sans leading-normal;
+    }
 
-  .typo-caption-md {
-    @apply font-sans text-xs leading-normal font-medium;
-  }
+    .typo-caption-sm-point {
+        @apply text-2xs font-sans leading-normal font-semibold;
+    }
 
-  .typo-caption-md-point {
-    @apply font-sans text-xs leading-normal font-semibold;
-  }
+    .typo-caption-md {
+        @apply font-sans text-xs leading-normal font-medium;
+    }
 
-  /* Body2 variants */
-  .typo-body2-sm {
-    @apply font-regular font-sans text-xs leading-normal;
-  }
+    .typo-caption-md-point {
+        @apply font-sans text-xs leading-normal font-semibold;
+    }
 
-  .typo-body2-sm-point {
-    @apply font-sans text-xs leading-normal font-semibold;
-  }
+    /* Body2 variants */
+    .typo-body2-sm {
+        @apply font-regular font-sans text-xs leading-normal;
+    }
 
-  .typo-body2-md {
-    @apply font-sans text-base leading-normal font-medium;
-  }
+    .typo-body2-sm-point {
+        @apply font-sans text-xs leading-normal font-semibold;
+    }
 
-  .typo-body2-md-point {
-    @apply font-sans text-base leading-normal font-semibold;
-  }
+    .typo-body2-md {
+        @apply font-sans text-base leading-normal font-medium;
+    }
 
-  /* Body variants */
-  .typo-body-sm {
-    @apply font-regular font-sans text-base leading-tight;
-  }
+    .typo-body2-md-point {
+        @apply font-sans text-base leading-normal font-semibold;
+    }
 
-  .typo-body-sm-point {
-    @apply font-sans text-base leading-normal font-bold;
-  }
+    /* Body variants */
+    .typo-body-sm {
+        @apply font-regular font-sans text-base leading-tight;
+    }
 
-  .typo-body-md {
-    @apply font-sans text-lg leading-normal font-medium;
-  }
+    .typo-body-sm-point {
+        @apply font-sans text-base leading-normal font-bold;
+    }
 
-  .typo-body-md-point {
-    @apply font-sans text-lg leading-normal font-bold;
-  }
+    .typo-body-md {
+        @apply font-sans text-lg leading-normal font-medium;
+    }
 
-  /* Subtitle variants */
-  .typo-subtitle-sm {
-    @apply font-sans text-lg leading-normal font-medium;
-  }
+    .typo-body-md-point {
+        @apply font-sans text-lg leading-normal font-bold;
+    }
 
-  .typo-subtitle-sm-point {
-    @apply font-sans text-lg leading-normal font-bold;
-  }
+    /* Subtitle variants */
+    .typo-subtitle-sm {
+        @apply font-sans text-lg leading-normal font-medium;
+    }
 
-  .typo-subtitle-md {
-    @apply font-sans text-xl leading-normal font-medium;
-  }
+    .typo-subtitle-sm-point {
+        @apply font-sans text-lg leading-normal font-bold;
+    }
 
-  .typo-subtitle-md-point {
-    @apply font-sans text-xl leading-normal font-bold;
-  }
+    .typo-subtitle-md {
+        @apply font-sans text-xl leading-normal font-medium;
+    }
 
-  /* Title variants */
-  .typo-title-sm {
-    @apply font-sans text-2xl leading-normal font-bold;
-  }
+    .typo-subtitle-md-point {
+        @apply font-sans text-xl leading-normal font-bold;
+    }
 
-  .typo-title-md {
-    @apply font-sans text-5xl leading-normal font-bold;
-  }
+    /* Title variants */
+    .typo-title-sm {
+        @apply font-sans text-2xl leading-normal font-bold;
+    }
 
-  /* Head variants */
-  .typo-head-sm {
-    @apply font-sans text-4xl leading-normal font-bold;
-  }
+    .typo-title-md {
+        @apply font-sans text-5xl leading-normal font-bold;
+    }
 
-  .typo-head-md {
-    @apply font-sans text-6xl leading-normal font-bold;
-  }
+    /* Head variants */
+    .typo-head-sm {
+        @apply font-sans text-4xl leading-normal font-bold;
+    }
 
-  /* Fixed size variants */
-  .typo-fixed-12 {
-    @apply text-2xs font-sans leading-normal font-medium;
-  }
+    .typo-head-md {
+        @apply font-sans text-6xl leading-normal font-bold;
+    }
 
-  .typo-fixed-14 {
-    @apply font-sans text-xs leading-normal font-medium;
-  }
+    /* Fixed size variants */
+    .typo-fixed-12 {
+        @apply text-2xs font-sans leading-normal font-medium;
+    }
 
-  .typo-fixed-15 {
-    @apply font-sans text-sm leading-normal font-semibold;
-  }
+    .typo-fixed-14 {
+        @apply font-sans text-xs leading-normal font-medium;
+    }
 
-  .typo-fixed-16 {
-    @apply font-sans text-base leading-normal font-medium;
-  }
+    .typo-fixed-15 {
+        @apply font-sans text-sm leading-normal font-semibold;
+    }
 
-  .typo-fixed-18 {
-    @apply font-sans text-lg leading-normal font-medium;
-  }
+    .typo-fixed-16 {
+        @apply font-sans text-base leading-normal font-medium;
+    }
 
-  .typo-fixed-20 {
-    @apply font-sans text-xl leading-normal font-semibold;
-  }
+    .typo-fixed-18 {
+        @apply font-sans text-lg leading-normal font-medium;
+    }
 
-  .typo-fixed-24 {
-    @apply font-sans text-3xl leading-normal font-bold;
-  }
+    .typo-fixed-20 {
+        @apply font-sans text-xl leading-normal font-semibold;
+    }
+
+    .typo-fixed-24 {
+        @apply font-sans text-3xl leading-normal font-bold;
+    }
 }
 
 @theme {
-  --animate-toast-hide: toast-hide 100ms ease-in forwards;
-  --animate-toast-slide-in: toast-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-toast-swipe-out: toast-swipe-out 100ms ease-out forwards;
+    --animate-toast-hide: toast-hide 100ms ease-in forwards;
+    --animate-toast-slide-in: toast-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-toast-swipe-out: toast-swipe-out 100ms ease-out forwards;
 
-  @keyframes toast-hide {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
+    @keyframes toast-hide {
+        from {
+            opacity: 1;
+        }
 
-  @keyframes toast-slide-in {
-    from {
-      transform: translateY(100%);
+        to {
+            opacity: 0;
+        }
     }
-    to {
-      transform: translateY(0);
-    }
-  }
 
-  @keyframes toast-swipe-out {
-    from {
-      transform: translateY(var(--radix-toast-swipe-end-y));
+    @keyframes toast-slide-in {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
     }
-    to {
-      transform: translateY(100%);
+
+    @keyframes toast-swipe-out {
+        from {
+            transform: translateY(var(--radix-toast-swipe-end-y));
+        }
+
+        to {
+            transform: translateY(100%);
+        }
     }
-  }
 }
