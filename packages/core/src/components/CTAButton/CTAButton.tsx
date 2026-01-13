@@ -1,8 +1,8 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ComponentProps } from 'react';
 import { ctaButtonStyles, CTAButtonColor } from './CTAButton.styles';
 import { mergeStyles } from '../../utils';
 
-export interface CTAButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface CTAButtonProps extends ComponentProps<'button'> {
   color?: CTAButtonColor;
   fullWidth?: boolean;
 }
