@@ -47,11 +47,13 @@ export const Default: Story = {
 export const WithIcon: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-2">
-      <Button color="white" leftIcon={<PhoneIcon />}>
+      <Button color="white">
+        <PhoneIcon />
         전화
       </Button>
 
-      <Button color="white" leftIcon={<MessageIcon />}>
+      <Button color="white">
+        <MessageIcon />
         메시지
       </Button>
     </div>
@@ -67,9 +69,9 @@ export const LikeButtons: Story = {
       <Button
         color={active ? 'red' : 'gray'}
         active={active}
-        leftIcon={<HeartIcon />}
         onClick={() => setActive((prev) => !prev)}
       >
+        <HeartIcon />
         좋아요 {active ? 1 : 0}
       </Button>
     );
@@ -79,10 +81,12 @@ export const LikeButtons: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <Button disabled color="gray" leftIcon={<HeartIcon />}>
+      <Button disabled color="gray">
+        <HeartIcon />
         좋아요 0
       </Button>
-      <Button disabled color="red" active leftIcon={<HeartIcon />}>
+      <Button disabled color="red" active>
+        <HeartIcon />
         좋아요 1
       </Button>
       <Button disabled color="white">
