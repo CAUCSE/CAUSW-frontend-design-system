@@ -1,12 +1,11 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import { buttonStyles, ButtonSize, ButtonColor } from './Button.styles';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ComponentProps<'button'> {
   size?: ButtonSize;
   color?: ButtonColor;
   active?: boolean;
   fullWidth?: boolean;
-  leftIcon?: ReactNode;
 }
 
 export function Button({
@@ -15,13 +14,11 @@ export function Button({
   active = false,
   fullWidth = false,
   disabled = false,
-  leftIcon,
   children,
   ...props
 }: ButtonProps) {
   return (
     <button
-      type="button"
       className={buttonStyles({
         size,
         color,
@@ -32,11 +29,7 @@ export function Button({
       disabled={disabled}
       {...props}
     >
-      {leftIcon && (
-        <span className="flex shrink-0 items-center">{leftIcon}</span>
-      )}
-
-      {children && <span>{children}</span>}
+      {children}
     </button>
   );
 }
