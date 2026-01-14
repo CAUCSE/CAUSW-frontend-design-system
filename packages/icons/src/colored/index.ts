@@ -1,0 +1,17 @@
+export { BellColored } from './BellColored';
+export { BuildingColored } from './BuildingColored';
+export { CalendarColored } from './CalendarColored';
+export { CommentColored } from './CommentColored';
+export { DocumentColored } from './DocumentColored';
+export { FlagColored } from './FlagColored';
+export { FlowerColored } from './FlowerColored';
+export { GearColored } from './GearColored';
+export { HeartColored } from './HeartColored';
+export { LockOpenColored } from './LockOpenColored';
+export { LockerColored } from './LockerColored';
+export { OfficialColored } from './OfficialColored';
+export { PenColored } from './PenColored';
+export { QuestionColored } from './QuestionColored';
+export { ScholarColored } from './ScholarColored';
+export { SpeakerColored } from './SpeakerColored';
+export { TagColored } from './TagColored';

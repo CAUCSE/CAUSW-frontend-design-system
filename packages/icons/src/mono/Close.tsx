@@ -1,0 +1,27 @@
+import type { MonoIconProps } from '../types';
+import { DEFAULT_SIZE, MONO_COLORS } from '../types';
+
+export const Close = ({
+  size = DEFAULT_SIZE,
+  active = false,
+  title,
+  ...props
+}: MonoIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    width={size}
+    height={size}
+    fill={active ? MONO_COLORS.active : MONO_COLORS.inactive}
+    color={active ? MONO_COLORS.active : MONO_COLORS.inactive}
+    aria-hidden={title ? undefined : true}
+    aria-label={title}
+    role={title ? 'img' : undefined}
+    {...props}
+  >
+    {title && <title>{title}</title>}
+    <path d="M10 11.4905L4.78327 16.7072C4.58809 16.9024 4.33967 17 4.03802 17C3.73638 17 3.48796 16.9024 3.29278 16.7072C3.09759 16.512 3 16.2636 3 15.962C3 15.6603 3.09759 15.4119 3.29278 15.2167L8.50951 10L3.29278 4.78327C3.09759 4.58809 3 4.33967 3 4.03802C3 3.73638 3.09759 3.48796 3.29278 3.29278C3.48796 3.09759 3.73638 3 4.03802 3C4.33967 3 4.58809 3.09759 4.78327 3.29278L10 8.50951L15.2167 3.29278C15.4119 3.09759 15.6603 3 15.962 3C16.2636 3 16.512 3.09759 16.7072 3.29278C16.9024 3.48796 17 3.73638 17 4.03802C17 4.33967 16.9024 4.58809 16.7072 4.78327L11.4905 10L16.7072 15.2167C16.9024 15.4119 17 15.6603 17 15.962C17 16.2636 16.9024 16.512 16.7072 16.7072C16.512 16.9024 16.2636 17 15.962 17C15.6603 17 15.4119 16.9024 15.2167 16.7072L10 11.4905Z" />
+  </svg>
+);
+
+Close.displayName = 'Close';

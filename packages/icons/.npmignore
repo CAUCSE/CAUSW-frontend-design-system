@@ -1,5 +1,7 @@
 # Source files
 src/
+svg/
+scripts/
 *.tsx
 *.ts
 !*.d.ts
