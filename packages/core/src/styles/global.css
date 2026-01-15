@@ -127,6 +127,13 @@
 }
 
 @theme {
+
+    --z-index-sticky: 250;
+    --z-index-dropdown: 500;
+    --z-index-bottomsheet: 600;
+    --z-index-modal: 1000;
+    --z-index-toast: 1500;
+
     --animate-toast-hide: toast-hide 100ms ease-in forwards;
     --animate-toast-slide-in: toast-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
     --animate-toast-swipe-out: toast-swipe-out 100ms ease-out forwards;
