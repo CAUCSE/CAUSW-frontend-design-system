@@ -1,5 +1,12 @@
 # @causw/tokens
 
+## 0.0.11
+
+### Patch Changes
+
+- 92424d9: Components(chip,avatar) addition
+- 9a6dcb4: Align color tokens (blue-100) with design system usage.
+
 ## 0.0.10
 
 ### Patch Changes

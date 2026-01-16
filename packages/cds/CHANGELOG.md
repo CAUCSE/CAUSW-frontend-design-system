@@ -1,5 +1,20 @@
 # @causw/design-system
 
+## 0.0.14
+
+### Patch Changes
+
+- 92424d9: Components(chip,avatar) addition
+- Updated dependencies [9a6dcb4]
+- Updated dependencies [a5620fb]
+- Updated dependencies [e3b27c9]
+- Updated dependencies [92424d9]
+- Updated dependencies [9a6dcb4]
+- Updated dependencies [9f60c3b]
+  - @causw/core@0.0.10
+  - @causw/icons@0.0.9
+  - @causw/tokens@0.0.11
+
 ## 0.0.13
 
 ### Patch Changes
