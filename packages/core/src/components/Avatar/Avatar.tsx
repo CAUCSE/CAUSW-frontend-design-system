@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Primitive } from '../Primitive';
+import { Primitive, PrimitiveProps } from '../Primitive';
 import {
   avatarRootStyles,
   avatarImageStyles,
@@ -10,14 +10,11 @@ import {
 import { mergeStyles } from '../../utils';
 import DEFAULT_AVATAR_SRC from '../../assets/avatar/default.jpeg';
 
-export interface AvatarProps extends Omit<
-  React.ComponentPropsWithoutRef<'span'>,
-  'alt'
-> {
+export interface AvatarProps
+  extends Omit<React.ComponentPropsWithoutRef<'span'>, 'alt'>, PrimitiveProps {
   variant?: AvatarVariant;
   src?: string;
   alt?: string;
-  asChild?: boolean;
   fallback?: React.ReactNode;
 }
 
@@ -25,7 +22,6 @@ export const Avatar = ({
   variant = 'md',
   src,
   alt,
-  asChild,
   className,
   fallback,
   ...props
@@ -58,7 +54,6 @@ export const Avatar = ({
   };
   return (
     <Primitive.span
-      asChild={asChild}
       className={mergeStyles(avatarRootStyles(), className)}
       style={{ width: size, height: size, borderRadius: radius }}
       {...props}
