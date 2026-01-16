@@ -3,7 +3,7 @@ import { FloatingActionButton } from './FloatingActionButton';
 import { HStack } from '../HStack';
 
 const PlusIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+  <svg width="20" height="20" viewBox="0 0 24 24">
     <path
       d="M12 5v14M5 12h14"
       stroke="currentColor"
@@ -54,14 +54,14 @@ export const LeftIcon: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
       <FloatingActionButton>
-        <span className="flex items-center gap-[0.25rem]">
+        <HStack gap="xs" className="items-center">
           <PlusIcon />
-          <div>글쓰기</div>
-        </span>
+          <p>글쓰기</p>
+        </HStack>
       </FloatingActionButton>
       <FloatingActionButton className="px-[1.25rem] py-[0.625rem]">
-        <HStack className="items-center gap-[0.625rem]">
-          <div>내 동문수첩</div>
+        <HStack className="items-center gap-2.5">
+          <p>내 동문수첩</p>
           <ChevronRightIcon />
         </HStack>
       </FloatingActionButton>
