@@ -6,7 +6,7 @@ type CTAButtonInternalColor = CTAButtonColor | 'disabled';
 
 const baseStyles =
   'inline-flex items-center justify-center ' +
-  'h-[3.375rem] px-[0.5rem] rounded-[0.75rem] ' +
+  'h-[3.375rem] p-[0.5rem] rounded-[0.75rem] ' +
   'typo-fixed-15 whitespace-nowrap select-none ' +
   'transition-colors';
 
