@@ -39,6 +39,6 @@ export function ctaButtonStyles({
     baseStyles,
     fullWidth ? widthStyles.full : widthStyles.default,
     colorStyles[disabled ? 'disabled' : color],
-    disabled ? 'pointer-events-none' : 'cursor-pointer',
+    disabled ? 'cursor-not-allowed' : 'cursor-pointer',
   );
 }
