@@ -16,8 +16,8 @@ export type FloatProps<E extends ElementType = 'div'> = PolymorphicProps<
 
 export const Float = <E extends ElementType = 'div'>({
   as,
-  position,
-  zIndex,
+  floatType = 'absolute',
+  zIndex = 'sticky',
   top,
   bottom,
   left,
@@ -26,15 +26,10 @@ export const Float = <E extends ElementType = 'div'>({
   style,
   children,
   ...props
-}: FloatProps<E> & {
-  top?: number | string;
-  bottom?: number | string;
-  left?: number | string;
-  right?: number | string;
-}) => {
+}: FloatProps<E>) => {
   const Component = as || 'div';
 
-  const classes = floatStyles({ position, zIndex });
+  const classes = floatStyles({ floatType, zIndex });
   const positionStyles = floatPositionStyles({ top, bottom, left, right });
 
   return React.createElement(
