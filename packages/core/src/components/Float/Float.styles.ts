@@ -1,4 +1,4 @@
-import { mergeStyles } from '../../utils';
+import { mergeStyles, convertPxToRem } from '../../utils';
 
 export type FloatType = 'absolute' | 'fixed' | 'sticky' | 'relative';
 export type FloatZIndex =
@@ -46,11 +46,6 @@ const zIndexClasses: Record<FloatZIndex, string> = {
   bottomsheet: 'z-bottomsheet',
   modal: 'z-modal',
   toast: 'z-toast',
-};
-
-const convertPxToRem = (value?: number) => {
-  if (!value) return;
-  return `${value / 16}rem`;
 };
 
 export function floatPositionStyles({ ...props }: FloatPosition) {
