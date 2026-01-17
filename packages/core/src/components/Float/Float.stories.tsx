@@ -15,7 +15,7 @@ const PlusIcon = () => (
 );
 
 const meta: Meta<typeof Float> = {
-  title: 'Components/Float',
+  title: 'Layouts/Float',
   component: Float,
   parameters: {
     layout: 'centered',
