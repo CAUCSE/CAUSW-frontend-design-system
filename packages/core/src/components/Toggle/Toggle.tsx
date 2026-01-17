@@ -58,7 +58,7 @@ const ToggleRoot = ({
     <ToggleContext.Provider value={{ checked: isChecked, disabled }}>
       <label
         className={mergeStyles(
-          'inline-flex cursor-pointer items-center gap-2',
+          'inline-flex w-full cursor-pointer items-center gap-2',
           disabled && 'cursor-not-allowed opacity-50',
           className,
         )}
