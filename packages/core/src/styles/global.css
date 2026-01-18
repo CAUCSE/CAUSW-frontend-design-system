@@ -10,119 +10,83 @@
 
 @layer utilities {
 
-    /* Caption variants */
-    .typo-caption-sm {
-        @apply text-2xs font-regular font-sans leading-normal;
-    }
-
-    .typo-caption-sm-point {
-        @apply text-2xs font-sans leading-normal font-semibold;
-    }
-
-    .typo-caption-md {
-        @apply font-sans text-xs leading-normal font-medium;
-    }
-
-    .typo-caption-md-point {
-        @apply font-sans text-xs leading-normal font-semibold;
-    }
-
-    /* Body2 variants */
-    .typo-body2-sm {
-        @apply font-regular font-sans text-xs leading-normal;
-    }
-
-    .typo-body2-sm-point {
-        @apply font-sans text-xs leading-normal font-semibold;
-    }
-
-    .typo-body2-md {
-        @apply font-sans text-base leading-normal font-medium;
-    }
-
-    .typo-body2-md-point {
-        @apply font-sans text-base leading-normal font-semibold;
-    }
-
-    /* Body variants */
-    .typo-body-sm {
-        @apply font-regular font-sans text-base leading-tight;
-    }
-
-    .typo-body-sm-point {
-        @apply font-sans text-base leading-normal font-bold;
-    }
-
-    .typo-body-md {
-        @apply font-sans text-lg leading-normal font-medium;
-    }
-
-    .typo-body-md-point {
-        @apply font-sans text-lg leading-normal font-bold;
-    }
-
-    /* Subtitle variants */
-    .typo-subtitle-sm {
-        @apply font-sans text-lg leading-normal font-medium;
-    }
-
-    .typo-subtitle-sm-point {
-        @apply font-sans text-lg leading-normal font-bold;
-    }
-
-    .typo-subtitle-md {
-        @apply font-sans text-xl leading-normal font-medium;
-    }
-
-    .typo-subtitle-md-point {
-        @apply font-sans text-xl leading-normal font-bold;
-    }
-
     /* Title variants */
-    .typo-title-sm {
-        @apply font-sans text-2xl leading-normal font-bold;
-    }
-
-    .typo-title-md {
-        @apply font-sans text-5xl leading-normal font-bold;
-    }
-
-    /* Head variants */
-    .typo-head-sm {
-        @apply font-sans text-4xl leading-normal font-bold;
-    }
-
-    .typo-head-md {
+    .typo-title-48-bold {
         @apply font-sans text-6xl leading-normal font-bold;
     }
 
-    /* Fixed size variants */
-    .typo-fixed-12 {
-        @apply text-2xs font-sans leading-normal font-medium;
+    .typo-title-32-bold {
+        @apply font-sans text-5xl leading-normal font-bold;
     }
 
-    .typo-fixed-14 {
-        @apply font-sans text-xs leading-normal font-medium;
+    .typo-title-30-bold {
+        @apply font-sans text-4xl leading-normal font-bold;
     }
 
-    .typo-fixed-15 {
-        @apply font-sans text-sm leading-normal font-semibold;
+    .typo-title-24-bold {
+        @apply font-sans text-3xl leading-normal font-bold;
     }
 
-    .typo-fixed-16 {
-        @apply font-sans text-base leading-normal font-medium;
+    .typo-title-22-bold {
+        @apply font-sans text-2xl leading-normal font-bold;
     }
 
-    .typo-fixed-18 {
+    /* Subtitle variants */
+    .typo-subtitle-20-bold {
+        @apply font-sans text-xl leading-normal font-bold;
+    }
+
+    .typo-subtitle-18-bold {
+        @apply font-sans text-lg leading-normal font-bold;
+    }
+
+    .typo-subtitle-16-bold {
+        @apply font-sans text-base leading-normal font-bold;
+    }
+
+    /* Body variants */
+    .typo-body-18-medium {
         @apply font-sans text-lg leading-normal font-medium;
     }
 
-    .typo-fixed-20 {
-        @apply font-sans text-xl leading-normal font-semibold;
+    .typo-body-16-medium {
+        @apply font-sans text-base leading-normal font-medium;
     }
 
-    .typo-fixed-24 {
-        @apply font-sans text-3xl leading-normal font-bold;
+    .typo-body-16-regular {
+        @apply font-sans text-base leading-normal font-regular;
+    }
+
+    .typo-body-15-semibold {
+        @apply font-sans text-sm leading-normal font-semibold;
+    }
+
+    .typo-body-15-medium {
+        @apply font-sans text-sm leading-normal font-medium;
+    }
+
+    .typo-body-14-semibold {
+        @apply font-sans text-xs leading-normal font-semibold;
+    }
+
+    .typo-body-14-medium {
+        @apply font-sans text-xs leading-normal font-medium;
+    }
+
+    .typo-body-14-regular {
+        @apply font-sans text-xs leading-normal font-regular;
+    }
+
+    .typo-caption-12-semibold {
+        @apply font-sans text-2xs leading-normal font-semibold;
+    }
+
+    .typo-caption-12-medium {
+        @apply font-sans text-2xs leading-normal font-medium;
+    }
+
+    .typo-caption-12-regular {
+        @apply font-sans text-2xs leading-normal font-regular;
     }
 }
 
