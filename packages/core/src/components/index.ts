@@ -18,4 +18,5 @@ export * from './Separator';
 export * from './Spacer';
 export * from './Select';
 export * from './Dialog';
+export * from './Dropdown';
 export * from './Float';
