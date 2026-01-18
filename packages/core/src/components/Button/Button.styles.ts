@@ -10,23 +10,23 @@ const baseStyles =
   'disabled:opacity-50 disabled:pointer-events-none';
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body2-sm-point',
-  md: 'h-[2.375rem] px-[0.75rem] typo-body2-sm-point',
+  sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body-14-semibold',
+  md: 'h-[2.375rem] px-[0.75rem] typo-body-14-semibold',
 };
 
 const colorStyles: Record<ButtonColor, { base: string; active: string }> = {
   // base와 active에 대한 설정이 아직 정해지지 않음
   white: {
-    base: 'bg-white text-gray-400',
-    active: 'bg-white text-gray-400',
+    base: 'bg-white text-gray-400 hover:bg-gray-100',
+    active: 'bg-white text-gray-400 hover:bg-gray-200',
   },
   gray: {
-    base: 'bg-gray-100 text-gray-400',
-    active: 'bg-gray-100 text-gray-400',
+    base: 'bg-gray-100 text-gray-400 hover:bg-gray-200',
+    active: 'bg-gray-100 text-gray-400 hover:bg-gray-200',
   },
   red: {
-    base: 'bg-red-100 text-red-400',
-    active: 'bg-red-100 text-red-400',
+    base: 'bg-red-100 text-red-400 hover:bg-red-200',
+    active: 'bg-red-100 text-red-400 hover:bg-red-200',
   },
 };
 
