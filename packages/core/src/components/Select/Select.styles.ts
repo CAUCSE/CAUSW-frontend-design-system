@@ -13,7 +13,7 @@ const contentStyles =
   'relative overflow-hidden rounded-md border border-gray-200 bg-white text-gray-950 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2';
 
 const itemStyles =
-  'relative flex w-full cursor-default select-none items-center justify-between gap-2 border-b border-gray-100 py-3 px-6 text-gray-500 outline-none typo-body-sm last:border-0 focus:bg-gray-100 focus:text-gray-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:font-semibold data-[state=checked]:text-gray-700';
+  'relative flex w-full cursor-default select-none items-center justify-between gap-2 border-b border-gray-100 py-3 px-6 text-gray-500 outline-none typo-body-16-regular last:border-0 focus:bg-gray-100 focus:text-gray-800 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:font-semibold data-[state=checked]:text-gray-700';
 
 export const styles = {
   trigger: (error?: boolean, className?: string) =>
@@ -25,7 +25,7 @@ export const styles = {
   content: (className?: string) => mergeStyles(contentStyles, className),
   item: (className?: string) => mergeStyles(itemStyles, className),
   label: (className?: string) =>
-    mergeStyles('py-1.5 px-6 text-gray-800 typo-body-sm-point', className),
+    mergeStyles('py-1.5 px-6 text-gray-800 typo-subtitle-16-bold', className),
   viewport: (position: 'popper' | 'item-aligned', className?: string) =>
     mergeStyles(
       'py-1',
