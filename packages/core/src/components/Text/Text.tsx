@@ -37,7 +37,7 @@ export type TextProps<E extends TextElement = 'span'> = PolymorphicProps<
 >;
 
 export const Text = <E extends TextElement = 'span'>({
-  typography = 'body-sm',
+  typography = 'body-16-regular',
   textColor = 'gray-700',
   align,
   as,

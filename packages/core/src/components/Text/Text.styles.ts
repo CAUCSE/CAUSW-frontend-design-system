@@ -2,33 +2,25 @@ import { mergeStyles } from '../../utils';
 
 // Typography preset type - format: {variant}-{size}[-point]
 export type Typography =
-  | 'caption-sm'
-  | 'caption-sm-point'
-  | 'caption-md'
-  | 'caption-md-point'
-  | 'body2-sm'
-  | 'body2-sm-point'
-  | 'body2-md'
-  | 'body2-md-point'
-  | 'body-sm'
-  | 'body-sm-point'
-  | 'body-md'
-  | 'body-md-point'
-  | 'subtitle-sm'
-  | 'subtitle-sm-point'
-  | 'subtitle-md'
-  | 'subtitle-md-point'
-  | 'title-sm'
-  | 'title-md'
-  | 'head-sm'
-  | 'head-md'
-  | 'fixed-12'
-  | 'fixed-14'
-  | 'fixed-15'
-  | 'fixed-16'
-  | 'fixed-18'
-  | 'fixed-20'
-  | 'fixed-24';
+  | 'title-48-bold'
+  | 'title-32-bold'
+  | 'title-30-bold'
+  | 'title-24-bold'
+  | 'title-22-bold'
+  | 'subtitle-20-bold'
+  | 'subtitle-18-bold'
+  | 'subtitle-16-bold'
+  | 'body-18-medium'
+  | 'body-16-medium'
+  | 'body-16-regular'
+  | 'body-15-semibold'
+  | 'body-15-medium'
+  | 'body-14-semibold'
+  | 'body-14-medium'
+  | 'body-14-regular'
+  | 'caption-12-semibold'
+  | 'caption-12-medium'
+  | 'caption-12-regular';
 
 export type TextColor =
   | 'gray-50'
@@ -80,46 +72,32 @@ const alignClasses: Record<TextAlign, string> = {
 
 // Typography preset styles mapping
 const typographyStyles: Record<Typography, string> = {
-  // Caption variants
-  'caption-sm': 'typo-caption-sm',
-  'caption-sm-point': 'typo-caption-sm-point',
-  'caption-md': 'typo-caption-md',
-  'caption-md-point': 'typo-caption-md-point',
-
-  // Body2 variants
-  'body2-sm': 'typo-body2-sm',
-  'body2-sm-point': 'typo-body2-sm-point',
-  'body2-md': 'typo-body2-md',
-  'body2-md-point': 'typo-body2-md-point',
-
-  // Body variants
-  'body-sm': 'typo-body-sm',
-  'body-sm-point': 'typo-body-sm-point',
-  'body-md': 'typo-body-md',
-  'body-md-point': 'typo-body-md-point',
+  // Title variants
+  'title-48-bold': 'typo-title-48-bold',
+  'title-32-bold': 'typo-title-32-bold',
+  'title-30-bold': 'typo-title-30-bold',
+  'title-24-bold': 'typo-title-24-bold',
+  'title-22-bold': 'typo-title-22-bold',
 
   // Subtitle variants
-  'subtitle-sm': 'typo-subtitle-sm',
-  'subtitle-sm-point': 'typo-subtitle-sm-point',
-  'subtitle-md': 'typo-subtitle-md',
-  'subtitle-md-point': 'typo-subtitle-md-point',
+  'subtitle-20-bold': 'typo-subtitle-20-bold',
+  'subtitle-18-bold': 'typo-subtitle-18-bold',
+  'subtitle-16-bold': 'typo-subtitle-16-bold',
 
-  // Title variants (always bold)
-  'title-sm': 'typo-title-sm',
-  'title-md': 'typo-title-md',
+  // Body variants
+  'body-18-medium': 'typo-body-18-medium',
+  'body-16-medium': 'typo-body-16-medium',
+  'body-16-regular': 'typo-body-16-regular',
+  'body-15-semibold': 'typo-body-15-semibold',
+  'body-15-medium': 'typo-body-15-medium',
+  'body-14-semibold': 'typo-body-14-semibold',
+  'body-14-medium': 'typo-body-14-medium',
+  'body-14-regular': 'typo-body-14-regular',
 
-  // Head variants (always bold)
-  'head-sm': 'typo-head-sm',
-  'head-md': 'typo-head-md',
-
-  // Fixed size variants
-  'fixed-12': 'typo-fixed-12',
-  'fixed-14': 'typo-fixed-14',
-  'fixed-15': 'typo-fixed-15',
-  'fixed-16': 'typo-fixed-16',
-  'fixed-18': 'typo-fixed-18',
-  'fixed-20': 'typo-fixed-20',
-  'fixed-24': 'typo-fixed-24',
+  // Caption variants
+  'caption-12-semibold': 'typo-caption-12-semibold',
+  'caption-12-medium': 'typo-caption-12-medium',
+  'caption-12-regular': 'typo-caption-12-regular',
 };
 
 export interface TextStylesOptions {
