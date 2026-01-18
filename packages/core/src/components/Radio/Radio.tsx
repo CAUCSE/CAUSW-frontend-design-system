@@ -135,7 +135,7 @@ export const Radio = ({
       >
         <RadioIcon checked={!!isChecked} />
       </span>
-      <Text typography="body-sm" textColor="gray-800">
+      <Text typography="body-16-regular" textColor="gray-800">
         {children}
       </Text>
     </label>

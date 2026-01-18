@@ -41,7 +41,7 @@ export type FieldLabelProps<E extends TextElement = 'label'> = PolymorphicProps<
 const FieldLabel = <E extends TextElement = 'label'>({
   children,
   className,
-  typography = 'body-sm-point',
+  typography = 'subtitle-16-bold',
   textColor = 'gray-700',
   ...labelProps
 }: FieldLabelProps<E>) => {
@@ -80,7 +80,7 @@ const FieldDescription = ({
 
   return (
     <Text
-      typography="body2-sm"
+      typography="body-14-regular"
       textColor="gray-400"
       id={id ? `${id}-description` : undefined}
       className={className}
@@ -110,7 +110,7 @@ const FieldErrorDescription = ({
 
   return (
     <Text
-      typography="body2-sm"
+      typography="body-14-regular"
       textColor="red-400"
       id={id ? `${id}-error` : undefined}
       className={className}

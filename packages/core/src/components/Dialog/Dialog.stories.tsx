@@ -101,10 +101,10 @@ export const Playground: Story = {
       </Dialog.Trigger>
       <Dialog.Content {...args}>
         <div className="flex h-32 flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-center">
-          <Text typography="body-sm" textColor="gray-400">
+          <Text typography="body-16-regular" textColor="gray-400">
             Arbitrary content area
           </Text>
-          <Text typography="body-sm" textColor="gray-400">
+          <Text typography="body-16-regular" textColor="gray-400">
             (Use VStack, HStack, etc.)
           </Text>
         </div>
@@ -121,7 +121,7 @@ export const TogglePopup: Story = {
       </Dialog.Trigger>
       <Dialog.Content maxWidth={420}>
         <VStack gap="lg">
-          <Text typography="subtitle-md-point">Privacy Settings</Text>
+          <Text typography="subtitle-20-bold">Privacy Settings</Text>
 
           <VStack gap="md">
             <Toggle className="w-full">
@@ -166,8 +166,8 @@ export const Controlled: Story = {
         <Dialog.Content width={400}>
           <VStack gap="lg">
             <VStack gap="sm">
-              <Text typography="head-sm">Controlled Dialog</Text>
-              <Text typography="body-md" textColor="gray-500">
+              <Text typography="title-30-bold">Controlled Dialog</Text>
+              <Text typography="body-18-medium" textColor="gray-500">
                 This dialog is controlled by external React state.
               </Text>
             </VStack>
@@ -238,8 +238,8 @@ export const PreventClose: Story = {
         >
           <VStack gap="lg">
             <VStack gap="sm">
-              <Text typography="head-sm">Prevent Closing</Text>
-              <Text typography="body-md" textColor="gray-500">
+              <Text typography="title-30-bold">Prevent Closing</Text>
+              <Text typography="body-18-medium" textColor="gray-500">
                 Try clicking outside the dialog.
               </Text>
             </VStack>
@@ -259,7 +259,7 @@ export const PreventClose: Story = {
                 Unsaved changes active
               </label>
             </div>
-            <Text typography="body-sm" textColor="gray-400">
+            <Text typography="body-16-regular" textColor="gray-400">
               If checked, clicking outside will trigger a confirmation alert
               instead of closing immediately.
             </Text>
@@ -298,7 +298,7 @@ export const FeedbackPopup: Story = {
               align="center"
               className="mb-[39px] w-full"
             >
-              <Text typography="head-sm">건의/오류 제보하기</Text>
+              <Text typography="title-30-bold">건의/오류 제보하기</Text>
               <Dialog.Close asChild>
                 <button className="text-gray-500 transition-colors hover:text-gray-700">
                   <svg
@@ -315,13 +315,13 @@ export const FeedbackPopup: Story = {
               </Dialog.Close>
             </HStack>
 
-            <Text typography="body-md">
+            <Text typography="body-18-medium">
               크자회 서비스에 관한 의견을 자유롭게 남겨주세요
             </Text>
 
             {/* Satisfaction Survey */}
             <VStack className="mb-[24px] w-full rounded-[12px] bg-white p-[24px]">
-              <Text typography="body-md">
+              <Text typography="body-18-medium">
                 크자회 앱 사용에 대한 전반적인 만족도를 알려주세요.
               </Text>
 
@@ -341,10 +341,10 @@ export const FeedbackPopup: Story = {
                 ))}
               </HStack>
               <HStack justify="between">
-                <Text typography="body-sm" textColor="gray-400">
+                <Text typography="body-16-regular" textColor="gray-400">
                   매우 아쉬움
                 </Text>
-                <Text typography="body-sm" textColor="gray-400">
+                <Text typography="body-16-regular" textColor="gray-400">
                   매우 만족
                 </Text>
               </HStack>
@@ -382,7 +382,7 @@ export const Fullscreen: Story = {
       <Dialog.Content fullscreen>
         <VStack gap="lg" className="h-full">
           <HStack justify="between" align="center">
-            <Text typography="head-md">Fullscreen Dialog</Text>
+            <Text typography="title-48-bold">Fullscreen Dialog</Text>
             <Dialog.Close asChild>
               <CTAButton color="light">Close</CTAButton>
             </Dialog.Close>
@@ -422,7 +422,7 @@ export const ResponsiveFullscreen: Story = {
         >
           <VStack gap="lg" className="h-full">
             <HStack justify="between" align="center">
-              <Text typography="head-md">Responsive Dialog</Text>
+              <Text typography="title-48-bold">Responsive Dialog</Text>
               <Dialog.Close asChild>
                 <CTAButton color="light">Close</CTAButton>
               </Dialog.Close>
@@ -430,8 +430,8 @@ export const ResponsiveFullscreen: Story = {
 
             <div className="flex flex-1 items-center justify-center rounded-md bg-gray-100 p-4 text-gray-400">
               <VStack align="center" gap="sm">
-                <Text typography="subtitle-md">Resize the window!</Text>
-                <Text typography="body-sm" textColor="gray-500">
+                <Text typography="subtitle-20-bold">Resize the window!</Text>
+                <Text typography="body-16-regular" textColor="gray-500">
                   Current Mode:{' '}
                   {isMobile ? 'Fullscreen (Mobile)' : 'Modal (Desktop)'}
                 </Text>

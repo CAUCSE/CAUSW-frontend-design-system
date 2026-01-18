@@ -45,7 +45,7 @@ const TextAreaInput = ({
 
   const textareaStyles = mergeStyles(
     'w-full min-w-0 min-h-10 bg-transparent outline-none',
-    'typo-body-sm',
+    'typo-body-16-regular',
     'text-gray-700 placeholder:text-gray-400',
     'caret-gray-600',
     resize ? 'resize-y' : 'resize-none',

@@ -4,7 +4,7 @@ const baseStyles =
   'inline-flex items-center justify-center ' +
   'bg-gray-100 border border-gray-200 ' +
   'hover:bg-gray-200 hover:border-gray-300 ' +
-  'text-gray-500 typo-body-sm-point ' +
+  'text-gray-500 typo-subtitle-16-bold ' +
   'h-[2.875rem] rounded-[6.1875rem] ' +
   'select-none whitespace-nowrap ' +
   'transition-colors';

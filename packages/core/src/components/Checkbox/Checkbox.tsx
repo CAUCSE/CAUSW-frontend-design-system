@@ -120,7 +120,7 @@ export type CheckboxLabelProps<E extends TextElement = 'span'> =
 
 const CheckboxLabel = <E extends TextElement = 'span'>({
   children,
-  typography = 'body-sm',
+  typography = 'body-16-regular',
   textColor = 'gray-600',
   ...props
 }: CheckboxLabelProps<E>) => {
