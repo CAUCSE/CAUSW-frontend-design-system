@@ -109,7 +109,7 @@ export type ToggleLabelProps<E extends TextElement = 'span'> = PolymorphicProps<
 
 const ToggleLabel = <E extends TextElement = 'span'>({
   children,
-  typography = 'fixed-16',
+  typography = 'body-16-regular',
   textColor = 'gray-700',
   ...props
 }: ToggleLabelProps<E>) => {
