@@ -1,8 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
-export type DropdownVariants = VariantProps<typeof dropdownStyles>;
-
-export const dropdownStyles = tv({
+export const dropdown = tv({
   slots: {
     content:
       'z-dropdown min-w-[8rem] overflow-hidden rounded-[0.75rem] border border-gray-100 bg-white py-1 text-gray-800 shadow-[0px_0px_30px_0px_rgba(51,53,61,0.16)] divide-y divide-gray-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
@@ -25,3 +23,5 @@ export const dropdownStyles = tv({
     color: 'default',
   },
 });
+
+export type DropdownVariants = VariantProps<typeof dropdown>;

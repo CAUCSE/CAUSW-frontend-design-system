@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { dropdownStyles, type DropdownVariants } from './Dropdown.styles';
+import { dropdown, type DropdownVariants } from './Dropdown.styles';
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -12,7 +12,7 @@ const DropdownMenuContent = ({
   ref,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) => {
-  const { content } = dropdownStyles();
+  const { content } = dropdown();
   return (
     <DropdownMenuPortal>
       <DropdownMenuPrimitive.Content
@@ -33,7 +33,7 @@ const DropdownMenuItem = ({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Item> &
   DropdownVariants) => {
-  const { item } = dropdownStyles({ color });
+  const { item } = dropdown({ color });
   return (
     <DropdownMenuPrimitive.Item
       ref={ref}

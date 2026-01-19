@@ -1,9 +1,7 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 import { convertPxToRem } from '../../utils';
 
-export type DialogVariants = VariantProps<typeof dialogStyles>;
-
-export const dialogStyles = tv({
+export const dialog = tv({
   slots: {
     overlay:
       'fixed inset-0 z-modal bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
@@ -50,3 +48,4 @@ export const dialogSizeStyles = ({ ...props }: DialogSizeOptions) => {
     minHeight: props.minHeight ? convertPxToRem(props.minHeight) : undefined,
   };
 };
+export type DialogVariants = VariantProps<typeof dialog>;
