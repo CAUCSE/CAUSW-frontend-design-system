@@ -1,12 +1,30 @@
-import { mergeStyles, convertPxToRem } from '../../utils';
+import { tv, type VariantProps } from 'tailwind-variants';
+import { convertPxToRem } from '../../utils';
 
-export type FloatType = 'absolute' | 'fixed' | 'sticky' | 'relative';
-export type FloatZIndex =
-  | 'sticky'
-  | 'dropdown'
-  | 'bottomsheet'
-  | 'modal'
-  | 'toast';
+export const float = tv({
+  base: 'w-fit h-fit',
+  variants: {
+    floatType: {
+      absolute: 'absolute',
+      fixed: 'fixed',
+      sticky: 'sticky',
+      relative: 'relative',
+    },
+    zIndex: {
+      sticky: 'z-sticky',
+      dropdown: 'z-dropdown',
+      bottomsheet: 'z-bottomsheet',
+      modal: 'z-modal',
+      toast: 'z-toast',
+    },
+  },
+  defaultVariants: {
+    floatType: 'absolute',
+    zIndex: 'sticky',
+  },
+});
+
+export type FloatVariants = VariantProps<typeof float>;
 
 export interface FloatPosition {
   top?: number;
@@ -15,38 +33,7 @@ export interface FloatPosition {
   right?: number;
 }
 
-export interface FloatStylesOptions extends FloatPosition {
-  floatType?: FloatType;
-  zIndex?: FloatZIndex;
-}
-
-export function floatStyles({
-  floatType = 'absolute',
-  zIndex = 'sticky',
-}: FloatStylesOptions): string {
-  return mergeStyles(
-    baseStyles,
-    positionClasses[floatType],
-    zIndexClasses[zIndex],
-  );
-}
-
-const baseStyles = 'w-fit h-fit';
-
-const positionClasses: Record<FloatType, string> = {
-  absolute: 'absolute',
-  fixed: 'fixed',
-  sticky: 'sticky',
-  relative: 'relative',
-};
-
-const zIndexClasses: Record<FloatZIndex, string> = {
-  sticky: 'z-sticky',
-  dropdown: 'z-dropdown',
-  bottomsheet: 'z-bottomsheet',
-  modal: 'z-modal',
-  toast: 'z-toast',
-};
+export interface FloatStylesOptions extends FloatPosition, FloatVariants {}
 
 export function floatPositionStyles({ ...props }: FloatPosition) {
   return {
