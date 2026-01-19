@@ -1,12 +1,12 @@
 import React, { useId } from 'react';
-import { mergeStyles } from '../../utils';
-import { Text, type TextStyleProps } from '../Text';
+import { PolymorphicProps } from '../../utils/polymorphic';
+import { Text, type TextVariants } from '../Text';
 import {
   FieldContext,
   useFieldContext,
 } from '../../hooks/field/useFieldContext';
-import { PolymorphicProps } from '../../utils/polymorphic';
 import { TextElement } from '../Text/Text';
+import { field } from './Field.styles';
 
 // Field Root
 export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,10 +23,11 @@ const FieldRoot = ({
   ...props
 }: FieldProps) => {
   const id = useId();
+  const { root } = field();
 
   return (
     <FieldContext.Provider value={{ id, disabled, error }}>
-      <div className={mergeStyles('flex flex-col gap-2', className)} {...props}>
+      <div className={root({ className })} {...props}>
         {children}
       </div>
     </FieldContext.Provider>
@@ -35,7 +36,7 @@ const FieldRoot = ({
 
 export type FieldLabelProps<E extends TextElement = 'label'> = PolymorphicProps<
   E,
-  TextStyleProps
+  TextVariants
 >;
 
 const FieldLabel = <E extends TextElement = 'label'>({
@@ -47,13 +48,14 @@ const FieldLabel = <E extends TextElement = 'label'>({
 }: FieldLabelProps<E>) => {
   const fieldContext = useFieldContext();
   const id = fieldContext?.id;
+  const { label } = field();
 
   return (
     <Text
       typography={typography}
       textColor={textColor}
       htmlFor={id}
-      className={mergeStyles('px-1', className)}
+      className={label({ className })}
       {...labelProps}
     >
       {children}
@@ -75,6 +77,7 @@ const FieldDescription = ({
 
   const id = fieldContext?.id;
   const error = fieldContext?.error;
+  const { description } = field();
 
   if (error) return null;
 
@@ -83,7 +86,7 @@ const FieldDescription = ({
       typography="body-14-regular"
       textColor="gray-400"
       id={id ? `${id}-description` : undefined}
-      className={className}
+      className={description({ className })}
       {...props}
     >
       {children}
@@ -105,6 +108,7 @@ const FieldErrorDescription = ({
 
   const id = fieldContext?.id;
   const error = fieldContext?.error;
+  const { error: errorStyle } = field();
 
   if (!error) return null;
 
@@ -113,7 +117,7 @@ const FieldErrorDescription = ({
       typography="body-14-regular"
       textColor="red-400"
       id={id ? `${id}-error` : undefined}
-      className={className}
+      className={errorStyle({ className })}
       {...props}
     >
       {children}
