@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
-import { mergeStyles } from '../../utils';
-import { Text } from '../Text';
 import { Primitive, PrimitiveProps } from '../Primitive';
+import { Text } from '../Text';
+import { radio } from './Radio.styles';
 
 // RadioGroup Context
 interface RadioGroupContextValue {
@@ -37,6 +37,7 @@ export const RadioGroup = ({
 }: RadioGroupProps) => {
   const [internalValue, setInternalValue] = React.useState(defaultValue);
   const currentValue = value ?? internalValue;
+  const { group } = radio();
 
   const handleChange = (newValue: string) => {
     if (value === undefined) {
@@ -51,7 +52,7 @@ export const RadioGroup = ({
     >
       <Primitive.div
         role="radiogroup"
-        className={mergeStyles('flex flex-col gap-5', className)}
+        className={group({ className })}
         {...props}
       >
         {children}
@@ -61,14 +62,20 @@ export const RadioGroup = ({
 };
 
 // Radio icons ( icons 구현 전까지 임시 )
-const RadioIcon = ({ checked }: { checked: boolean }) => (
+const RadioIcon = ({
+  checked,
+  className,
+}: {
+  checked: boolean;
+  className?: string;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
     height="20"
     viewBox="0 0 20 20"
     fill="none"
-    className="transition-all duration-150 ease-in-out"
+    className={className}
   >
     <circle
       cx="10"
@@ -108,14 +115,13 @@ export const Radio = ({
     onChange?.(e);
   };
 
+  const { item, indicatorWrapper, indicatorIcon } = radio({
+    checked: !!isChecked,
+    disabled: props.disabled,
+  });
+
   return (
-    <label
-      className={mergeStyles(
-        'flex cursor-pointer items-center gap-2',
-        'transition-opacity duration-150 hover:opacity-80',
-        className,
-      )}
-    >
+    <label className={item({ className })}>
       <input
         type="radio"
         name={name}
@@ -125,15 +131,8 @@ export const Radio = ({
         className="sr-only"
         {...props}
       />
-      <span
-        className={mergeStyles(
-          'flex-shrink-0 transition-colors duration-150',
-          isChecked
-            ? 'text-gray-800 hover:text-gray-800'
-            : 'text-gray-200 hover:text-gray-400',
-        )}
-      >
-        <RadioIcon checked={!!isChecked} />
+      <span className={indicatorWrapper()}>
+        <RadioIcon checked={!!isChecked} className={indicatorIcon()} />
       </span>
       <Text typography="body-16-regular" textColor="gray-800">
         {children}
