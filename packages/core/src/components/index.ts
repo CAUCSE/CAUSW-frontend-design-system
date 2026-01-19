@@ -20,3 +20,5 @@ export * from './Select';
 export * from './Dialog';
 export * from './Dropdown';
 export * from './Float';
+export * from './Chip';
+export * from './Avatar';
