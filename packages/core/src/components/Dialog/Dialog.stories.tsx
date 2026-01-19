@@ -286,7 +286,7 @@ export const FeedbackPopup: Story = {
         </Dialog.Trigger>
         <Dialog.Content
           width={700}
-          className="max-w-none gap-0 rounded-[16px] bg-[#f5f6f8] p-[32px] sm:rounded-[16px]"
+          className="max-w-none gap-0 rounded-[16px] bg-gray-100 p-[32px] sm:rounded-[16px]"
           aria-describedby={undefined}
         >
           <VStack className="w-full">
