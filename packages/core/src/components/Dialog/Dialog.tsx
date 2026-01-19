@@ -2,7 +2,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   DialogSizeKeys,
   dialogSizeStyles,
-  dialogStyles,
+  dialog,
   DialogVariants,
   type DialogSizeOptions,
 } from './Dialog.styles';
@@ -21,7 +21,7 @@ const DialogOverlay = ({
   className,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Overlay>) => {
-  const { overlay } = dialogStyles();
+  const { overlay } = dialog();
 
   return (
     <DialogPrimitive.Overlay className={overlay({ className })} {...props} />
@@ -42,7 +42,7 @@ const DialogContent = ({
 }: DialogContentProps) => {
   const [sizeProps, restProps] = splitVariantProps(props, DialogSizeKeys);
   const sizeStyles = dialogSizeStyles(sizeProps);
-  const { content } = dialogStyles({ fullscreen: sizeProps.fullscreen });
+  const { content } = dialog({ fullscreen: sizeProps.fullscreen });
 
   return (
     <DialogPortal>

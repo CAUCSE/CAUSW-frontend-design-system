@@ -7,11 +7,9 @@ import { VStack } from '../VStack';
 import { Text } from '../Text';
 import { Toggle } from '../Toggle';
 import { HStack } from '../HStack';
-import { Spacer } from '../Spacer';
 import { Button } from '../Button';
 import { TextArea } from '../TextArea';
 import { Field } from '../Field';
-import { Box } from '../Box';
 import { Flex } from '../Flex';
 
 const meta = {
