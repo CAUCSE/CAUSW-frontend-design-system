@@ -89,7 +89,7 @@ const SelectItem = ({
           >
             <path
               d="M1 3.5L4.68421 7L11 1"
-              stroke="#1E2939"
+              stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
