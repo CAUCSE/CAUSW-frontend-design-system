@@ -1,17 +1,14 @@
 import React, { type ElementType } from 'react';
 import {
-  floatStyles,
+  float,
   type FloatStylesOptions,
   floatPositionStyles,
 } from './Float.styles';
-import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
-
-export type FloatBaseProps = FloatStylesOptions;
 
 export type FloatProps<E extends ElementType = 'div'> = PolymorphicProps<
   E,
-  FloatBaseProps
+  FloatStylesOptions
 >;
 
 export const Float = <E extends ElementType = 'div'>({
@@ -22,20 +19,20 @@ export const Float = <E extends ElementType = 'div'>({
   bottom,
   left,
   right,
-  className = '',
+  className,
   style,
   children,
   ...props
 }: FloatProps<E>) => {
   const Component = as || 'div';
 
-  const classes = floatStyles({ floatType, zIndex });
+  const classes = float({ floatType, zIndex, className });
   const positionStyles = floatPositionStyles({ top, bottom, left, right });
 
   return React.createElement(
     Component,
     {
-      className: mergeStyles(classes, className),
+      className: classes,
       style: { ...positionStyles, ...style },
       ...props,
     },
