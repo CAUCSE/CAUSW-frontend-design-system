@@ -1,12 +1,8 @@
-import React from 'react';
-import { textStyles } from './Text.styles';
-import type { Typography, TextColor, TextAlign } from './Text.styles';
-import { mergeStyles } from '../../utils';
+import { text } from './Text.styles';
+import type { TextVariants } from './Text.styles';
 import type { PolymorphicProps } from '../../utils/polymorphic';
+import { createElement } from 'react';
 
-export type { Typography, TextColor, TextAlign };
-
-/** Text element types that can be used with as prop */
 export type TextElement =
   | 'span'
   | 'p'
@@ -20,38 +16,32 @@ export type TextElement =
   | 'label'
   | 'a';
 
-/** Base text styling props - reusable for other components */
-export interface TextStyleProps {
-  /** Typography preset - format: {variant}-{size}[-point] */
-  typography?: Typography;
-  /** Text color */
-  textColor?: TextColor;
-  /** Text alignment */
-  align?: TextAlign;
-}
-
-/** Full Text component props with polymorphic support */
-export type TextProps<E extends TextElement = 'span'> = PolymorphicProps<
+export type TextProps<E extends TextElement> = PolymorphicProps<
   E,
-  TextStyleProps
+  TextVariants
 >;
 
 export const Text = <E extends TextElement = 'span'>({
+  children,
   typography = 'body-16-regular',
   textColor = 'gray-700',
   align,
   as,
-  children,
-  className = '',
+  className,
   ...props
 }: TextProps<E>) => {
   const Component = as || 'span';
-  const classes = textStyles({ typography, textColor, align });
+  const styles = text({
+    typography,
+    align,
+    textColor,
+    className,
+  });
 
-  return React.createElement(
+  return createElement(
     Component,
     {
-      className: mergeStyles(classes, className),
+      className: styles,
       ...props,
     },
     children,
