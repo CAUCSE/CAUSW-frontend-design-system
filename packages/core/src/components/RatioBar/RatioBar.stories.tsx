@@ -175,6 +175,121 @@ export const FlexibleWidth: Story = {
   ),
 };
 
+// ============ Footer Stories (count 기반 자동 비율 계산) ============
+
+export const WithFooter: Story = {
+  name: 'Footer - Auto Ratio',
+  render: () => {
+    const [selected, setSelected] = useState('option1');
+
+    return (
+      <div className="flex w-[25rem] flex-col gap-[1rem]">
+        <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+        <RatioBar.Root value={selected} onValueChange={setSelected}>
+          <RatioBar.Item value="option1" label="짬뽕" count={8} />
+          <RatioBar.Item value="option2" label="짜장면" count={2} />
+          <RatioBar.Footer endTime="72시간 후 종료" />
+        </RatioBar.Root>
+        <p className="text-sm text-gray-500">
+          count만 전달하면 자동으로 total과 ratio 계산 (8+2=10, 80%/20%)
+        </p>
+      </div>
+    );
+  },
+};
+
+export const BeforeVoting: Story = {
+  name: 'Footer - Before Voting',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+      <RatioBar.Root>
+        <RatioBar.Item value="option1" label="짬뽕" count={0} />
+        <RatioBar.Item value="option2" label="짜장면" count={0} />
+        <RatioBar.Footer endTime="72시간 후 종료" />
+      </RatioBar.Root>
+      <p className="text-sm text-gray-500">아직 투표 전 상태 (0명 참여)</p>
+    </div>
+  ),
+};
+
+export const AfterVoting: Story = {
+  name: 'Footer - After Voting',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+      <RatioBar.Root defaultValue="option1" disabled>
+        <RatioBar.Item value="option1" label="짬뽕" count={65} />
+        <RatioBar.Item value="option2" label="짜장면" count={35} />
+        <RatioBar.Footer endTime="종료됨" />
+      </RatioBar.Root>
+      <p className="text-sm text-gray-500">
+        투표 종료 상태 (disabled + 종료됨 표시)
+      </p>
+    </div>
+  ),
+};
+
+export const FooterWithEndDate: Story = {
+  name: 'Footer - With EndDate',
+  render: () => {
+    // 현재 시간에서 3일 후
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 3);
+
+    return (
+      <div className="flex w-[25rem] flex-col gap-[1rem]">
+        <h3 className="font-bold">이번 주 회식 메뉴</h3>
+        <RatioBar.Root>
+          <RatioBar.Item value="option1" label="고기" count={15} />
+          <RatioBar.Item value="option2" label="해산물" count={8} />
+          <RatioBar.Item value="option3" label="한식" count={7} />
+          <RatioBar.Footer endDate={endDate} />
+        </RatioBar.Root>
+        <p className="text-sm text-gray-500">
+          endDate를 전달하면 자동으로 남은 시간 계산
+        </p>
+      </div>
+    );
+  },
+};
+
+export const FooterCustomChildren: Story = {
+  name: 'Footer - Custom Children',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">커스텀 Footer</h3>
+      <RatioBar.Root>
+        <RatioBar.Item value="option1" label="옵션 A" count={10} />
+        <RatioBar.Item value="option2" label="옵션 B" count={5} />
+        <RatioBar.Footer>
+          <span className="typo-body-14 text-gray-400">익명 투표</span>
+          <span className="typo-body-14 text-blue-500">결과 보기</span>
+        </RatioBar.Footer>
+      </RatioBar.Root>
+      <p className="text-sm text-gray-500">
+        children으로 커스텀 Footer 내용 전달 가능
+      </p>
+    </div>
+  ),
+};
+
+export const ManualRatio: Story = {
+  name: 'Manual Ratio',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">기존 ratio 방식</h3>
+      <RatioBar.Root>
+        <RatioBar.Item value="option1" label="짬뽕" ratio={80} />
+        <RatioBar.Item value="option2" label="짜장면" ratio={20} />
+      </RatioBar.Root>
+      <p className="text-sm text-gray-500">
+        ratio를 직접 지정하는 방식도 호환됨
+      </p>
+    </div>
+  ),
+};
+
 // ============ Edit Mode Stories ============
 
 export const EditModeDefault: Story = {
