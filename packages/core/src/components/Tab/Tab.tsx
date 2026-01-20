@@ -10,6 +10,8 @@ type TabContextValue = {
   baseId: string;
   activeClassName?: string;
   inactiveClassName?: string;
+  listRef: React.RefObject<HTMLDivElement>;
+  scrollAlign: ScrollLogicalPosition; // 'start' | 'center' | 'end' | 'nearest'
 };
 
 const TabContext = React.createContext<TabContextValue | null>(null);
@@ -20,20 +22,14 @@ const useTabContext = () => {
   return ctx;
 };
 
-/** =========================
- * Root
- * ========================= */
 export interface TabRootProps {
   variant: TabVariant;
   activeClassName?: string;
   inactiveClassName?: string;
-  /** uncontrolled */
+  scrollAlign?: ScrollLogicalPosition;
   defaultValue?: string;
-
-  /** controlled */
   value?: string;
   onValueChange?: (v: string) => void;
-
   id?: string;
   className?: string;
   children: React.ReactNode;
@@ -41,14 +37,15 @@ export interface TabRootProps {
 
 const TabRoot = ({
   variant,
+  activeClassName,
+  inactiveClassName,
+  scrollAlign = 'center',
   defaultValue = '',
   value: valueProp,
   onValueChange,
   id,
   className,
   children,
-  activeClassName,
-  inactiveClassName,
 }: TabRootProps) => {
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue);
   const isControlled = valueProp !== undefined;
@@ -62,6 +59,8 @@ const TabRoot = ({
   const reactId = React.useId();
   const baseId = id ?? `tab-${reactId}`;
 
+  const listRef = React.useRef<HTMLDivElement>(null!);
+
   return (
     <TabContext.Provider
       value={{
@@ -71,6 +70,8 @@ const TabRoot = ({
         baseId,
         activeClassName,
         inactiveClassName,
+        listRef,
+        scrollAlign,
       }}
     >
       <div className={className}>{children}</div>
@@ -79,30 +80,24 @@ const TabRoot = ({
 };
 TabRoot.displayName = 'Tab.Root';
 
-/** =========================
- * List
- * ========================= */
 export type TabListProps = React.ComponentPropsWithoutRef<'div'> & {
   asChild?: boolean;
 };
 
-const TabList = ({ asChild, className, ...props }: TabListProps) => {
-  const { variant } = useTabContext();
+const TabList = ({ className, ...props }: TabListProps) => {
+  const { variant, listRef } = useTabContext();
 
   return (
-    <Primitive.div
-      asChild={asChild}
+    <div
+      ref={listRef}
       role="tablist"
-      className={[tabListStyles(variant), className].filter(Boolean).join(' ')}
+      className={mergeStyles(tabListStyles(variant), className)}
       {...props}
     />
   );
 };
 TabList.displayName = 'Tab.List';
 
-/** =========================
- * Trigger
- * ========================= */
 export type TabTriggerProps = React.ComponentPropsWithoutRef<'button'> & {
   value: string;
   asChild?: boolean;
@@ -112,6 +107,7 @@ const TabTrigger = ({
   value,
   asChild,
   className,
+  onClick,
   ...props
 }: TabTriggerProps) => {
   const {
@@ -121,10 +117,23 @@ const TabTrigger = ({
     baseId,
     activeClassName,
     inactiveClassName,
+    scrollAlign,
   } = useTabContext();
 
   const active = activeValue === value;
   const tone = active ? activeClassName : inactiveClassName;
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setValue(value);
+
+    e.currentTarget.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: scrollAlign ?? 'center',
+    });
+
+    onClick?.(e);
+  };
 
   return (
     <Primitive.button
@@ -138,16 +147,13 @@ const TabTrigger = ({
         tone,
         className,
       )}
-      onClick={() => setValue(value)}
+      onClick={handleClick}
       {...props}
     />
   );
 };
 TabTrigger.displayName = 'Tab.Trigger';
 
-/** =========================
- * Content (Panel)
- * ========================= */
 export type TabContentProps = React.ComponentPropsWithoutRef<'div'> & {
   value: string;
   forceMount?: boolean;
@@ -188,5 +194,5 @@ export const Tab = Object.assign(TabRoot, {
   List: TabList,
   Trigger: TabTrigger,
   Content: TabContent,
-  Panel: TabContent, // vapor style alias
+  Panel: TabContent,
 });

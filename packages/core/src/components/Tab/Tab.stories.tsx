@@ -229,7 +229,7 @@ export const Multiple: Story = {
     }, [main]);
 
     return (
-      <div className="flex w-80 flex-col gap-6 bg-gray-50 p-4">
+      <div className="flex w-full flex-col gap-6 bg-gray-50 p-4">
         <Tab.Root
           variant="underline"
           value={main}
@@ -237,11 +237,11 @@ export const Multiple: Story = {
         >
           <Tab.List className="border-yellow-400">
             <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="my-1">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="all-1">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my-2">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="all-3">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my-4">내 경조사</Tab.Trigger>
           </Tab.List>
         </Tab.Root>
 
