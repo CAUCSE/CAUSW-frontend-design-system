@@ -1,5 +1,12 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
+const SPACING = {
+  HEADER_MB_SM: 'mb-[17px]',
+  HEADER_MB_MD: 'mb-[23px]',
+  GRID_MT_SM: 'mt-[16px]',
+  GRID_MT_MD: 'mt-[26px]',
+} as const;
+
 export const calendar = tv({
   slots: {
     wrapper: [
@@ -7,81 +14,66 @@ export const calendar = tv({
       'w-full min-w-[328px] max-w-[804px]',
       'py-4 px-2 md:py-10',
     ],
-
     layoutContainer: 'w-full',
-    header:
-      'w-full grid grid-cols-7 items-center mb-[17px] md:mb-[23px] gap-x-0',
+
+    header: `w-full grid grid-cols-7 items-center gap-x-0 ${SPACING.HEADER_MB_SM} md:${SPACING.HEADER_MB_MD}`,
 
     navContainerLeft: 'flex items-center justify-center w-full',
     navContainerRight: 'flex items-center justify-center w-full text-gray-400',
-
     navButton:
-      'flex items-center justify-center bg-white border border-gray-200 rounded-[8px] text-gray-400 hover:bg-gray-50 hover:text-gray-700 cursor-pointer w-[26px] h-[26px] md:h-[29px]',
-    navIcon: 'w-[6px] h-[10px]',
-
+      'flex items-center justify-center bg-white border border-gray-200 rounded-[8px] hover:bg-gray-50 hover:text-gray-700 cursor-pointer w-[26px] h-[26px] md:h-[29px]',
+    navIcon: 'w-[6px] h-[10px] text-gray-400',
     caption:
       'text-[#364153] text-[16px] font-bold leading-[1.6] tracking-[-0.02em] select-none',
-
     gridHeader: 'w-full mb-0 gap-x-0',
-
     weekday:
       'h-[44px] flex items-center justify-center text-gray-400 text-[14px] font-normal leading-[1.6] tracking-[-0.02em] select-none',
 
-    gridBody: 'w-full mt-[16px] md:mt-[26px] gap-y-4 gap-x-0',
+    gridBody: `w-full gap-y-4 gap-x-0 ${SPACING.GRID_MT_SM} md:${SPACING.GRID_MT_MD}`,
 
     cell: 'relative group gap-1 min-h-[52px] md:min-h-[56px]',
     cellEmpty: 'min-h-[52px] md:min-h-[56px]',
-
     dayNumber:
       'w-7 h-7 flex items-center justify-center rounded-full text-[15px] font-semibold leading-[1.6] tracking-[-0.02em] text-[#364153] z-10 select-none',
-
     eventList: 'w-full flex flex-col gap-1',
     eventItemHeight: 'h-[20px] md:h-[24px]',
   },
 
   variants: {
     size: {
-      // Mobile (328px)
       sm: {
         wrapper: '!w-[328px] !max-w-none !min-w-0 !py-4 !px-2',
         layoutContainer: '!w-[312px]',
-        header: '!mb-[17px]',
-        gridBody: '!mt-[16px]',
+        header: `!${SPACING.HEADER_MB_SM}`,
+        gridBody: `!${SPACING.GRID_MT_SM}`,
         navButton: '!w-[26px] !h-[26px]',
         cell: '!min-h-[52px]',
         cellEmpty: '!min-h-[52px]',
         eventItemHeight: '!h-[20px]',
-
         navContainerLeft: '!justify-center !translate-x-0',
         navContainerRight: '!justify-center !translate-x-0',
       },
 
-      //Tablet (412px)
       md: {
         wrapper: '!w-[412px] !max-w-none !min-w-0 !py-10 !px-2',
         layoutContainer: '!w-[396px]',
-
-        navContainerLeft: 'justify-end translate-x-[25%]',
-        navContainerRight: 'justify-start -translate-x-[25%]',
-
-        header: '!mb-[23px]',
-        gridBody: '!mt-[26px]',
+        navContainerLeft: 'justify-end translate-x-[25%] z-20',
+        navContainerRight: 'justify-start -translate-x-[25%] z-20',
+        header: `!${SPACING.HEADER_MB_MD}`,
+        gridBody: `!${SPACING.GRID_MT_MD}`,
         navButton: '!w-[26px] !h-[29px]',
         cell: '!min-h-[56px]',
         cellEmpty: '!min-h-[56px]',
         eventItemHeight: '!h-[24px]',
       },
 
-      //Desktop (804px)
       lg: {
         wrapper: '!w-[804px] !max-w-none !min-w-0 !py-10 !px-2',
         layoutContainer: '!w-[788px]',
-
         navContainerLeft: '!justify-center !translate-x-0',
         navContainerRight: '!justify-center !translate-x-0',
-
-        header: '!mb-[23px]',
-        gridBody: '!mt-[26px]',
+        header: `!${SPACING.HEADER_MB_MD}`,
+        gridBody: `!${SPACING.GRID_MT_MD}`,
         navButton: '!w-[26px] !h-[29px]',
         cell: '!min-h-[56px]',
         cellEmpty: '!min-h-[56px]',

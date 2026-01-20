@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   format,
   addMonths,
   subMonths,
   startOfMonth,
+  endOfMonth,
+  addDays,
   getDay,
   getDaysInMonth,
   isSameDay,
@@ -22,6 +24,8 @@ import {
   type CalendarVariants,
 } from './Calendar.styles';
 import { mergeStyles } from '../../utils';
+
+const CELL_GAP_PX = 4;
 
 export type CalendarEvent = {
   title: string;
@@ -42,17 +46,11 @@ const parseDateStr = (dateStr: string) => {
   return new Date(y, m - 1, d);
 };
 const formatDateStr = (date: Date) => format(date, 'yyyy-MM-dd');
+
 const getEventRange = (event: CalendarEvent) => {
   const start = parseDateStr(event.startDate);
   const end = event.endDate ? parseDateStr(event.endDate) : start;
   return { start, end };
-};
-const isDateInRange = (targetDate: Date, event: CalendarEvent) => {
-  const { start, end } = getEventRange(event);
-  const target = targetDate.setHours(0, 0, 0, 0);
-  return (
-    target >= start.setHours(0, 0, 0, 0) && target <= end.setHours(0, 0, 0, 0)
-  );
 };
 
 export const Calendar = ({
@@ -76,7 +74,7 @@ export const Calendar = ({
     gridBody,
     cell,
     cellEmpty,
-    dayNumber,
+    eventList,
     eventItemHeight,
   } = calendar({ size });
 
@@ -88,6 +86,31 @@ export const Calendar = ({
 
   const handlePrevMonth = () => setCurrentMonth((prev) => subMonths(prev, 1));
   const handleNextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1));
+
+  const eventsByDate = useMemo(() => {
+    const map = new Map<string, CalendarEvent[]>();
+    const mStart = startOfMonth(currentMonth);
+    const mEnd = endOfMonth(currentMonth);
+
+    const relevantEvents = events.filter((event) => {
+      const { start, end } = getEventRange(event);
+      return start <= mEnd && end >= mStart;
+    });
+
+    for (const event of relevantEvents) {
+      const { start, end } = getEventRange(event);
+      let d = start < mStart ? mStart : start;
+      const eventEndDate = end > mEnd ? mEnd : end;
+
+      while (d <= eventEndDate) {
+        const dateKey = formatDateStr(d);
+        const dailyEvents = map.get(dateKey) ?? [];
+        map.set(dateKey, [...dailyEvents, event]);
+        d = addDays(d, 1);
+      }
+    }
+    return map;
+  }, [currentMonth, events]);
 
   return (
     <Box className={wrapper({ className })}>
@@ -121,7 +144,7 @@ export const Calendar = ({
           </Flex>
         </Grid>
 
-        {/*요일 헤더 */}
+        {/* 2. 요일 헤더 */}
         <Grid columns={7} className={gridHeader()}>
           {weekDays.map((day) => (
             <Flex
@@ -135,7 +158,7 @@ export const Calendar = ({
           ))}
         </Grid>
 
-        {/* 날짜 그리드 */}
+        {/* 3. 날짜 그리드 */}
         <Grid columns={7} className={gridBody()}>
           {Array.from({ length: startDayIndex }).map((_, i) => (
             <Box key={`empty-${i}`} className={cellEmpty()} />
@@ -151,10 +174,7 @@ export const Calendar = ({
             const dateKey = formatDateStr(currentDate);
             const dayIndex = getDay(currentDate);
             const isTodayDate = isSameDay(currentDate, today);
-
-            const daysEvents = events.filter((e) =>
-              isDateInRange(currentDate, e),
-            );
+            const daysEvents = eventsByDate.get(dateKey) || [];
 
             return (
               <Flex
@@ -170,7 +190,7 @@ export const Calendar = ({
                   {day}
                 </span>
 
-                <Flex direction="column" className="w-full gap-[4px]">
+                <Flex className={eventList()}>
                   {daysEvents.map((ev, idx) => {
                     const { start, end } = getEventRange(ev);
                     const startDateKey = formatDateStr(start);
@@ -188,7 +208,7 @@ export const Calendar = ({
 
                     return (
                       <div
-                        key={idx}
+                        key={`${ev.title}-${ev.startDate}-${idx}`}
                         className={mergeStyles([
                           'relative',
                           eventItemHeight(),
@@ -211,7 +231,7 @@ export const Calendar = ({
                             style={{
                               width:
                                 span > 1
-                                  ? `calc(${span * 100}% + ${(span - 1) * 2}px)`
+                                  ? `calc(${span * 100}% + ${(span - 1) * CELL_GAP_PX}px)`
                                   : '100%',
                             }}
                           >
