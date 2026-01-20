@@ -57,13 +57,14 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
   } = props;
 
   // 단일 선택 내부 상태
-  const [internalSingleValue, setInternalSingleValue] = useState<string>(
-    (mode === 'single' ? (defaultValue as string) : '') || '',
+  const [internalSingleValue, setInternalSingleValue] = useState<string>(() =>
+    mode === 'single' && typeof defaultValue === 'string' ? defaultValue : '',
   );
 
   // 다중 선택 내부 상태
   const [internalMultipleValue, setInternalMultipleValue] = useState<string[]>(
-    (mode === 'multiple' ? (defaultValue as string[]) : []) || [],
+    () =>
+      mode === 'multiple' && Array.isArray(defaultValue) ? defaultValue : [],
   );
 
   // count 기반 자동 비율 계산을 위한 state
