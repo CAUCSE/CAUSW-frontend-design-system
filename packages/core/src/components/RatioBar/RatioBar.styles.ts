@@ -21,7 +21,6 @@ const itemBaseStyles =
   'relative flex items-center px-[1rem] h-[3.5rem] rounded-[0.75rem] border border-gray-200 overflow-hidden transition-all duration-200';
 
 export interface RatioBarItemStyleOptions {
-  selected?: boolean;
   disabled?: boolean;
 }
 

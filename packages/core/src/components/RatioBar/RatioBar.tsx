@@ -2,6 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { mergeStyles } from '../../utils';
 import {
   RatioBarContext,
+  useRatioBarContext,
   type RatioBarSelectionMode,
 } from '../../hooks/ratioBar';
 import {
@@ -189,13 +190,6 @@ const RatioBarItem = ({
   className,
   ...props
 }: RatioBarItemProps) => {
-  const context = React.useContext(RatioBarContext);
-  if (!context) {
-    throw new Error(
-      'RatioBar.Item은 <RatioBar.Root> 내부에서 사용해야 합니다.',
-    );
-  }
-
   const {
     disabled: rootDisabled,
     onSelect,
@@ -203,7 +197,7 @@ const RatioBarItem = ({
     registerCount,
     unregisterCount,
     getRatio,
-  } = context;
+  } = useRatioBarContext();
   const disabled = itemDisabled || rootDisabled;
   const selected = isSelected(value);
 
@@ -251,10 +245,7 @@ const RatioBarItem = ({
       disabled={disabled}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      className={mergeStyles(
-        ratioBarItemStyles({ selected, disabled }),
-        className,
-      )}
+      className={mergeStyles(ratioBarItemStyles({ disabled }), className)}
       style={{ minWidth: 0 }}
       {...props}
     >
@@ -331,14 +322,7 @@ const RatioBarFooter = ({
   children,
   ...props
 }: RatioBarFooterProps) => {
-  const context = React.useContext(RatioBarContext);
-  if (!context) {
-    throw new Error(
-      'RatioBar.Footer는 <RatioBar.Root> 내부에서 사용해야 합니다.',
-    );
-  }
-
-  const { totalCount } = context;
+  const { totalCount } = useRatioBarContext();
 
   // endDate가 있으면 자동 계산, 없으면 endTime 사용
   const displayEndTime = endDate ? formatTimeRemaining(endDate) : endTime;
