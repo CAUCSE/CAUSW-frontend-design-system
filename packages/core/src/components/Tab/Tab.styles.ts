@@ -1,4 +1,4 @@
-import { mergeStyles } from '../../utils'; // 기존 유틸리티 활용
+import { mergeStyles } from '../../utils';
 
 export type TabVariant = 'underline' | 'chip';
 export type TabColor = 'white' | 'gray-700';
@@ -36,7 +36,7 @@ export const tabItemStyles = ({
     'px-4 py-2 rounded-[12px] font-medium',
     active
       ? color === 'white'
-        ? 'bg-[#364153] text-white' // darkgray 계열
+        ? 'bg-[#364153] text-white'
         : 'bg-white text-gray-700 border border-gray-200'
       : 'bg-[#F5F6F8] text-gray-500 hover:bg-gray-200',
   );
