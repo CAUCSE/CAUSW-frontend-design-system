@@ -117,6 +117,7 @@ const TabTrigger = ({
     baseId,
     activeClassName,
     inactiveClassName,
+    listRef,
     scrollAlign,
   } = useTabContext();
 
@@ -126,15 +127,17 @@ const TabTrigger = ({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setValue(value);
 
-    e.currentTarget.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: scrollAlign ?? 'center',
-    });
+    const list = listRef.current;
+    if (list && list.scrollWidth > list.clientWidth + 1) {
+      e.currentTarget.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: scrollAlign ?? 'center',
+      });
+    }
 
     onClick?.(e);
   };
-
   return (
     <Primitive.button
       asChild={asChild}

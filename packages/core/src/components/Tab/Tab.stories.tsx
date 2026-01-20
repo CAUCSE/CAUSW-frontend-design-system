@@ -6,9 +6,50 @@ import { Text } from '../Text';
 const meta: Meta<typeof Tab> = {
   title: 'Components/Tab',
   component: Tab,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+탭(Tab) 컴포넌트입니다.
+
+- underline / chip variant 지원
+- controlled / uncontrolled 패턴 지원
+- 가로 스크롤 가능 + 선택된 항목으로 스크롤 자동 이동
+- active / inactive 스타일 커스터마이즈 가능
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: '탭 스타일 variant',
+      control: 'radio',
+      options: ['underline', 'chip'],
+    },
+    defaultValue: {
+      description: 'uncontrolled 상태의 초기 값',
+      control: 'text',
+    },
+    value: {
+      description: 'controlled 상태의 현재 값',
+      control: 'text',
+    },
+    onValueChange: {
+      description: '탭 변경 시 호출',
+      action: 'valueChanged',
+    },
+    activeClassName: {
+      control: 'text',
+    },
+    inactiveClassName: {
+      control: 'text',
+    },
+  },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof Tab>;
 
 const ContentBox = (props: React.PropsWithChildren) => (
@@ -17,10 +58,10 @@ const ContentBox = (props: React.PropsWithChildren) => (
   </div>
 );
 
-export const UnderlineOnly: Story = {
+export const Underline: Story = {
   render: () => (
-    <div style={{ width: 360 }}>
-      <Tab.Root variant="underline" defaultValue="1">
+    <div>
+      <Tab.Root variant="underline" defaultValue="3">
         <Tab.List>
           <Tab.Trigger value="1">라벨1</Tab.Trigger>
           <Tab.Trigger value="2">라벨2</Tab.Trigger>
@@ -47,12 +88,17 @@ export const UnderlineOnly: Story = {
   ),
 };
 
-/** 2) Chip만: 필터 탭 느낌 - Content는 “1개만” 두고 선택값 표시 (추천) */
-export const ChipOnly: Story = {
+export const Chip: Story = {
   render: () => {
-    const [value, setValue] = React.useState<'total' | 'wedding' | 'funeral'>(
-      'total',
-    );
+    const OPTIONS = [
+      { value: 'total', label: '전체' },
+      { value: 'wedding', label: '결혼' },
+      { value: 'funeral', label: '장례' },
+    ] as const;
+
+    type TabValue = (typeof OPTIONS)[number]['value'];
+
+    const [value, setValue] = React.useState<TabValue>('total');
 
     return (
       <div style={{ width: 360 }} className="bg-gray-50 p-4">
@@ -64,15 +110,16 @@ export const ChipOnly: Story = {
           }
         >
           <Tab.List>
-            <Tab.Trigger value="total">전체</Tab.Trigger>
-            <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-            <Tab.Trigger value="funeral">장례</Tab.Trigger>
+            {OPTIONS.map((opt) => (
+              <Tab.Trigger key={opt.value} value={opt.value}>
+                {opt.label}
+              </Tab.Trigger>
+            ))}
           </Tab.List>
 
-          {/* 필터 탭은 보통 이렇게 “단일 content”가 자연스러움 */}
           <Tab.Content value={value}>
             <ContentBox>
-              <Text typography="body-16-regular">{`선택된 필터: ${value}`}</Text>
+              <Text>{`선택된 필터: ${value}`}</Text>
             </ContentBox>
           </Tab.Content>
         </Tab.Root>
@@ -81,38 +128,6 @@ export const ChipOnly: Story = {
   },
 };
 
-/** 3) 기존 Seed 스타일 예시 (Underline + Content) */
-export const TabsPreview: Story = {
-  render: () => (
-    <div style={{ width: 360 }}>
-      <Tab.Root variant="underline" defaultValue="1">
-        <Tab.List>
-          <Tab.Trigger value="1">라벨1</Tab.Trigger>
-          <Tab.Trigger value="2">라벨2</Tab.Trigger>
-          <Tab.Trigger value="3">라벨3</Tab.Trigger>
-        </Tab.List>
-
-        <Tab.Content value="1">
-          <ContentBox>
-            <Text typography="body-16-regular">Content 1</Text>
-          </ContentBox>
-        </Tab.Content>
-        <Tab.Content value="2">
-          <ContentBox>
-            <Text typography="body-16-regular">Content 2</Text>
-          </ContentBox>
-        </Tab.Content>
-        <Tab.Content value="3">
-          <ContentBox>
-            <Text typography="body-16-regular">Content 3</Text>
-          </ContentBox>
-        </Tab.Content>
-      </Tab.Root>
-    </div>
-  ),
-};
-
-/** 4) 기존 Combined */
 export const CombinedTabs: Story = {
   render: () => {
     const [main, setMain] = React.useState<'all' | 'my'>('all');
@@ -172,7 +187,7 @@ export const Colored: Story = {
     }, [main]);
 
     return (
-      <div className="flex w-90 flex-col gap-6 bg-gray-50 p-4">
+      <div className="flex flex-col gap-6 bg-gray-50 p-4">
         <Tab.Root
           variant="underline"
           value={main}
@@ -235,13 +250,13 @@ export const Multiple: Story = {
           value={main}
           onValueChange={(value) => setMain(value as 'all' | 'my')}
         >
-          <Tab.List className="border-yellow-400">
+          <Tab.List>
             <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
             <Tab.Trigger value="my-1">내 경조사</Tab.Trigger>
-            <Tab.Trigger value="all-1">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my-2">내 경조사</Tab.Trigger>
-            <Tab.Trigger value="all-3">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my-4">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="all-1">전체 경조사1</Tab.Trigger>
+            <Tab.Trigger value="my-2">내 경조사1</Tab.Trigger>
+            <Tab.Trigger value="all-3">전체 경조사2</Tab.Trigger>
+            <Tab.Trigger value="my-4">내 경조사2</Tab.Trigger>
           </Tab.List>
         </Tab.Root>
 
@@ -252,12 +267,12 @@ export const Multiple: Story = {
                 <Tab.Trigger value="total">전체</Tab.Trigger>
                 <Tab.Trigger value="wedding">결혼</Tab.Trigger>
                 <Tab.Trigger value="funeral">장례</Tab.Trigger>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>{' '}
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+                <Tab.Trigger value="total-1">전체1</Tab.Trigger>
+                <Tab.Trigger value="wedding-1">결혼1</Tab.Trigger>
+                <Tab.Trigger value="funeral-1">장례1</Tab.Trigger>
+                <Tab.Trigger value="total-2">전체2</Tab.Trigger>
+                <Tab.Trigger value="wedding-2">결혼2</Tab.Trigger>
+                <Tab.Trigger value="funeral-2">장례2</Tab.Trigger>
               </>
             ) : (
               <>
@@ -270,56 +285,6 @@ export const Multiple: Story = {
             )}
           </Tab.List>
 
-          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
-          <Tab.Panel value={sub}>
-            <ContentBox>
-              <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
-            </ContentBox>
-          </Tab.Panel>
-        </Tab.Root>
-      </div>
-    );
-  },
-};
-export const DefaultValue: Story = {
-  render: () => {
-    const [main, setMain] = React.useState<'all' | 'my'>('all');
-    const [sub, setSub] = React.useState(main === 'all' ? 'total' : 'done');
-
-    React.useEffect(() => {
-      setSub(main === 'all' ? 'total' : 'done');
-    }, [main]);
-
-    return (
-      <div className="flex w-full flex-col gap-5 p-8">
-        <Tab.Root
-          variant="underline"
-          value={main}
-          onValueChange={(value) => setMain(value as 'all' | 'my')}
-        >
-          <Tab.List>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
-          </Tab.List>
-        </Tab.Root>
-
-        <Tab.Root variant="chip" value={sub} onValueChange={setSub}>
-          <Tab.List>
-            {main === 'all' ? (
-              <>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
-              </>
-            ) : (
-              <>
-                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
-                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
-              </>
-            )}
-          </Tab.List>
-
-          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
           <Tab.Panel value={sub}>
             <ContentBox>
               <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>

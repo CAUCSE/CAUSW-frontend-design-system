@@ -20,7 +20,7 @@ export const tabItemStyles = ({
   if (variant === 'underline') {
     return mergeStyles(
       base,
-      'px-3 py-3 text-center border-b-2 typo-subtitle-16-bold flex-shrink-0',
+      'flex-1 min-w-fit px-3  py-3 text-center border-b-2 typo-subtitle-16-bold flex-shrink-0',
       active
         ? 'border-gray-700 text-gray-700'
         : 'border-transparent text-gray-300',
