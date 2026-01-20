@@ -47,11 +47,7 @@ export const BottomSheetRoot = ({
         onClose: () => handleOpenChange(false),
       }}
     >
-      <DrawerRoot
-        open={isOpen}
-        defaultOpen={defaultOpen}
-        onOpenChange={handleOpenChange}
-      >
+      <DrawerRoot open={isOpen} onOpenChange={handleOpenChange}>
         {children}
       </DrawerRoot>
     </BottomSheetContext.Provider>
