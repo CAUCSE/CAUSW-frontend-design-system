@@ -59,7 +59,7 @@ const TabRoot = ({
   const reactId = React.useId();
   const baseId = id ?? `tab-${reactId}`;
 
-  const listRef = React.useRef<HTMLDivElement>(null!);
+  const listRef = React.useRef<HTMLDivElement>(null);
 
   return (
     <TabContext.Provider
