@@ -3,7 +3,7 @@ import { expect, within } from '@storybook/test';
 import { Box } from './Box';
 
 const meta = {
-  title: 'Components/Box',
+  title: 'Layout Components/Box',
   component: Box,
   parameters: {
     layout: 'centered',
