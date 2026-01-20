@@ -51,16 +51,16 @@ export function ratioBarItemFillStyles({
 }
 
 export interface RatioBarItemContentStyleOptions {
-  selected?: boolean;
+  variant?: 'light' | 'dark';
 }
 
 export function ratioBarItemContentStyles({
-  selected,
+  variant = 'dark',
 }: RatioBarItemContentStyleOptions = {}) {
   return mergeStyles(
-    'relative z-10 flex items-center justify-between w-full gap-[0.5rem]',
+    'absolute inset-0 z-10 flex items-center justify-between px-[1rem] gap-[0.5rem]',
     'typo-body1-md-point',
-    selected ? 'text-white font-bold' : 'text-gray-800 font-medium',
+    variant === 'light' ? 'text-white font-bold' : 'text-gray-800 font-medium',
   );
 }
 

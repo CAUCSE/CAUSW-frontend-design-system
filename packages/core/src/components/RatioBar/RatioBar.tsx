@@ -233,6 +233,16 @@ const RatioBarItem = ({
   // ratio 표시 여부: count가 있거나 ratio가 명시적으로 지정된 경우
   const showRatio = count !== undefined || ratio !== undefined;
 
+  // 텍스트 컨텐츠
+  const contentElement = (
+    <>
+      <span className={ratioBarLabelStyles()}>{label}</span>
+      {showRatio && (
+        <span className={ratioBarRatioStyles()}>{displayRatio}%</span>
+      )}
+    </>
+  );
+
   return (
     <button
       type="button"
@@ -254,13 +264,30 @@ const RatioBarItem = ({
         style={{ width: `${displayRatio}%` }}
       />
 
-      {/* 컨텐츠 */}
-      <span className={ratioBarItemContentStyles({ selected })}>
-        <span className={ratioBarLabelStyles()}>{label}</span>
-        {showRatio && (
-          <span className={ratioBarRatioStyles()}>{displayRatio}%</span>
-        )}
-      </span>
+      {selected ? (
+        <>
+          {/* selected: 흰색 텍스트 (fill 영역에서만 보임) */}
+          <span
+            className={ratioBarItemContentStyles({ variant: 'light' })}
+            style={{ clipPath: `inset(0 ${100 - displayRatio}% 0 0)` }}
+          >
+            {contentElement}
+          </span>
+
+          {/* selected: 검은색 텍스트 (fill 밖에서만 보임) */}
+          <span
+            className={ratioBarItemContentStyles({ variant: 'dark' })}
+            style={{ clipPath: `inset(0 0 0 ${displayRatio}%)` }}
+          >
+            {contentElement}
+          </span>
+        </>
+      ) : (
+        /* unselected: 검은색 텍스트 하나만 */
+        <span className={ratioBarItemContentStyles({ variant: 'dark' })}>
+          {contentElement}
+        </span>
+      )}
     </button>
   );
 };
