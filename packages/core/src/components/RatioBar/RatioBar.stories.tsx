@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RatioBar } from './RatioBar';
 import { RatioBarEditor, type RatioBarEditorOption } from './RatioBarEditor';
@@ -21,6 +21,343 @@ const meta: Meta<typeof RatioBar> = {
 
 export default meta;
 type Story = StoryObj<typeof RatioBar>;
+
+// ============ Playground ============
+
+interface PlaygroundProps {
+  // Root
+  mode: 'single' | 'multiple';
+  disabled: boolean;
+  // Items
+  itemCount: number;
+  useCount: boolean;
+  item1Label: string;
+  item1Value: number;
+  item1Disabled: boolean;
+  item2Label: string;
+  item2Value: number;
+  item2Disabled: boolean;
+  item3Label: string;
+  item3Value: number;
+  item3Disabled: boolean;
+  item4Label: string;
+  item4Value: number;
+  item4Disabled: boolean;
+  item5Label: string;
+  item5Value: number;
+  item5Disabled: boolean;
+  // Footer
+  showFooter: boolean;
+  useEndDate: boolean;
+  endDays: number;
+  endTime: string;
+  hideParticipantCount: boolean;
+}
+
+const PlaygroundComponent = (props: PlaygroundProps) => {
+  const {
+    mode,
+    disabled,
+    itemCount,
+    useCount,
+    item1Label,
+    item1Value,
+    item1Disabled,
+    item2Label,
+    item2Value,
+    item2Disabled,
+    item3Label,
+    item3Value,
+    item3Disabled,
+    item4Label,
+    item4Value,
+    item4Disabled,
+    item5Label,
+    item5Value,
+    item5Disabled,
+    showFooter,
+    useEndDate,
+    endDays,
+    endTime,
+    hideParticipantCount,
+  } = props;
+
+  const [singleValue, setSingleValue] = useState('item1');
+  const [multipleValue, setMultipleValue] = useState<string[]>([]);
+
+  const items = useMemo(
+    () => [
+      {
+        value: 'item1',
+        label: item1Label,
+        count: item1Value,
+        disabled: item1Disabled,
+      },
+      {
+        value: 'item2',
+        label: item2Label,
+        count: item2Value,
+        disabled: item2Disabled,
+      },
+      {
+        value: 'item3',
+        label: item3Label,
+        count: item3Value,
+        disabled: item3Disabled,
+      },
+      {
+        value: 'item4',
+        label: item4Label,
+        count: item4Value,
+        disabled: item4Disabled,
+      },
+      {
+        value: 'item5',
+        label: item5Label,
+        count: item5Value,
+        disabled: item5Disabled,
+      },
+    ],
+    [
+      item1Label,
+      item1Value,
+      item1Disabled,
+      item2Label,
+      item2Value,
+      item2Disabled,
+      item3Label,
+      item3Value,
+      item3Disabled,
+      item4Label,
+      item4Value,
+      item4Disabled,
+      item5Label,
+      item5Value,
+      item5Disabled,
+    ],
+  );
+
+  const visibleItems = items.slice(0, itemCount);
+  const totalCount = visibleItems.reduce((sum, item) => sum + item.count, 0);
+
+  const endDate = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + endDays);
+    return date;
+  }, [endDays]);
+
+  return (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">Playground</h3>
+
+      {mode === 'single' ? (
+        <RatioBar.Root
+          mode="single"
+          value={singleValue}
+          onValueChange={setSingleValue}
+          disabled={disabled}
+        >
+          {visibleItems.map((item) =>
+            useCount ? (
+              <RatioBar.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                count={item.count}
+                disabled={item.disabled}
+              />
+            ) : (
+              <RatioBar.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                ratio={
+                  totalCount > 0
+                    ? Math.round((item.count / totalCount) * 100)
+                    : 0
+                }
+                disabled={item.disabled}
+              />
+            ),
+          )}
+          {showFooter && (
+            <RatioBar.Footer
+              endDate={useEndDate ? endDate : undefined}
+              endTime={!useEndDate ? endTime : undefined}
+              hideParticipantCount={hideParticipantCount}
+            />
+          )}
+        </RatioBar.Root>
+      ) : (
+        <RatioBar.Root
+          mode="multiple"
+          value={multipleValue}
+          onValueChange={setMultipleValue}
+          disabled={disabled}
+        >
+          {visibleItems.map((item) =>
+            useCount ? (
+              <RatioBar.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                count={item.count}
+                disabled={item.disabled}
+              />
+            ) : (
+              <RatioBar.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                ratio={
+                  totalCount > 0
+                    ? Math.round((item.count / totalCount) * 100)
+                    : 0
+                }
+                disabled={item.disabled}
+              />
+            ),
+          )}
+          {showFooter && (
+            <RatioBar.Footer
+              endDate={useEndDate ? endDate : undefined}
+              endTime={!useEndDate ? endTime : undefined}
+              hideParticipantCount={hideParticipantCount}
+            />
+          )}
+        </RatioBar.Root>
+      )}
+
+      <div className="text-sm text-gray-500">
+        <p>
+          선택된 값:{' '}
+          {mode === 'single'
+            ? singleValue
+            : multipleValue.length > 0
+              ? multipleValue.join(', ')
+              : '없음'}
+        </p>
+        {useCount && <p>총 참여: {totalCount}명</p>}
+      </div>
+    </div>
+  );
+};
+
+export const Playground: StoryObj<PlaygroundProps> = {
+  render: (args) => <PlaygroundComponent {...args} />,
+  args: {
+    // Root
+    mode: 'single',
+    disabled: false,
+    // Items
+    itemCount: 3,
+    useCount: true,
+    item1Label: '두쫀쿠',
+    item1Value: 8,
+    item1Disabled: false,
+    item2Label: '마라탕',
+    item2Value: 5,
+    item2Disabled: false,
+    item3Label: '엽떡',
+    item3Value: 2,
+    item3Disabled: false,
+    item4Label: '치킨',
+    item4Value: 0,
+    item4Disabled: false,
+    item5Label: '구이',
+    item5Value: 0,
+    item5Disabled: false,
+    // Footer
+    showFooter: true,
+    useEndDate: false,
+    endDays: 3,
+    endTime: '72시간 후 종료',
+    hideParticipantCount: false,
+  },
+  argTypes: {
+    // Root
+    mode: {
+      control: 'radio',
+      options: ['single', 'multiple'],
+      description: '선택 모드',
+      table: { category: 'Root' },
+    },
+    disabled: {
+      control: 'boolean',
+      description: '전체 비활성화',
+      table: { category: 'Root' },
+    },
+    // Items
+    itemCount: {
+      control: { type: 'range', min: 2, max: 5, step: 1 },
+      description: '항목 개수',
+      table: { category: 'Items' },
+    },
+    useCount: {
+      control: 'boolean',
+      description: 'count 자동 계산 사용 (false면 ratio 직접 지정)',
+      table: { category: 'Items' },
+    },
+    item1Label: { control: 'text', table: { category: 'Item 1' } },
+    item1Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 1' },
+    },
+    item1Disabled: { control: 'boolean', table: { category: 'Item 1' } },
+    item2Label: { control: 'text', table: { category: 'Item 2' } },
+    item2Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 2' },
+    },
+    item2Disabled: { control: 'boolean', table: { category: 'Item 2' } },
+    item3Label: { control: 'text', table: { category: 'Item 3' } },
+    item3Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 3' },
+    },
+    item3Disabled: { control: 'boolean', table: { category: 'Item 3' } },
+    item4Label: { control: 'text', table: { category: 'Item 4' } },
+    item4Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 4' },
+    },
+    item4Disabled: { control: 'boolean', table: { category: 'Item 4' } },
+    item5Label: { control: 'text', table: { category: 'Item 5' } },
+    item5Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 5' },
+    },
+    item5Disabled: { control: 'boolean', table: { category: 'Item 5' } },
+    // Footer
+    showFooter: {
+      control: 'boolean',
+      description: 'Footer 표시',
+      table: { category: 'Footer' },
+    },
+    useEndDate: {
+      control: 'boolean',
+      description: 'endDate 사용 (false면 endTime 문자열 사용)',
+      table: { category: 'Footer' },
+    },
+    endDays: {
+      control: { type: 'number', min: 0 },
+      description: '종료까지 남은 일수 (useEndDate=true일 때)',
+      table: { category: 'Footer' },
+    },
+    endTime: {
+      control: 'text',
+      description: '종료 시간 문자열 (useEndDate=false일 때)',
+      table: { category: 'Footer' },
+    },
+    hideParticipantCount: {
+      control: 'boolean',
+      description: '참여 인원 숨기기',
+      table: { category: 'Footer' },
+    },
+  },
+};
+
+// ============ Basic Stories ============
 
 export const Default: Story = {
   render: () => (
