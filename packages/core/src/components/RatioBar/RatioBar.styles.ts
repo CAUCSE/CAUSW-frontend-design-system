@@ -71,3 +71,12 @@ export function ratioBarLabelStyles() {
 export function ratioBarRatioStyles() {
   return 'flex-shrink-0';
 }
+
+// Footer
+export function ratioBarFooterStyles() {
+  return 'flex items-end justify-between px-[0.25rem]';
+}
+
+export function ratioBarFooterTextStyles() {
+  return 'typo-body-14 text-gray-400';
+}

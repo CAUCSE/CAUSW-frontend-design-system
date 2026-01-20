@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { mergeStyles } from '../../utils';
 import {
   RatioBarContext,
@@ -11,6 +11,8 @@ import {
   ratioBarItemContentStyles,
   ratioBarLabelStyles,
   ratioBarRatioStyles,
+  ratioBarFooterStyles,
+  ratioBarFooterTextStyles,
 } from './RatioBar.styles';
 
 // Root Props - 단일 선택
