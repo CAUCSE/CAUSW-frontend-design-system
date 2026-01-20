@@ -1,101 +1,192 @@
 import * as React from 'react';
-import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { ComponentProps } from 'react';
+import { Primitive } from '../Primitive';
+import { tabListStyles, tabItemStyles, type TabVariant } from './Tab.styles';
+import { mergeStyles } from '../../utils';
 
-import {
-  tabListStyles,
-  tabItemStyles,
-  type TabVariant,
-  type TabColor,
-} from './Tab.styles';
-
-const TabRoot = TabsPrimitive.Root;
-const TabContent = TabsPrimitive.Content;
-
-type TabStyleContextValue = {
+type TabContextValue = {
   variant: TabVariant;
-  color?: TabColor;
+  value: string;
+  setValue: (v: string) => void;
+  baseId: string;
+  activeClassName?: string;
+  inactiveClassName?: string;
 };
 
-const TabStyleContext = React.createContext<TabStyleContextValue | null>(null);
+const TabContext = React.createContext<TabContextValue | null>(null);
 
-const useTabStyleContext = () => {
-  const ctx = React.useContext(TabStyleContext);
+const useTabContext = () => {
+  const ctx = React.useContext(TabContext);
   if (!ctx) throw new Error('Tab.* must be used within Tab.Root');
   return ctx;
 };
 
-export interface TabRootProps extends ComponentProps<
-  typeof TabsPrimitive.Root
-> {
+/** =========================
+ * Root
+ * ========================= */
+export interface TabRootProps {
   variant: TabVariant;
-  color?: TabColor;
+  activeClassName?: string;
+  inactiveClassName?: string;
+  /** uncontrolled */
+  defaultValue?: string;
+
+  /** controlled */
+  value?: string;
+  onValueChange?: (v: string) => void;
+
+  id?: string;
+  className?: string;
+  children: React.ReactNode;
 }
 
-const Root = ({ variant, color, children, ...props }: TabRootProps) => {
+const TabRoot = ({
+  variant,
+  defaultValue = '',
+  value: valueProp,
+  onValueChange,
+  id,
+  className,
+  children,
+  activeClassName,
+  inactiveClassName,
+}: TabRootProps) => {
+  const [uncontrolled, setUncontrolled] = React.useState(defaultValue);
+  const isControlled = valueProp !== undefined;
+  const value = (isControlled ? valueProp : uncontrolled) ?? '';
+
+  const setValue = (v: string) => {
+    if (!isControlled) setUncontrolled(v);
+    onValueChange?.(v);
+  };
+
+  const reactId = React.useId();
+  const baseId = id ?? `tab-${reactId}`;
+
   return (
-    <TabStyleContext.Provider value={{ variant, color }}>
-      <TabRoot {...props}>{children}</TabRoot>
-    </TabStyleContext.Provider>
+    <TabContext.Provider
+      value={{
+        variant,
+        value,
+        setValue,
+        baseId,
+        activeClassName,
+        inactiveClassName,
+      }}
+    >
+      <div className={className}>{children}</div>
+    </TabContext.Provider>
   );
 };
-Root.displayName = TabsPrimitive.Root.displayName;
+TabRoot.displayName = 'Tab.Root';
 
-export type TabListProps = ComponentProps<typeof TabsPrimitive.List>;
+/** =========================
+ * List
+ * ========================= */
+export type TabListProps = React.ComponentPropsWithoutRef<'div'> & {
+  asChild?: boolean;
+};
 
-const List = ({ className, ...props }: TabListProps) => {
-  const { variant } = useTabStyleContext();
+const TabList = ({ asChild, className, ...props }: TabListProps) => {
+  const { variant } = useTabContext();
 
   return (
-    <TabsPrimitive.List
+    <Primitive.div
+      asChild={asChild}
+      role="tablist"
       className={[tabListStyles(variant), className].filter(Boolean).join(' ')}
       {...props}
     />
   );
 };
-List.displayName = TabsPrimitive.List.displayName;
+TabList.displayName = 'Tab.List';
 
-export interface TabTriggerProps extends ComponentProps<
-  typeof TabsPrimitive.Trigger
-> {
-  /** chip 탭에서 active 색상 옵션 */
-  color?: TabColor;
-}
+/** =========================
+ * Trigger
+ * ========================= */
+export type TabTriggerProps = React.ComponentPropsWithoutRef<'button'> & {
+  value: string;
+  asChild?: boolean;
+};
 
-const Trigger = ({
+const TabTrigger = ({
+  value,
+  asChild,
   className,
-  color: colorProp,
   ...props
 }: TabTriggerProps) => {
-  const { variant, color: colorCtx } = useTabStyleContext();
-  const color = colorProp ?? colorCtx;
+  const {
+    variant,
+    value: activeValue,
+    setValue,
+    baseId,
+    activeClassName,
+    inactiveClassName,
+  } = useTabContext();
 
-  // 기본(비활성) 스타일은 기존 함수 그대로 사용
-  const base = tabItemStyles({ variant, active: false, color });
+  const active = activeValue === value;
+  const tone = active ? activeClassName : inactiveClassName;
 
-  // active일 때만 덮어씌울 클래스 (Radix data-state 사용)
-  const active =
-    variant === 'underline'
-      ? 'data-[state=active]:border-gray-700 data-[state=active]:text-gray-700 data-[state=active]:hover:text-gray-700 data-[state=active]:border-b-2'
-      : color === 'white'
-        ? 'data-[state=active]:bg-[#364153] data-[state=active]:text-white'
-        : 'data-[state=active]:bg-white data-[state=active]:text-gray-700 data-[state=active]:border data-[state=active]:border-gray-200';
-
-  // underline의 inactive에서 border-transparent가 필요한데 base가 이미 넣어줌
-  // chip inactive bg/text도 base가 이미 넣어줌
   return (
-    <TabsPrimitive.Trigger
-      className={[base, active, className].filter(Boolean).join(' ')}
+    <Primitive.button
+      asChild={asChild}
+      role="tab"
+      aria-selected={active}
+      id={`${baseId}-trigger-${value}`}
+      aria-controls={`${baseId}-content-${value}`}
+      className={mergeStyles(
+        tabItemStyles({ variant, active }),
+        tone,
+        className,
+      )}
+      onClick={() => setValue(value)}
       {...props}
     />
   );
 };
-Trigger.displayName = TabsPrimitive.Trigger.displayName;
+TabTrigger.displayName = 'Tab.Trigger';
 
-export const Tab = Object.assign(Root, {
-  Root,
-  List,
-  Trigger,
+/** =========================
+ * Content (Panel)
+ * ========================= */
+export type TabContentProps = React.ComponentPropsWithoutRef<'div'> & {
+  value: string;
+  forceMount?: boolean;
+  asChild?: boolean;
+};
+
+const TabContent = ({
+  value,
+  forceMount = false,
+  asChild,
+  className,
+  children,
+  ...props
+}: TabContentProps) => {
+  const { value: activeValue, baseId } = useTabContext();
+  const active = activeValue === value;
+
+  if (!forceMount && !active) return null;
+
+  return (
+    <Primitive.div
+      asChild={asChild}
+      role="tabpanel"
+      id={`${baseId}-content-${value}`}
+      aria-labelledby={`${baseId}-trigger-${value}`}
+      hidden={!active}
+      className={className}
+      {...props}
+    >
+      {children}
+    </Primitive.div>
+  );
+};
+TabContent.displayName = 'Tab.Content';
+
+export const Tab = Object.assign(TabRoot, {
+  Root: TabRoot,
+  List: TabList,
+  Trigger: TabTrigger,
   Content: TabContent,
-  Panel: TabContent, // vapor 스타일 alias
+  Panel: TabContent, // vapor style alias
 });

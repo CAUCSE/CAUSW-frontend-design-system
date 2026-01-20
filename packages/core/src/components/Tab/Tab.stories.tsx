@@ -17,7 +17,6 @@ const ContentBox = (props: React.PropsWithChildren) => (
   </div>
 );
 
-/** 1) Underline만: 탭 전환 + 각 탭별 Panel */
 export const UnderlineOnly: Story = {
   render: () => (
     <div style={{ width: 360 }}>
@@ -124,7 +123,175 @@ export const CombinedTabs: Story = {
     }, [main]);
 
     return (
+      <div className="flex w-full flex-col gap-5 p-8">
+        <Tab.Root
+          variant="underline"
+          value={main}
+          onValueChange={(value) => setMain(value as 'all' | 'my')}
+        >
+          <Tab.List>
+            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+          </Tab.List>
+        </Tab.Root>
+
+        <Tab.Root variant="chip" value={sub} onValueChange={setSub}>
+          <Tab.List>
+            {main === 'all' ? (
+              <>
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+              </>
+            ) : (
+              <>
+                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
+                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
+              </>
+            )}
+          </Tab.List>
+
+          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
+          <Tab.Panel value={sub}>
+            <ContentBox>
+              <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
+            </ContentBox>
+          </Tab.Panel>
+        </Tab.Root>
+      </div>
+    );
+  },
+};
+export const Colored: Story = {
+  render: () => {
+    const [main, setMain] = React.useState<'all' | 'my'>('all');
+    const [sub, setSub] = React.useState(main === 'all' ? 'total' : 'done');
+
+    React.useEffect(() => {
+      setSub(main === 'all' ? 'total' : 'done');
+    }, [main]);
+
+    return (
       <div className="flex w-90 flex-col gap-6 bg-gray-50 p-4">
+        <Tab.Root
+          variant="underline"
+          value={main}
+          onValueChange={(value) => setMain(value as 'all' | 'my')}
+          activeClassName="text-red-600 border-blue-600"
+          inactiveClassName="text-pink-300"
+        >
+          <Tab.List>
+            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+          </Tab.List>
+        </Tab.Root>
+
+        <Tab.Root
+          variant="chip"
+          value={sub}
+          onValueChange={setSub}
+          activeClassName="text-red-800 bg-yellow-200"
+          inactiveClassName="text-pink-300"
+        >
+          <Tab.List>
+            {main === 'all' ? (
+              <>
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+              </>
+            ) : (
+              <>
+                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
+                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
+              </>
+            )}
+          </Tab.List>
+
+          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
+          <Tab.Panel value={sub}>
+            <ContentBox>
+              <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
+            </ContentBox>
+          </Tab.Panel>
+        </Tab.Root>
+      </div>
+    );
+  },
+};
+export const Multiple: Story = {
+  render: () => {
+    const [main, setMain] = React.useState<'all' | 'my'>('all');
+    const [sub, setSub] = React.useState(main === 'all' ? 'total' : 'done');
+
+    React.useEffect(() => {
+      setSub(main === 'all' ? 'total' : 'done');
+    }, [main]);
+
+    return (
+      <div className="flex w-80 flex-col gap-6 bg-gray-50 p-4">
+        <Tab.Root
+          variant="underline"
+          value={main}
+          onValueChange={(value) => setMain(value as 'all' | 'my')}
+        >
+          <Tab.List className="border-yellow-400">
+            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
+            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+          </Tab.List>
+        </Tab.Root>
+
+        <Tab.Root variant="chip" value={sub} onValueChange={setSub}>
+          <Tab.List>
+            {main === 'all' ? (
+              <>
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>{' '}
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+              </>
+            ) : (
+              <>
+                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
+                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
+                <Tab.Trigger value="total">전체</Tab.Trigger>
+                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+              </>
+            )}
+          </Tab.List>
+
+          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
+          <Tab.Panel value={sub}>
+            <ContentBox>
+              <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
+            </ContentBox>
+          </Tab.Panel>
+        </Tab.Root>
+      </div>
+    );
+  },
+};
+export const DefaultValue: Story = {
+  render: () => {
+    const [main, setMain] = React.useState<'all' | 'my'>('all');
+    const [sub, setSub] = React.useState(main === 'all' ? 'total' : 'done');
+
+    React.useEffect(() => {
+      setSub(main === 'all' ? 'total' : 'done');
+    }, [main]);
+
+    return (
+      <div className="flex w-full flex-col gap-5 p-8">
         <Tab.Root
           variant="underline"
           value={main}
