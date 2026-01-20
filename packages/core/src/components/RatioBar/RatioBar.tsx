@@ -65,6 +65,9 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
     (mode === 'multiple' ? (defaultValue as string[]) : []) || [],
   );
 
+  // count 기반 자동 비율 계산을 위한 state
+  const [counts, setCounts] = useState<Map<string, number>>(new Map());
+
   const isControlled = valueProp !== undefined;
 
   const currentValue =
@@ -110,6 +113,35 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
     [mode, disabled, isControlled, currentValue, onValueChange],
   );
 
+  // count 등록/해제 함수
+  const registerCount = useCallback((itemValue: string, count: number) => {
+    setCounts((prev) => new Map(prev).set(itemValue, count));
+  }, []);
+
+  const unregisterCount = useCallback((itemValue: string) => {
+    setCounts((prev) => {
+      const next = new Map(prev);
+      next.delete(itemValue);
+      return next;
+    });
+  }, []);
+
+  // 전체 count 합계
+  const totalCount = useMemo(() => {
+    let total = 0;
+    counts.forEach((c) => (total += c));
+    return total;
+  }, [counts]);
+
+  // 항목의 비율 계산
+  const getRatio = useCallback(
+    (itemValue: string) => {
+      const count = counts.get(itemValue) ?? 0;
+      return totalCount > 0 ? Math.round((count / totalCount) * 100) : 0;
+    },
+    [counts, totalCount],
+  );
+
   return (
     <RatioBarContext.Provider
       value={{
@@ -118,6 +150,11 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
         disabled,
         onSelect,
         isSelected,
+        counts,
+        registerCount,
+        unregisterCount,
+        totalCount,
+        getRatio,
       }}
     >
       <div
@@ -138,13 +175,15 @@ export interface RatioBarItemProps extends Omit<
 > {
   value: string;
   label: string;
-  ratio?: number; // 0-100
+  count?: number; // count만 전달하면 자동으로 비율 계산
+  ratio?: number; // 0-100, 직접 비율 지정 (count사용 시 count 우선)
   disabled?: boolean;
 }
 
 const RatioBarItem = ({
   value,
   label,
+  count,
   ratio,
   disabled: itemDisabled,
   className,
@@ -157,9 +196,24 @@ const RatioBarItem = ({
     );
   }
 
-  const { disabled: rootDisabled, onSelect, isSelected } = context;
+  const {
+    disabled: rootDisabled,
+    onSelect,
+    isSelected,
+    registerCount,
+    unregisterCount,
+    getRatio,
+  } = context;
   const disabled = itemDisabled || rootDisabled;
   const selected = isSelected(value);
+
+  // count가 있으면 등록
+  useEffect(() => {
+    if (count !== undefined) {
+      registerCount(value, count);
+      return () => unregisterCount(value);
+    }
+  }, [count, value, registerCount, unregisterCount]);
 
   const handleClick = () => {
     if (!disabled) {
@@ -174,8 +228,10 @@ const RatioBarItem = ({
     }
   };
 
-  // ratio가 없으면 0%로 표시
-  const displayRatio = ratio ?? 0;
+  // count가 있으면 자동 계산, 없으면 ratio prop 사용, 둘 다 없으면 0
+  const displayRatio = count !== undefined ? getRatio(value) : (ratio ?? 0);
+  // ratio 표시 여부: count가 있거나 ratio가 명시적으로 지정된 경우
+  const showRatio = count !== undefined || ratio !== undefined;
 
   return (
     <button
@@ -201,18 +257,82 @@ const RatioBarItem = ({
       {/* 컨텐츠 */}
       <span className={ratioBarItemContentStyles({ selected })}>
         <span className={ratioBarLabelStyles()}>{label}</span>
-        {ratio !== undefined && (
-          <span className={ratioBarRatioStyles()}>{ratio}%</span>
+        {showRatio && (
+          <span className={ratioBarRatioStyles()}>{displayRatio}%</span>
         )}
       </span>
     </button>
   );
 };
 
+// Footer Props
+export interface RatioBarFooterProps extends React.ComponentProps<'div'> {
+  endDate?: Date; // 종료 시간 자동 계산
+  endTime?: string; // 직접 문자열 지정
+  hideParticipantCount?: boolean;
+}
+
+// 남은 시간 계산
+function formatTimeRemaining(endDate: Date): string {
+  const now = new Date();
+  const diff = endDate.getTime() - now.getTime();
+
+  if (diff <= 0) return '종료됨';
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 후 종료`;
+  if (hours > 0) return `${hours}시간 후 종료`;
+
+  const minutes = Math.floor(diff / (1000 * 60));
+  return `${minutes}분 후 종료`;
+}
+
+const RatioBarFooter = ({
+  endDate,
+  endTime,
+  hideParticipantCount,
+  className,
+  children,
+  ...props
+}: RatioBarFooterProps) => {
+  const context = React.useContext(RatioBarContext);
+  if (!context) {
+    throw new Error(
+      'RatioBar.Footer는 <RatioBar.Root> 내부에서 사용해야 합니다.',
+    );
+  }
+
+  const { totalCount } = context;
+
+  // endDate가 있으면 자동 계산, 없으면 endTime 사용
+  const displayEndTime = endDate ? formatTimeRemaining(endDate) : endTime;
+
+  return (
+    <div className={mergeStyles(ratioBarFooterStyles(), className)} {...props}>
+      {children ?? (
+        <>
+          {!hideParticipantCount && (
+            <span className={ratioBarFooterTextStyles()}>
+              {totalCount}명 참여
+            </span>
+          )}
+          {displayEndTime && (
+            <span className={ratioBarFooterTextStyles()}>{displayEndTime}</span>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
 RatioBarRoot.displayName = 'RatioBar.Root';
 RatioBarItem.displayName = 'RatioBar.Item';
+RatioBarFooter.displayName = 'RatioBar.Footer';
 
 export const RatioBar = Object.assign(RatioBarRoot, {
   Root: RatioBarRoot,
   Item: RatioBarItem,
+  Footer: RatioBarFooter,
 });
