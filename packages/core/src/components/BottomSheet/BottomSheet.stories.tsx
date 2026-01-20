@@ -8,10 +8,10 @@ import {
   BottomSheetBody,
   BottomSheetFooter,
 } from './BottomSheet';
-import { Text } from '../Text';
+import { useBottomSheet } from '../../hooks';
 import { Stack } from '../Stack';
 import { Box } from '../Box';
-import { useBottomSheet } from '../../hooks';
+import { CTAButton } from '../CTAButton';
 
 const meta: Meta<typeof BottomSheetRoot> = {
   title: 'Components/BottomSheet',
@@ -63,14 +63,9 @@ const ExampleCloseButton = () => {
   const { onClose } = useBottomSheet();
 
   return (
-    <button
-      onClick={onClose}
-      className="w-full cursor-pointer rounded-md bg-gray-700 px-2 py-3.5"
-    >
-      <Text textColor="white" typography="fixed-15">
-        확인
-      </Text>
-    </button>
+    <CTAButton onClick={onClose} color="dark" fullWidth>
+      확인
+    </CTAButton>
   );
 };
 
@@ -132,14 +127,9 @@ export const Controlled: Story = {
               </p>
             </BottomSheetBody>
             <BottomSheetFooter>
-              <button
-                onClick={() => setOpen(false)}
-                className="w-full cursor-pointer rounded-md bg-gray-700 px-2 py-3.5 hover:bg-gray-800"
-              >
-                <Text textColor="white" typography="fixed-15">
-                  닫기
-                </Text>
-              </button>
+              <CTAButton onClick={() => setOpen(false)} color="dark" fullWidth>
+                닫기 (상태 변경)
+              </CTAButton>
             </BottomSheetFooter>
           </BottomSheetContent>
         </BottomSheetRoot>
