@@ -4,7 +4,7 @@ import { VStack } from './VStack';
 import { Box } from '../Box';
 
 const meta = {
-  title: 'Components/VStack',
+  title: 'Layout Components/VStack',
   component: VStack,
   parameters: {
     layout: 'centered',

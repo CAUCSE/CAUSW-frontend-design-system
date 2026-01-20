@@ -6,7 +6,7 @@ import { Box } from '../Box';
 import { Flex } from '../Flex';
 
 const meta = {
-  title: 'Components/Spacer',
+  title: 'Layout Components/Spacer',
   component: Spacer,
   parameters: {
     layout: 'centered',

@@ -4,7 +4,7 @@ import { Stack } from './Stack';
 import { Box } from '../Box';
 
 const meta = {
-  title: 'Components/Stack',
+  title: 'Layout Components/Stack',
   component: Stack,
   parameters: {
     layout: 'centered',

@@ -6,7 +6,7 @@ import { Box } from '../Box';
 import { Flex } from '../Flex';
 
 const meta = {
-  title: 'Components/Separator',
+  title: 'Layout Components/Separator',
   component: Separator,
   parameters: {
     layout: 'centered',
