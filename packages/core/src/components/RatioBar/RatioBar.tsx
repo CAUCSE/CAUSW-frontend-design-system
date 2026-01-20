@@ -279,14 +279,21 @@ function formatTimeRemaining(endDate: Date): string {
 
   if (diff <= 0) return '종료됨';
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(hours / 24);
+  const totalHours = diff / (1000 * 60 * 60);
+  const totalMinutes = diff / (1000 * 60);
 
-  if (days > 0) return `${days}일 후 종료`;
-  if (hours > 0) return `${hours}시간 후 종료`;
+  // 24시간 이상이면 일 단위 (12시간 기준 반올림/내림)
+  if (totalHours >= 24) {
+    return `${Math.round(totalHours / 24)}일 후 종료`;
+  }
 
-  const minutes = Math.floor(diff / (1000 * 60));
-  return `${minutes}분 후 종료`;
+  // 1시간 이상이면 시간 단위 (내림)
+  if (totalHours >= 1) {
+    return `${Math.floor(totalHours)}시간 후 종료`;
+  }
+
+  // 그 외 분 단위 (내림)
+  return `${Math.floor(totalMinutes)}분 후 종료`;
 }
 
 const RatioBarFooter = ({
