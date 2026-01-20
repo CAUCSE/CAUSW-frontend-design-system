@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RatioBar } from './RatioBar';
+import { RatioBarEditor, type RatioBarEditorOption } from './RatioBarEditor';
 
 const meta: Meta<typeof RatioBar> = {
   title: 'Components/RatioBar',
@@ -172,4 +173,84 @@ export const FlexibleWidth: Story = {
       </div>
     </div>
   ),
+};
+
+// ============ Edit Mode Stories ============
+
+export const EditModeDefault: Story = {
+  name: 'Edit Mode - Default',
+  render: () => <RatioBarEditor onDelete={() => alert('투표 삭제')} />,
+};
+
+export const EditModeControlled: Story = {
+  name: 'Edit Mode - Controlled',
+  render: () => {
+    const [options, setOptions] = useState<RatioBarEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '' },
+    ]);
+    const [allowMultiple, setAllowMultiple] = useState(false);
+
+    return (
+      <div className="flex flex-col gap-[1rem]">
+        <RatioBarEditor
+          options={options}
+          onOptionsChange={setOptions}
+          allowMultiple={allowMultiple}
+          onAllowMultipleChange={setAllowMultiple}
+          onDelete={() => alert('투표 삭제')}
+        />
+        <div className="text-sm text-gray-500">
+          <p>옵션: {JSON.stringify(options.map((o) => o.value))}</p>
+          <p>복수 선택: {allowMultiple ? '허용' : '비허용'}</p>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const EditModeWithThreeOptions: Story = {
+  name: 'Edit Mode - Three Options',
+  render: () => {
+    const [options, setOptions] = useState<RatioBarEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '' },
+      { id: '3', value: '' },
+    ]);
+
+    return (
+      <RatioBarEditor
+        options={options}
+        onOptionsChange={setOptions}
+        onDelete={() => alert('투표 삭제')}
+      />
+    );
+  },
+};
+
+export const EditModeFilled: Story = {
+  name: 'Edit Mode - Filled Options',
+  render: () => {
+    const [options, setOptions] = useState<RatioBarEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '짜장면' },
+      { id: '3', value: '탕수육' },
+    ]);
+    const [allowMultiple, setAllowMultiple] = useState(true);
+
+    return (
+      <RatioBarEditor
+        options={options}
+        onOptionsChange={setOptions}
+        allowMultiple={allowMultiple}
+        onAllowMultipleChange={setAllowMultiple}
+        onDelete={() => alert('투표 삭제')}
+      />
+    );
+  },
+};
+
+export const EditModeDisabled: Story = {
+  name: 'Edit Mode - Disabled',
+  render: () => <RatioBarEditor disabled onDelete={() => alert('투표 삭제')} />,
 };
