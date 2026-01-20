@@ -8,6 +8,12 @@ export interface RatioBarContextValue {
   disabled?: boolean;
   onSelect: (itemValue: string) => void;
   isSelected: (itemValue: string) => boolean;
+  // count 기반 자동 비율 계산
+  counts: Map<string, number>;
+  registerCount: (itemValue: string, count: number) => void;
+  unregisterCount: (itemValue: string) => void;
+  totalCount: number;
+  getRatio: (itemValue: string) => number;
 }
 
 export const RatioBarContext = createContext<RatioBarContextValue | null>(null);
