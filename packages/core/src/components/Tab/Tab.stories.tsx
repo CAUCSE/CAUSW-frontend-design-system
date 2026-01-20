@@ -17,6 +17,72 @@ const ContentBox = (props: React.PropsWithChildren) => (
   </div>
 );
 
+/** 1) Underline만: 탭 전환 + 각 탭별 Panel */
+export const UnderlineOnly: Story = {
+  render: () => (
+    <div style={{ width: 360 }}>
+      <Tab.Root variant="underline" defaultValue="1">
+        <Tab.List>
+          <Tab.Trigger value="1">라벨1</Tab.Trigger>
+          <Tab.Trigger value="2">라벨2</Tab.Trigger>
+          <Tab.Trigger value="3">라벨3</Tab.Trigger>
+        </Tab.List>
+
+        <Tab.Content value="1">
+          <ContentBox>
+            <Text typography="body-16-regular">Underline Content 1</Text>
+          </ContentBox>
+        </Tab.Content>
+        <Tab.Content value="2">
+          <ContentBox>
+            <Text typography="body-16-regular">Underline Content 2</Text>
+          </ContentBox>
+        </Tab.Content>
+        <Tab.Content value="3">
+          <ContentBox>
+            <Text typography="body-16-regular">Underline Content 3</Text>
+          </ContentBox>
+        </Tab.Content>
+      </Tab.Root>
+    </div>
+  ),
+};
+
+/** 2) Chip만: 필터 탭 느낌 - Content는 “1개만” 두고 선택값 표시 (추천) */
+export const ChipOnly: Story = {
+  render: () => {
+    const [value, setValue] = React.useState<'total' | 'wedding' | 'funeral'>(
+      'total',
+    );
+
+    return (
+      <div style={{ width: 360 }} className="bg-gray-50 p-4">
+        <Tab.Root
+          variant="chip"
+          value={value}
+          onValueChange={(val) =>
+            setValue(val as 'total' | 'wedding' | 'funeral')
+          }
+        >
+          <Tab.List>
+            <Tab.Trigger value="total">전체</Tab.Trigger>
+            <Tab.Trigger value="wedding">결혼</Tab.Trigger>
+            <Tab.Trigger value="funeral">장례</Tab.Trigger>
+          </Tab.List>
+
+          {/* 필터 탭은 보통 이렇게 “단일 content”가 자연스러움 */}
+          <Tab.Content value={value}>
+            <ContentBox>
+              <Text typography="body-16-regular">{`선택된 필터: ${value}`}</Text>
+            </ContentBox>
+          </Tab.Content>
+        </Tab.Root>
+      </div>
+    );
+  },
+};
+
+/** 3) 기존 Seed 스타일 예시 (Underline + Content) */
 export const TabsPreview: Story = {
   render: () => (
     <div style={{ width: 360 }}>
@@ -47,6 +113,7 @@ export const TabsPreview: Story = {
   ),
 };
 
+/** 4) 기존 Combined */
 export const CombinedTabs: Story = {
   render: () => {
     const [main, setMain] = React.useState<'all' | 'my'>('all');
@@ -85,7 +152,7 @@ export const CombinedTabs: Story = {
             )}
           </Tab.List>
 
-          {/* 필터용이면 Content는 생략 가능. 예시로만 */}
+          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
           <Tab.Panel value={sub}>
             <ContentBox>
               <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
