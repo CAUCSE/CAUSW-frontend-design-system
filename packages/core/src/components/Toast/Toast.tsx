@@ -2,18 +2,21 @@ import * as ToastPrimitives from '@radix-ui/react-toast';
 import { colorStyles, getToastStyles, ToastVariant } from './Toast.styles';
 import { Text } from '../Text';
 import { mergeStyles } from '../../utils';
+import { HStack } from '../HStack';
 
 export interface ToastProps extends React.ComponentProps<
   typeof ToastPrimitives.Root
 > {
   variant?: ToastVariant;
   message?: string;
+  icon?: React.ReactNode;
 }
 
 export const Toast = ({
   className,
   variant = 'default',
   message,
+  icon,
   ...props
 }: ToastProps) => {
   const contentColor = colorStyles[variant];
@@ -23,13 +26,16 @@ export const Toast = ({
       className={getToastStyles({ variant, className })}
       {...props}
     >
-      {message && (
-        <ToastPrimitives.Description asChild>
-          <Text as="p" typography="fixed-16" textColor={contentColor}>
-            {message}
-          </Text>
-        </ToastPrimitives.Description>
-      )}
+      <HStack gap="sm" align="center">
+        {icon && <>{icon}</>}
+        {message && (
+          <ToastPrimitives.Description asChild>
+            <Text as="p" typography="fixed-16" textColor={contentColor}>
+              {message}
+            </Text>
+          </ToastPrimitives.Description>
+        )}
+      </HStack>
     </ToastPrimitives.Root>
   );
 };
