@@ -286,7 +286,7 @@ export const FeedbackPopup: Story = {
         </Dialog.Trigger>
         <Dialog.Content
           width={700}
-          className="max-w-none gap-0 rounded-[16px] bg-[#f5f6f8] p-[32px] sm:rounded-[16px]"
+          className="max-w-none gap-0 rounded-[16px] bg-gray-100 p-[32px] sm:rounded-[16px]"
           aria-describedby={undefined}
         >
           <VStack className="w-full">
@@ -331,7 +331,7 @@ export const FeedbackPopup: Story = {
                     className={`flex h-[60px] w-[60px] items-center justify-center rounded-[12px] border text-[16px] transition-all ${
                       rating === idx
                         ? 'border-blue-500 bg-blue-50 font-bold text-blue-600'
-                        : 'border-transparent bg-[#f5f6f8] text-[#6a7282] hover:bg-gray-200'
+                        : 'border-transparent bg-gray-100 text-gray-500 hover:bg-gray-200'
                     }`}
                   >
                     {idx}
