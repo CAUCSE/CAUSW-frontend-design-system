@@ -1,5 +1,11 @@
 # 🚀 Pull Request
 
+## Issue
+> 관련 이슈를 태그해주세요
+
+- Closes #
+
+
 ## ✨ Summary
 > 이번 PR에서 어떤 변화가 있었는지 한 줄 요약해주세요.
 
