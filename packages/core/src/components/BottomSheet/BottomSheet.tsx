@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { HeaderAlign } from './BottomSheet.styles';
 import { mergeStyles } from '../../utils';
 import {
   DrawerContent,
@@ -9,6 +8,8 @@ import {
 } from '../Drawer/Drawer';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
+
+export type HeaderAlign = 'left' | 'center';
 
 export interface BottomSheetRootProps {
   children?: React.ReactNode;
@@ -47,9 +48,9 @@ export const BottomSheetRoot = ({
       }}
     >
       <DrawerRoot
-        open={controlledOpen}
+        open={isOpen}
         defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
+        onOpenChange={handleOpenChange}
       >
         {children}
       </DrawerRoot>
@@ -58,6 +59,7 @@ export const BottomSheetRoot = ({
 };
 
 export const BottomSheetTrigger = DrawerTrigger;
+BottomSheetTrigger.displayName = 'BottomSheetTrigger';
 
 export const BottomSheetHandle = () => {
   return <div className="h-1 w-11 rounded-full bg-gray-200" />;

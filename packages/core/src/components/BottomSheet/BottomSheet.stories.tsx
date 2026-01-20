@@ -8,10 +8,10 @@ import {
   BottomSheetBody,
   BottomSheetFooter,
 } from './BottomSheet';
-import { HStack } from '../HStack';
 import { Text } from '../Text';
 import { Stack } from '../Stack';
 import { Box } from '../Box';
+import { useBottomSheet } from '../../hooks';
 
 const meta: Meta<typeof BottomSheetRoot> = {
   title: 'Components/BottomSheet',
@@ -59,20 +59,20 @@ const meta: Meta<typeof BottomSheetRoot> = {
 export default meta;
 type Story = StoryObj<typeof BottomSheetRoot>;
 
-const ExampleButtons = () => (
-  <HStack gap="sm">
-    <button className="w-full cursor-pointer rounded-md bg-gray-100 px-2 py-3.5">
-      <Text textColor="gray-500" typography="fixed-15">
-        닫기
-      </Text>
-    </button>
-    <button className="w-full cursor-pointer rounded-md bg-red-400 px-2 py-3.5">
+const ExampleCloseButton = () => {
+  const { onClose } = useBottomSheet();
+
+  return (
+    <button
+      onClick={onClose}
+      className="w-full cursor-pointer rounded-md bg-gray-700 px-2 py-3.5"
+    >
       <Text textColor="white" typography="fixed-15">
-        신고하기
+        확인
       </Text>
     </button>
-  </HStack>
-);
+  );
+};
 
 export const Default: Story = {
   render: (args) => (
@@ -87,7 +87,7 @@ export const Default: Story = {
         <BottomSheetHeader title="제목" />
         <BottomSheetBody>Content</BottomSheetBody>
         <BottomSheetFooter>
-          <ExampleButtons />
+          <ExampleCloseButton />
         </BottomSheetFooter>
       </BottomSheetContent>
     </BottomSheetRoot>
@@ -137,7 +137,7 @@ export const Controlled: Story = {
                 className="w-full cursor-pointer rounded-md bg-gray-700 px-2 py-3.5 hover:bg-gray-800"
               >
                 <Text textColor="white" typography="fixed-15">
-                  닫기 (State 변경)
+                  닫기
                 </Text>
               </button>
             </BottomSheetFooter>
@@ -193,11 +193,7 @@ export const LongContent: Story = {
           </Stack>
         </BottomSheetBody>
         <BottomSheetFooter>
-          <button className="w-full cursor-pointer rounded-md bg-gray-700 px-2 py-3.5">
-            <Text textColor="white" typography="fixed-15">
-              확인
-            </Text>
-          </button>
+          <ExampleCloseButton />
         </BottomSheetFooter>
       </BottomSheetContent>
     </BottomSheetRoot>
