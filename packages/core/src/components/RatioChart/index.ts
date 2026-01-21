@@ -1,12 +1,12 @@
 export {
-  RatioBar,
-  type RatioBarRootProps,
-  type RatioBarItemProps,
-  type RatioBarFooterProps,
-} from './RatioBar';
+  RatioChart,
+  type RatioChartRootProps,
+  type RatioChartItemProps,
+  type RatioChartFooterProps,
+} from './RatioChart';
 
 export {
-  RatioBarEditor,
-  type RatioBarEditorProps,
-  type RatioBarEditorOption,
-} from './RatioBarEditor';
+  RatioChartEditor,
+  type RatioChartEditorProps,
+  type RatioChartEditorOption,
+} from './RatioChartEditor';

@@ -1,2 +1,2 @@
 export * from './field';
-export * from './ratioBar';
+export * from './ratioChart';
