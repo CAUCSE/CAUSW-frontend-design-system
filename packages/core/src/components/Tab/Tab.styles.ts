@@ -2,7 +2,7 @@ import { tv, type VariantProps } from 'tailwind-variants';
 
 export type TabVariant = 'underline' | 'chip';
 export const tabList = tv({
-  base: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto [-webkit-overflow-scrolling:touch]',
+  base: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar [-webkit-overflow-scrolling:touch]',
   variants: {
     variant: {
       underline: 'border-b border-gray-200',
