@@ -2,4 +2,4 @@
 '@causw/core': patch
 ---
 
-Add RatioBar component
+Add RatioChart component
