@@ -1,6 +1,6 @@
 export {
-  RatioBarContext,
-  useRatioBarContext,
-  type RatioBarContextValue,
-  type RatioBarSelectionMode,
-} from './useRatioBarContext';
+  RatioChartContext,
+  useRatioChartContext,
+  type RatioChartContextValue,
+  type RatioChartSelectionMode,
+} from './useRatioChartContext';

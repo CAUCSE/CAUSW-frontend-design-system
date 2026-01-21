@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
 
-export type RatioBarSelectionMode = 'single' | 'multiple';
+export type RatioChartSelectionMode = 'single' | 'multiple';
 
-export interface RatioBarContextValue {
+export interface RatioChartContextValue {
   value: string | string[];
-  mode: RatioBarSelectionMode;
+  mode: RatioChartSelectionMode;
   disabled?: boolean;
   onSelect: (itemValue: string) => void;
   isSelected: (itemValue: string) => boolean;
@@ -16,13 +16,15 @@ export interface RatioBarContextValue {
   getRatio: (itemValue: string) => number;
 }
 
-export const RatioBarContext = createContext<RatioBarContextValue | null>(null);
+export const RatioChartContext = createContext<RatioChartContextValue | null>(
+  null,
+);
 
-export const useRatioBarContext = () => {
-  const context = useContext(RatioBarContext);
+export const useRatioChartContext = () => {
+  const context = useContext(RatioChartContext);
   if (!context) {
     throw new Error(
-      'RatioBar 서브 컴포넌트는 <RatioBar.Root> 내부에서 사용해야 합니다.',
+      'RatioChart 서브 컴포넌트는 <RatioChart.Root> 내부에서 사용해야 합니다.',
     );
   }
   return context;
