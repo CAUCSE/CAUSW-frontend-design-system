@@ -1,6 +1,5 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
-export type TabVariant = 'underline' | 'chip';
 export const tabList = tv({
   base: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar [-webkit-overflow-scrolling:touch]',
   variants: {
@@ -14,7 +13,6 @@ export const tabList = tv({
   },
 });
 export type TabListVariants = VariantProps<typeof tabList>;
-export const tabListKeys = tabList.variantKeys;
 
 export const tabItem = tv({
   base: 'cursor-pointer transition-colors select-none flex-shrink-0',
@@ -56,6 +54,3 @@ export const tabItem = tv({
     active: false,
   },
 });
-
-export type TabItemVariants = VariantProps<typeof tabItem>;
-export const tabItemKeys = tabItem.variantKeys;

@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { tabItem, tabList, type TabVariant } from './Tab.styles';
+import { tabItem, tabList, TabListVariants } from './Tab.styles';
 import { mergeStyles } from '../../utils';
 
-type TabContextValue = {
-  variant: TabVariant;
+interface TabContextValue extends TabListVariants {
   value: string;
   setValue: (v: string) => void;
   baseId: string;
   listRef: React.RefObject<HTMLDivElement>;
   scrollAlign: ScrollLogicalPosition; // 'start' | 'center' | 'end' | 'nearest'
-};
+}
 
 const TabContext = React.createContext<TabContextValue | null>(null);
 
@@ -20,8 +19,7 @@ const useTabContext = () => {
   return ctx;
 };
 
-export interface TabRootProps {
-  variant: TabVariant;
+export interface TabRootProps extends TabListVariants {
   scrollAlign?: ScrollLogicalPosition;
   defaultValue?: string;
   value?: string;

@@ -4,5 +4,3 @@ export type {
   TabTabItemProps,
   TabContentProps,
 } from './Tab';
-
-export type { TabVariant } from './Tab.styles';
