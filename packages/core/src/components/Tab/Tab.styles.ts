@@ -1,36 +1,61 @@
-import { mergeStyles } from '../../utils';
+import { tv, type VariantProps } from 'tailwind-variants';
 
 export type TabVariant = 'underline' | 'chip';
+export const tabList = tv({
+  base: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto [-webkit-overflow-scrolling:touch]',
+  variants: {
+    variant: {
+      underline: 'border-b border-gray-200',
+      chip: 'gap-2',
+    },
+  },
+  defaultVariants: {
+    variant: 'underline',
+  },
+});
+export type TabListVariants = VariantProps<typeof tabList>;
+export const tabListKeys = tabList.variantKeys;
 
-export const tabListStyles = (variant: TabVariant) =>
-  mergeStyles(
-    'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto',
-    '[-webkit-overflow-scrolling:touch]',
-    variant === 'underline' ? 'border-b border-gray-200' : 'gap-2',
-  );
-export const tabItemStyles = ({
-  variant,
-  active,
-}: {
-  variant: TabVariant;
-  active: boolean;
-}) => {
-  const base = 'cursor-pointer transition-colors select-none';
+export const tabItem = tv({
+  base: 'cursor-pointer transition-colors select-none flex-shrink-0',
+  variants: {
+    variant: {
+      underline:
+        'flex-1 min-w-fit px-3 py-3 text-center border-b-2 typo-subtitle-16-bold',
+      chip: 'px-3 py-2 rounded-[0.5rem] typo-body-14-medium',
+    },
+    active: {
+      true: '',
+      false: '',
+    },
+  },
+  compoundVariants: [
+    {
+      variant: 'underline',
+      active: true,
+      class: 'border-gray-700 text-gray-700',
+    },
+    {
+      variant: 'underline',
+      active: false,
+      class: 'border-transparent text-gray-300',
+    },
+    {
+      variant: 'chip',
+      active: true,
+      class: 'bg-gray-700 text-white',
+    },
+    {
+      variant: 'chip',
+      active: false,
+      class: 'bg-white text-gray-600',
+    },
+  ],
+  defaultVariants: {
+    variant: 'underline',
+    active: false,
+  },
+});
 
-  if (variant === 'underline') {
-    return mergeStyles(
-      base,
-      'flex-1 min-w-fit px-3  py-3 text-center border-b-2 typo-subtitle-16-bold flex-shrink-0',
-      active
-        ? 'border-gray-700 text-gray-700'
-        : 'border-transparent text-gray-300',
-    );
-  }
-
-  // Chip 타입 스타일
-  return mergeStyles(
-    base,
-    'px-3 py-2 rounded-[0.5rem] typo-body-14-medium flex-shrink-0',
-    active ? 'bg-gray-700 text-white' : 'bg-white text-gray-600',
-  );
-};
+export type TabItemVariants = VariantProps<typeof tabItem>;
+export const tabItemKeys = tabItem.variantKeys;

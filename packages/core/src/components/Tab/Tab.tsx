@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { tabListStyles, tabItemStyles, type TabVariant } from './Tab.styles';
+import { tabItem, tabList, type TabVariant } from './Tab.styles';
 import { mergeStyles } from '../../utils';
 
 type TabContextValue = {
@@ -8,8 +8,6 @@ type TabContextValue = {
   value: string;
   setValue: (v: string) => void;
   baseId: string;
-  activeClassName?: string;
-  inactiveClassName?: string;
   listRef: React.RefObject<HTMLDivElement>;
   scrollAlign: ScrollLogicalPosition; // 'start' | 'center' | 'end' | 'nearest'
 };
@@ -24,8 +22,6 @@ const useTabContext = () => {
 
 export interface TabRootProps {
   variant: TabVariant;
-  activeClassName?: string;
-  inactiveClassName?: string;
   scrollAlign?: ScrollLogicalPosition;
   defaultValue?: string;
   value?: string;
@@ -37,8 +33,6 @@ export interface TabRootProps {
 
 const TabRoot = ({
   variant,
-  activeClassName,
-  inactiveClassName,
   scrollAlign = 'center',
   defaultValue = '',
   value: valueProp,
@@ -68,8 +62,6 @@ const TabRoot = ({
         value,
         setValue,
         baseId,
-        activeClassName,
-        inactiveClassName,
         listRef,
         scrollAlign,
       }}
@@ -91,7 +83,7 @@ const TabList = ({ className, ...props }: TabListProps) => {
     <div
       ref={listRef}
       role="tablist"
-      className={mergeStyles(tabListStyles(variant), className)}
+      className={tabList({ variant, className })}
       {...props}
     />
   );
@@ -114,14 +106,11 @@ const TabItem = ({
     value: activeValue,
     setValue,
     baseId,
-    activeClassName,
-    inactiveClassName,
     listRef,
     scrollAlign,
   } = useTabContext();
 
   const active = activeValue === value;
-  const tone = active ? activeClassName : inactiveClassName;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setValue(value);
@@ -144,11 +133,11 @@ const TabItem = ({
       aria-selected={active}
       id={`${baseId}-TabItem-${value}`}
       aria-controls={`${baseId}-content-${value}`}
-      className={mergeStyles(
-        tabItemStyles({ variant, active }),
-        tone,
-        className,
-      )}
+      className={tabItem({
+        variant,
+        active,
+        className: mergeStyles(className),
+      })}
       onClick={handleClick}
       {...props}
     />

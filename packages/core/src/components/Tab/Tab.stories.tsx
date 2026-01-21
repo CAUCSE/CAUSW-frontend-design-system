@@ -16,7 +16,6 @@ const meta: Meta<typeof Tab> = {
 - underline / chip variant 지원
 - controlled / uncontrolled 패턴 지원
 - 가로 스크롤 가능 + 선택된 항목으로 스크롤 자동 이동
-- active / inactive 스타일 커스터마이즈 가능
         `,
       },
     },
@@ -38,12 +37,6 @@ const meta: Meta<typeof Tab> = {
     onValueChange: {
       description: '탭 변경 시 호출',
       action: 'valueChanged',
-    },
-    activeClassName: {
-      control: 'text',
-    },
-    inactiveClassName: {
-      control: 'text',
     },
   },
 };
@@ -177,63 +170,7 @@ export const CombinedTabs: Story = {
     );
   },
 };
-export const Colored: Story = {
-  render: () => {
-    const [main, setMain] = React.useState<'all' | 'my'>('all');
-    const [sub, setSub] = React.useState(main === 'all' ? 'total' : 'done');
 
-    React.useEffect(() => {
-      setSub(main === 'all' ? 'total' : 'done');
-    }, [main]);
-
-    return (
-      <div className="flex flex-col gap-6 bg-gray-50 p-4">
-        <Tab.Root
-          variant="underline"
-          value={main}
-          onValueChange={(value) => setMain(value as 'all' | 'my')}
-          activeClassName="text-red-600 border-blue-600"
-          inactiveClassName="text-pink-300"
-        >
-          <Tab.List>
-            <Tab.TabItem value="all">전체 경조사</Tab.TabItem>
-            <Tab.TabItem value="my">내 경조사</Tab.TabItem>
-          </Tab.List>
-        </Tab.Root>
-
-        <Tab.Root
-          variant="chip"
-          value={sub}
-          onValueChange={setSub}
-          activeClassName="text-red-800 bg-yellow-200"
-          inactiveClassName="text-pink-300"
-        >
-          <Tab.List>
-            {main === 'all' ? (
-              <>
-                <Tab.TabItem value="total">전체</Tab.TabItem>
-                <Tab.TabItem value="wedding">결혼</Tab.TabItem>
-                <Tab.TabItem value="funeral">장례</Tab.TabItem>
-              </>
-            ) : (
-              <>
-                <Tab.TabItem value="done">등록 완료</Tab.TabItem>
-                <Tab.TabItem value="waiting">등록 대기중</Tab.TabItem>
-              </>
-            )}
-          </Tab.List>
-
-          {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
-          <Tab.Content value={sub}>
-            <ContentBox>
-              <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
-            </ContentBox>
-          </Tab.Content>
-        </Tab.Root>
-      </div>
-    );
-  },
-};
 export const Multiple: Story = {
   render: () => {
     const [main, setMain] = React.useState<'all' | 'my'>('all');
