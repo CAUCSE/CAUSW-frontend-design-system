@@ -1,23 +1,23 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { mergeStyles } from '../../utils';
 import {
-  RatioBarContext,
-  useRatioBarContext,
-  type RatioBarSelectionMode,
-} from '../../hooks/ratioBar';
+  RatioChartContext,
+  useRatioChartContext,
+  type RatioChartSelectionMode,
+} from '../../hooks/ratioChart';
 import {
-  ratioBarRootStyles,
-  ratioBarItemStyles,
-  ratioBarItemFillStyles,
-  ratioBarItemContentStyles,
-  ratioBarLabelStyles,
-  ratioBarRatioStyles,
-  ratioBarFooterStyles,
-  ratioBarFooterTextStyles,
-} from './RatioBar.styles';
+  ratioChartRootStyles,
+  ratioChartItemStyles,
+  ratioChartItemFillStyles,
+  ratioChartItemContentStyles,
+  ratioChartLabelStyles,
+  ratioChartRatioStyles,
+  ratioChartFooterStyles,
+  ratioChartFooterTextStyles,
+} from './RatioChart.styles';
 
 // Root Props - 단일 선택
-interface RatioBarRootSingleProps extends Omit<
+interface RatioChartRootSingleProps extends Omit<
   React.ComponentProps<'div'>,
   'defaultValue'
 > {
@@ -29,7 +29,7 @@ interface RatioBarRootSingleProps extends Omit<
 }
 
 // Root Props - 다중 선택
-interface RatioBarRootMultipleProps extends Omit<
+interface RatioChartRootMultipleProps extends Omit<
   React.ComponentProps<'div'>,
   'defaultValue'
 > {
@@ -40,11 +40,11 @@ interface RatioBarRootMultipleProps extends Omit<
   disabled?: boolean;
 }
 
-export type RatioBarRootProps =
-  | RatioBarRootSingleProps
-  | RatioBarRootMultipleProps;
+export type RatioChartRootProps =
+  | RatioChartRootSingleProps
+  | RatioChartRootMultipleProps;
 
-const RatioBarRoot = (props: RatioBarRootProps) => {
+const RatioChartRoot = (props: RatioChartRootProps) => {
   const {
     mode = 'single',
     value: valueProp,
@@ -145,10 +145,10 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
   );
 
   return (
-    <RatioBarContext.Provider
+    <RatioChartContext.Provider
       value={{
         value: currentValue,
-        mode: mode as RatioBarSelectionMode,
+        mode: mode as RatioChartSelectionMode,
         disabled,
         onSelect,
         isSelected,
@@ -161,17 +161,17 @@ const RatioBarRoot = (props: RatioBarRootProps) => {
     >
       <div
         role="group"
-        className={mergeStyles(ratioBarRootStyles({ disabled }), className)}
+        className={mergeStyles(ratioChartRootStyles({ disabled }), className)}
         {...rest}
       >
         {children}
       </div>
-    </RatioBarContext.Provider>
+    </RatioChartContext.Provider>
   );
 };
 
 // Item Props
-export interface RatioBarItemProps extends Omit<
+export interface RatioChartItemProps extends Omit<
   React.ComponentProps<'button'>,
   'value'
 > {
@@ -182,7 +182,7 @@ export interface RatioBarItemProps extends Omit<
   disabled?: boolean;
 }
 
-const RatioBarItem = ({
+const RatioChartItem = ({
   value,
   label,
   count,
@@ -190,7 +190,7 @@ const RatioBarItem = ({
   disabled: itemDisabled,
   className,
   ...props
-}: RatioBarItemProps) => {
+}: RatioChartItemProps) => {
   const {
     disabled: rootDisabled,
     onSelect,
@@ -198,7 +198,7 @@ const RatioBarItem = ({
     registerCount,
     unregisterCount,
     getRatio,
-  } = useRatioBarContext();
+  } = useRatioChartContext();
   const disabled = itemDisabled || rootDisabled;
   const selected = isSelected(value);
 
@@ -231,9 +231,9 @@ const RatioBarItem = ({
   // 텍스트 컨텐츠
   const contentElement = (
     <>
-      <span className={ratioBarLabelStyles()}>{label}</span>
+      <span className={ratioChartLabelStyles()}>{label}</span>
       {showRatio && (
-        <span className={ratioBarRatioStyles()}>{displayRatio}%</span>
+        <span className={ratioChartRatioStyles()}>{displayRatio}%</span>
       )}
     </>
   );
@@ -246,13 +246,13 @@ const RatioBarItem = ({
       disabled={disabled}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      className={mergeStyles(ratioBarItemStyles({ disabled }), className)}
+      className={mergeStyles(ratioChartItemStyles({ disabled }), className)}
       style={{ minWidth: 0 }}
       {...props}
     >
       {/* 비율 배경 */}
       <span
-        className={ratioBarItemFillStyles({ selected })}
+        className={ratioChartItemFillStyles({ selected })}
         style={{ width: `${displayRatio}%` }}
       />
 
@@ -260,7 +260,7 @@ const RatioBarItem = ({
         <>
           {/* selected: 흰색 텍스트 (fill 영역에서만 보임) */}
           <span
-            className={ratioBarItemContentStyles({ variant: 'light' })}
+            className={ratioChartItemContentStyles({ variant: 'light' })}
             style={{ clipPath: `inset(0 ${100 - displayRatio}% 0 0)` }}
           >
             {contentElement}
@@ -268,7 +268,7 @@ const RatioBarItem = ({
 
           {/* selected: 검은색 텍스트 (fill 밖에서만 보임) */}
           <span
-            className={ratioBarItemContentStyles({ variant: 'dark' })}
+            className={ratioChartItemContentStyles({ variant: 'dark' })}
             style={{ clipPath: `inset(0 0 0 ${displayRatio}%)` }}
           >
             {contentElement}
@@ -276,7 +276,7 @@ const RatioBarItem = ({
         </>
       ) : (
         /* unselected: 검은색 텍스트 하나만 */
-        <span className={ratioBarItemContentStyles({ variant: 'dark' })}>
+        <span className={ratioChartItemContentStyles({ variant: 'dark' })}>
           {contentElement}
         </span>
       )}
@@ -285,7 +285,7 @@ const RatioBarItem = ({
 };
 
 // Footer Props
-export interface RatioBarFooterProps extends React.ComponentProps<'div'> {
+export interface RatioChartFooterProps extends React.ComponentProps<'div'> {
   endDate?: Date; // 종료 시간 자동 계산
   endTime?: string; // 직접 문자열 지정
   hideParticipantCount?: boolean;
@@ -315,30 +315,35 @@ function formatTimeRemaining(endDate: Date): string {
   return `${Math.floor(totalMinutes)}분 후 종료`;
 }
 
-const RatioBarFooter = ({
+const RatioChartFooter = ({
   endDate,
   endTime,
   hideParticipantCount,
   className,
   children,
   ...props
-}: RatioBarFooterProps) => {
-  const { totalCount } = useRatioBarContext();
+}: RatioChartFooterProps) => {
+  const { totalCount } = useRatioChartContext();
 
   // endDate가 있으면 자동 계산, 없으면 endTime 사용
   const displayEndTime = endDate ? formatTimeRemaining(endDate) : endTime;
 
   return (
-    <div className={mergeStyles(ratioBarFooterStyles(), className)} {...props}>
+    <div
+      className={mergeStyles(ratioChartFooterStyles(), className)}
+      {...props}
+    >
       {children ?? (
         <>
           {!hideParticipantCount && (
-            <span className={ratioBarFooterTextStyles()}>
+            <span className={ratioChartFooterTextStyles()}>
               {totalCount}명 참여
             </span>
           )}
           {displayEndTime && (
-            <span className={ratioBarFooterTextStyles()}>{displayEndTime}</span>
+            <span className={ratioChartFooterTextStyles()}>
+              {displayEndTime}
+            </span>
           )}
         </>
       )}
@@ -346,12 +351,12 @@ const RatioBarFooter = ({
   );
 };
 
-RatioBarRoot.displayName = 'RatioBar.Root';
-RatioBarItem.displayName = 'RatioBar.Item';
-RatioBarFooter.displayName = 'RatioBar.Footer';
+RatioChartRoot.displayName = 'RatioChart.Root';
+RatioChartItem.displayName = 'RatioChart.Item';
+RatioChartFooter.displayName = 'RatioChart.Footer';
 
-export const RatioBar = Object.assign(RatioBarRoot, {
-  Root: RatioBarRoot,
-  Item: RatioBarItem,
-  Footer: RatioBarFooter,
+export const RatioChart = Object.assign(RatioChartRoot, {
+  Root: RatioChartRoot,
+  Item: RatioChartItem,
+  Footer: RatioChartFooter,
 });
