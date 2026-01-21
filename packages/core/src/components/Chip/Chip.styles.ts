@@ -6,8 +6,8 @@ const baseStyles =
   'inline-flex items-center rounded-[12px] select-none whitespace-nowrap transition-colors ';
 
 const sizeStyles: Record<ChipSize, string> = {
-  sm: 'px-2 py-1 typo-fixed-14',
-  md: 'px-[0.875rem] py-[0.375rem] typo-fixed-16',
+  sm: 'px-2 py-1 typo-body-14-semibold',
+  md: 'px-[0.875rem] py-[0.375rem] typo-body-16-medium',
 };
 
 const colorStyles: Record<ChipColor, string> = {

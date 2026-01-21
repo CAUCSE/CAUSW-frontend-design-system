@@ -1,9 +1,10 @@
 import { ComponentProps } from 'react';
-import { Slot } from '@radix-ui/react-slot';
 import { ctaButtonStyles, CTAButtonColor } from './CTAButton.styles';
 import { mergeStyles } from '../../utils';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
-export interface CTAButtonProps extends ComponentProps<'button'> {
+export interface CTAButtonProps
+  extends ComponentProps<'button'>, PrimitiveProps {
   color?: CTAButtonColor;
   fullWidth?: boolean;
   asChild?: boolean;
@@ -13,16 +14,12 @@ export function CTAButton({
   color = 'light',
   fullWidth = false,
   disabled = false,
-  asChild = false,
   className,
   children,
   ...props
 }: CTAButtonProps) {
-  const Component = asChild ? Slot : 'button';
-
   return (
-    <Component
-      type={asChild ? undefined : 'button'}
+    <Primitive.button
       disabled={disabled}
       className={mergeStyles(
         ctaButtonStyles({ color, fullWidth, disabled }),
@@ -31,6 +28,6 @@ export function CTAButton({
       {...props}
     >
       {children}
-    </Component>
+    </Primitive.button>
   );
 }
