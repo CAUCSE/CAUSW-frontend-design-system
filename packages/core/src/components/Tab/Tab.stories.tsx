@@ -167,11 +167,11 @@ export const CombinedTabs: Story = {
           </Tab.List>
 
           {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
-          <Tab.Panel value={sub}>
+          <Tab.Content value={sub}>
             <ContentBox>
               <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
             </ContentBox>
-          </Tab.Panel>
+          </Tab.Content>
         </Tab.Root>
       </div>
     );
@@ -224,11 +224,11 @@ export const Colored: Story = {
           </Tab.List>
 
           {/* Combined에서는 “선택값 표시용 단일 Content”가 제일 자연스러움 */}
-          <Tab.Panel value={sub}>
+          <Tab.Content value={sub}>
             <ContentBox>
               <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
             </ContentBox>
-          </Tab.Panel>
+          </Tab.Content>
         </Tab.Root>
       </div>
     );
@@ -285,11 +285,11 @@ export const Multiple: Story = {
             )}
           </Tab.List>
 
-          <Tab.Panel value={sub}>
+          <Tab.Content value={sub}>
             <ContentBox>
               <Text typography="body-16-regular">{`선택: ${main} / ${sub}`}</Text>
             </ContentBox>
-          </Tab.Panel>
+          </Tab.Content>
         </Tab.Root>
       </div>
     );

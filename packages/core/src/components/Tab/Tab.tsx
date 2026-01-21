@@ -197,5 +197,4 @@ export const Tab = Object.assign(TabRoot, {
   List: TabList,
   Trigger: TabTrigger,
   Content: TabContent,
-  Panel: TabContent,
 });
