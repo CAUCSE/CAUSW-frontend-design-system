@@ -3,30 +3,30 @@ import { Plus, CloseFilled } from '@causw/icons';
 import { mergeStyles } from '../../utils';
 import { Checkbox } from '../Checkbox';
 import {
-  ratioBarEditorRootStyles,
-  ratioBarEditorFieldsStyles,
-  ratioBarEditorInputStyles,
-  ratioBarEditorTextInputStyles,
-  ratioBarEditorRemoveButtonStyles,
-  ratioBarEditorAddButtonStyles,
-  ratioBarEditorAddButtonTextStyles,
-  ratioBarEditorFooterStyles,
-  ratioBarEditorDeleteButtonStyles,
-} from './RatioBarEditor.styles';
+  ratioChartEditorRootStyles,
+  ratioChartEditorFieldsStyles,
+  ratioChartEditorInputStyles,
+  ratioChartEditorTextInputStyles,
+  ratioChartEditorRemoveButtonStyles,
+  ratioChartEditorAddButtonStyles,
+  ratioChartEditorAddButtonTextStyles,
+  ratioChartEditorFooterStyles,
+  ratioChartEditorDeleteButtonStyles,
+} from './RatioChartEditor.styles';
 
-export interface RatioBarEditorOption {
+export interface RatioChartEditorOption {
   id: string;
   value: string;
 }
 
-export interface RatioBarEditorProps extends Omit<
+export interface RatioChartEditorProps extends Omit<
   React.ComponentProps<'div'>,
   'onChange'
 > {
   /** 옵션 목록 */
-  options?: RatioBarEditorOption[];
+  options?: RatioChartEditorOption[];
   /** 옵션 변경 콜백 */
-  onOptionsChange?: (options: RatioBarEditorOption[]) => void;
+  onOptionsChange?: (options: RatioChartEditorOption[]) => void;
   /** 복수 선택 허용 여부 */
   allowMultiple?: boolean;
   /** 복수 선택 변경 콜백 */
@@ -41,7 +41,7 @@ export interface RatioBarEditorProps extends Omit<
   disabled?: boolean;
 }
 
-export const RatioBarEditor = ({
+export const RatioChartEditor = ({
   options: optionsProp,
   onOptionsChange,
   allowMultiple: allowMultipleProp,
@@ -52,14 +52,14 @@ export const RatioBarEditor = ({
   disabled,
   className,
   ...props
-}: RatioBarEditorProps) => {
+}: RatioChartEditorProps) => {
   const baseId = useId();
 
   // 내부 상태 (uncontrolled)
   const [internalOptions, setInternalOptions] = useState<
-    RatioBarEditorOption[]
+    RatioChartEditorOption[]
   >(() => {
-    const initial: RatioBarEditorOption[] = [];
+    const initial: RatioChartEditorOption[] = [];
     for (let i = 0; i < minOptions; i++) {
       initial.push({ id: `${baseId}-${i}`, value: '' });
     }
@@ -92,7 +92,7 @@ export const RatioBarEditor = ({
 
   // 옵션 추가
   const handleAddOption = useCallback(() => {
-    const newOption: RatioBarEditorOption = {
+    const newOption: RatioChartEditorOption = {
       id: `${baseId}-${Date.now()}`,
       value: '',
     };
@@ -131,27 +131,30 @@ export const RatioBarEditor = ({
 
   return (
     <div
-      className={mergeStyles(ratioBarEditorRootStyles({ disabled }), className)}
+      className={mergeStyles(
+        ratioChartEditorRootStyles({ disabled }),
+        className,
+      )}
       {...props}
     >
       {/* 입력 필드들 */}
-      <div className={ratioBarEditorFieldsStyles()}>
+      <div className={ratioChartEditorFieldsStyles()}>
         {options.map((option) => (
-          <div key={option.id} className={ratioBarEditorInputStyles()}>
+          <div key={option.id} className={ratioChartEditorInputStyles()}>
             <input
               type="text"
               value={option.value}
               onChange={(e) => handleOptionChange(option.id, e.target.value)}
               placeholder={placeholder}
               disabled={disabled}
-              className={ratioBarEditorTextInputStyles()}
+              className={ratioChartEditorTextInputStyles()}
             />
             {canRemove && (
               <button
                 type="button"
                 onClick={() => handleRemoveOption(option.id)}
                 disabled={disabled}
-                className={ratioBarEditorRemoveButtonStyles()}
+                className={ratioChartEditorRemoveButtonStyles()}
                 aria-label="옵션 삭제"
               >
                 <CloseFilled size={20} />
@@ -165,17 +168,17 @@ export const RatioBarEditor = ({
           type="button"
           onClick={handleAddOption}
           disabled={disabled}
-          className={ratioBarEditorAddButtonStyles()}
+          className={ratioChartEditorAddButtonStyles()}
         >
           <Plus size={20} />
-          <span className={ratioBarEditorAddButtonTextStyles()}>
+          <span className={ratioChartEditorAddButtonTextStyles()}>
             다른 선택 항목 추가
           </span>
         </button>
       </div>
 
       {/* 푸터 */}
-      <div className={ratioBarEditorFooterStyles()}>
+      <div className={ratioChartEditorFooterStyles()}>
         <Checkbox
           checked={allowMultiple}
           onCheckedChange={handleAllowMultipleChange}
@@ -190,7 +193,7 @@ export const RatioBarEditor = ({
             type="button"
             onClick={onDelete}
             disabled={disabled}
-            className={ratioBarEditorDeleteButtonStyles()}
+            className={ratioChartEditorDeleteButtonStyles()}
           >
             투표 삭제
           </button>
@@ -200,4 +203,4 @@ export const RatioBarEditor = ({
   );
 };
 
-RatioBarEditor.displayName = 'RatioBarEditor';
+RatioChartEditor.displayName = 'RatioChartEditor';
