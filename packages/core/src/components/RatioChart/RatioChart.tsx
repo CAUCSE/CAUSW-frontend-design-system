@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { mergeStyles } from '../../utils';
+import { RatioChartContext } from '../../hooks/ratioChart/useRatioChartContext';
 import {
-  RatioChartContext,
   useRatioChartContext,
   type RatioChartSelectionMode,
 } from '../../hooks/ratioChart';
