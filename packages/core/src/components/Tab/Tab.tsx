@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Primitive } from '../Primitive';
+import { Primitive, PrimitiveProps } from '../Primitive';
 import { tabListStyles, tabItemStyles, type TabVariant } from './Tab.styles';
 import { mergeStyles } from '../../utils';
 
@@ -98,11 +98,10 @@ const TabList = ({ className, ...props }: TabListProps) => {
 };
 TabList.displayName = 'Tab.List';
 
-export type TabTriggerProps = React.ComponentPropsWithoutRef<'button'> & {
+export interface TabTriggerProps
+  extends React.ComponentPropsWithoutRef<'button'>, PrimitiveProps {
   value: string;
-  asChild?: boolean;
-};
-
+}
 const TabTrigger = ({
   value,
   asChild,
