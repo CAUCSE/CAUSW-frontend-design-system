@@ -3,13 +3,13 @@ import { mergeStyles } from '../../utils';
 // 아이템들이 세로로 쌓기
 const rootBaseStyles = 'flex flex-col gap-[0.75rem] pb-[0.5rem] min-w-[20rem]';
 
-export interface RatioBarRootStyleOptions {
+export interface RatioChartRootStyleOptions {
   disabled?: boolean;
 }
 
-export function ratioBarRootStyles({
+export function ratioChartRootStyles({
   disabled,
-}: RatioBarRootStyleOptions = {}) {
+}: RatioChartRootStyleOptions = {}) {
   return mergeStyles(
     rootBaseStyles,
     disabled && 'opacity-50 cursor-not-allowed',
@@ -20,13 +20,13 @@ export function ratioBarRootStyles({
 const itemBaseStyles =
   'relative flex items-center px-[1rem] h-[3.5rem] rounded-[0.75rem] border border-gray-200 overflow-hidden transition-all duration-200';
 
-export interface RatioBarItemStyleOptions {
+export interface RatioChartItemStyleOptions {
   disabled?: boolean;
 }
 
-export function ratioBarItemStyles({
+export function ratioChartItemStyles({
   disabled,
-}: RatioBarItemStyleOptions = {}) {
+}: RatioChartItemStyleOptions = {}) {
   return mergeStyles(
     itemBaseStyles,
     disabled
@@ -35,27 +35,27 @@ export function ratioBarItemStyles({
   );
 }
 
-export interface RatioBarItemFillStyleOptions {
+export interface RatioChartItemFillStyleOptions {
   selected?: boolean;
 }
 
 // 비율에 따라 배경 채워지도록
-export function ratioBarItemFillStyles({
+export function ratioChartItemFillStyles({
   selected,
-}: RatioBarItemFillStyleOptions = {}) {
+}: RatioChartItemFillStyleOptions = {}) {
   return mergeStyles(
     'absolute inset-y-0 left-0 rounded-l-[0.75rem] transition-all duration-300',
     selected ? 'bg-gray-900' : 'bg-gray-200',
   );
 }
 
-export interface RatioBarItemContentStyleOptions {
+export interface RatioChartItemContentStyleOptions {
   variant?: 'light' | 'dark';
 }
 
-export function ratioBarItemContentStyles({
+export function ratioChartItemContentStyles({
   variant = 'dark',
-}: RatioBarItemContentStyleOptions = {}) {
+}: RatioChartItemContentStyleOptions = {}) {
   return mergeStyles(
     'absolute inset-0 z-10 flex items-center justify-between px-[1rem] gap-[0.5rem]',
     'typo-body1-md-point',
@@ -63,19 +63,19 @@ export function ratioBarItemContentStyles({
   );
 }
 
-export function ratioBarLabelStyles() {
+export function ratioChartLabelStyles() {
   return 'truncate';
 }
 
-export function ratioBarRatioStyles() {
+export function ratioChartRatioStyles() {
   return 'flex-shrink-0';
 }
 
 // Footer
-export function ratioBarFooterStyles() {
+export function ratioChartFooterStyles() {
   return 'flex items-end justify-between px-[0.25rem]';
 }
 
-export function ratioBarFooterTextStyles() {
+export function ratioChartFooterTextStyles() {
   return 'typo-body-14 text-gray-400';
 }
