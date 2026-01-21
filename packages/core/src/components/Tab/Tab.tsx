@@ -98,17 +98,17 @@ const TabList = ({ className, ...props }: TabListProps) => {
 };
 TabList.displayName = 'Tab.List';
 
-export interface TabTriggerProps
+export interface TabTabItemProps
   extends React.ComponentPropsWithoutRef<'button'>, PrimitiveProps {
   value: string;
 }
-const TabTrigger = ({
+const TabItem = ({
   value,
   asChild,
   className,
   onClick,
   ...props
-}: TabTriggerProps) => {
+}: TabTabItemProps) => {
   const {
     variant,
     value: activeValue,
@@ -142,7 +142,7 @@ const TabTrigger = ({
       asChild={asChild}
       role="tab"
       aria-selected={active}
-      id={`${baseId}-trigger-${value}`}
+      id={`${baseId}-TabItem-${value}`}
       aria-controls={`${baseId}-content-${value}`}
       className={mergeStyles(
         tabItemStyles({ variant, active }),
@@ -154,7 +154,7 @@ const TabTrigger = ({
     />
   );
 };
-TabTrigger.displayName = 'Tab.Trigger';
+TabItem.displayName = 'Tab.Item';
 
 export type TabContentProps = React.ComponentPropsWithoutRef<'div'> & {
   value: string;
@@ -180,7 +180,7 @@ const TabContent = ({
       asChild={asChild}
       role="tabpanel"
       id={`${baseId}-content-${value}`}
-      aria-labelledby={`${baseId}-trigger-${value}`}
+      aria-labelledby={`${baseId}-TabItem-${value}`}
       hidden={!active}
       className={className}
       {...props}
@@ -194,6 +194,6 @@ TabContent.displayName = 'Tab.Content';
 export const Tab = Object.assign(TabRoot, {
   Root: TabRoot,
   List: TabList,
-  Trigger: TabTrigger,
+  TabItem: TabItem,
   Content: TabContent,
 });

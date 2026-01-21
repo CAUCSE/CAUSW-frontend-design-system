@@ -63,9 +63,9 @@ export const Underline: Story = {
     <div>
       <Tab.Root variant="underline" defaultValue="3">
         <Tab.List>
-          <Tab.Trigger value="1">라벨1</Tab.Trigger>
-          <Tab.Trigger value="2">라벨2</Tab.Trigger>
-          <Tab.Trigger value="3">라벨3</Tab.Trigger>
+          <Tab.TabItem value="1">라벨1</Tab.TabItem>
+          <Tab.TabItem value="2">라벨2</Tab.TabItem>
+          <Tab.TabItem value="3">라벨3</Tab.TabItem>
         </Tab.List>
 
         <Tab.Content value="1">
@@ -111,9 +111,9 @@ export const Chip: Story = {
         >
           <Tab.List>
             {OPTIONS.map((opt) => (
-              <Tab.Trigger key={opt.value} value={opt.value}>
+              <Tab.TabItem key={opt.value} value={opt.value}>
                 {opt.label}
-              </Tab.Trigger>
+              </Tab.TabItem>
             ))}
           </Tab.List>
 
@@ -145,8 +145,8 @@ export const CombinedTabs: Story = {
           onValueChange={(value) => setMain(value as 'all' | 'my')}
         >
           <Tab.List>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+            <Tab.TabItem value="all">전체 경조사</Tab.TabItem>
+            <Tab.TabItem value="my">내 경조사</Tab.TabItem>
           </Tab.List>
         </Tab.Root>
 
@@ -154,14 +154,14 @@ export const CombinedTabs: Story = {
           <Tab.List>
             {main === 'all' ? (
               <>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+                <Tab.TabItem value="total">전체</Tab.TabItem>
+                <Tab.TabItem value="wedding">결혼</Tab.TabItem>
+                <Tab.TabItem value="funeral">장례</Tab.TabItem>
               </>
             ) : (
               <>
-                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
-                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
+                <Tab.TabItem value="done">등록 완료</Tab.TabItem>
+                <Tab.TabItem value="waiting">등록 대기중</Tab.TabItem>
               </>
             )}
           </Tab.List>
@@ -196,8 +196,8 @@ export const Colored: Story = {
           inactiveClassName="text-pink-300"
         >
           <Tab.List>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my">내 경조사</Tab.Trigger>
+            <Tab.TabItem value="all">전체 경조사</Tab.TabItem>
+            <Tab.TabItem value="my">내 경조사</Tab.TabItem>
           </Tab.List>
         </Tab.Root>
 
@@ -211,14 +211,14 @@ export const Colored: Story = {
           <Tab.List>
             {main === 'all' ? (
               <>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+                <Tab.TabItem value="total">전체</Tab.TabItem>
+                <Tab.TabItem value="wedding">결혼</Tab.TabItem>
+                <Tab.TabItem value="funeral">장례</Tab.TabItem>
               </>
             ) : (
               <>
-                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
-                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
+                <Tab.TabItem value="done">등록 완료</Tab.TabItem>
+                <Tab.TabItem value="waiting">등록 대기중</Tab.TabItem>
               </>
             )}
           </Tab.List>
@@ -251,12 +251,12 @@ export const Multiple: Story = {
           onValueChange={(value) => setMain(value as 'all' | 'my')}
         >
           <Tab.List>
-            <Tab.Trigger value="all">전체 경조사</Tab.Trigger>
-            <Tab.Trigger value="my-1">내 경조사</Tab.Trigger>
-            <Tab.Trigger value="all-1">전체 경조사1</Tab.Trigger>
-            <Tab.Trigger value="my-2">내 경조사1</Tab.Trigger>
-            <Tab.Trigger value="all-3">전체 경조사2</Tab.Trigger>
-            <Tab.Trigger value="my-4">내 경조사2</Tab.Trigger>
+            <Tab.TabItem value="all">전체 경조사</Tab.TabItem>
+            <Tab.TabItem value="my-1">내 경조사</Tab.TabItem>
+            <Tab.TabItem value="all-1">전체 경조사1</Tab.TabItem>
+            <Tab.TabItem value="my-2">내 경조사1</Tab.TabItem>
+            <Tab.TabItem value="all-3">전체 경조사2</Tab.TabItem>
+            <Tab.TabItem value="my-4">내 경조사2</Tab.TabItem>
           </Tab.List>
         </Tab.Root>
 
@@ -264,23 +264,23 @@ export const Multiple: Story = {
           <Tab.List>
             {main === 'all' ? (
               <>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
-                <Tab.Trigger value="total-1">전체1</Tab.Trigger>
-                <Tab.Trigger value="wedding-1">결혼1</Tab.Trigger>
-                <Tab.Trigger value="funeral-1">장례1</Tab.Trigger>
-                <Tab.Trigger value="total-2">전체2</Tab.Trigger>
-                <Tab.Trigger value="wedding-2">결혼2</Tab.Trigger>
-                <Tab.Trigger value="funeral-2">장례2</Tab.Trigger>
+                <Tab.TabItem value="total">전체</Tab.TabItem>
+                <Tab.TabItem value="wedding">결혼</Tab.TabItem>
+                <Tab.TabItem value="funeral">장례</Tab.TabItem>
+                <Tab.TabItem value="total-1">전체1</Tab.TabItem>
+                <Tab.TabItem value="wedding-1">결혼1</Tab.TabItem>
+                <Tab.TabItem value="funeral-1">장례1</Tab.TabItem>
+                <Tab.TabItem value="total-2">전체2</Tab.TabItem>
+                <Tab.TabItem value="wedding-2">결혼2</Tab.TabItem>
+                <Tab.TabItem value="funeral-2">장례2</Tab.TabItem>
               </>
             ) : (
               <>
-                <Tab.Trigger value="done">등록 완료</Tab.Trigger>
-                <Tab.Trigger value="waiting">등록 대기중</Tab.Trigger>
-                <Tab.Trigger value="total">전체</Tab.Trigger>
-                <Tab.Trigger value="wedding">결혼</Tab.Trigger>
-                <Tab.Trigger value="funeral">장례</Tab.Trigger>
+                <Tab.TabItem value="done">등록 완료</Tab.TabItem>
+                <Tab.TabItem value="waiting">등록 대기중</Tab.TabItem>
+                <Tab.TabItem value="total">전체</Tab.TabItem>
+                <Tab.TabItem value="wedding">결혼</Tab.TabItem>
+                <Tab.TabItem value="funeral">장례</Tab.TabItem>
               </>
             )}
           </Tab.List>
