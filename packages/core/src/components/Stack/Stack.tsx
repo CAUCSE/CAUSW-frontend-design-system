@@ -1,13 +1,11 @@
 import React, { type ElementType } from 'react';
-import { stackStyles, type StackStylesOptions } from './Stack.styles';
+import { stack, type StackVariants } from './Stack.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-export type StackBaseProps = StackStylesOptions;
-
 export type StackProps<E extends ElementType = 'div'> = PolymorphicProps<
   E,
-  StackBaseProps
+  StackVariants
 >;
 
 /**
@@ -26,7 +24,7 @@ export const Stack = <E extends ElementType = 'div'>({
 }: StackProps<E>) => {
   const Component = as || 'div';
 
-  const classes = stackStyles({ direction, gap, align, justify });
+  const classes = stack({ direction, gap, align, justify });
 
   return React.createElement(
     Component,
