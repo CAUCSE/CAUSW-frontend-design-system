@@ -1,13 +1,11 @@
 import React, { type ElementType } from 'react';
-import { boxStyles, type BoxStylesOptions } from './Box.styles';
+import { box, type BoxVariants } from './Box.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-export type BoxBaseProps = BoxStylesOptions;
-
 export type BoxProps<E extends ElementType = 'div'> = PolymorphicProps<
   E,
-  BoxBaseProps
+  BoxVariants
 >;
 
 export const Box = <E extends ElementType = 'div'>({
@@ -22,7 +20,7 @@ export const Box = <E extends ElementType = 'div'>({
 }: BoxProps<E>) => {
   const Component = as || 'div';
 
-  const classes = boxStyles({ padding, radius, display, background });
+  const classes = box({ padding, radius, display, background });
 
   return React.createElement(
     Component,
