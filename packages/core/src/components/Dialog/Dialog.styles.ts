@@ -7,8 +7,6 @@ export const dialog = tv({
       'fixed inset-0 z-modal bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
     content:
       'fixed left-[50%] top-[50%] z-modal grid w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-white p-6 shadow-lg rounded-lg data-[state=open]:animate-zoom-in data-[state=closed]:animate-zoom-out',
-    title: 'text-lg font-semibold leading-none tracking-tight',
-    description: 'text-sm text-gray-500',
     close:
       'absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500',
   },

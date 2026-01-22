@@ -8,6 +8,7 @@ import {
 } from './Dialog.styles';
 import { splitVariantProps } from '../../utils';
 import { ComponentProps } from 'react';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
 const DialogRoot = DialogPrimitive.Root;
 
@@ -59,8 +60,35 @@ const DialogContent = ({
 };
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
+const DialogTitle = ({
+  className,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Title>) => {
+  return <DialogPrimitive.Title {...props} />;
+};
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+
+const DialogDescription = ({
+  className,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Description>) => {
+  return <DialogPrimitive.Description {...props} />;
+};
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
+
+const DialogFooter = ({
+  className,
+  ...props
+}: ComponentProps<'div'> & PrimitiveProps) => {
+  return <Primitive.div {...props} />;
+};
+DialogFooter.displayName = 'DialogFooter';
+
 export const Dialog = Object.assign(DialogRoot, {
   Trigger: DialogTrigger,
   Content: DialogContent,
+  Title: DialogTitle,
+  Description: DialogDescription,
+  Footer: DialogFooter,
   Close: DialogClose,
 });
