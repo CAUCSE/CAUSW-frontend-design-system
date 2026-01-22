@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { mergeStyles } from '../../utils';
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { chipStyles, type ChipSize, type ChipColor } from './Chip.styles';
+import { chip, ChipVariants } from './Chip.styles';
 
 export interface ChipProps
-  extends React.ComponentPropsWithoutRef<'div'>, PrimitiveProps {
-  size?: ChipSize;
-  color?: ChipColor;
-  disabled?: boolean;
-}
+  extends
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'color'>,
+    PrimitiveProps,
+    ChipVariants {}
 
 export const Chip = ({
   size = 'md',
@@ -22,8 +21,7 @@ export const Chip = ({
   const isClickable = !!onClick && !disabled;
 
   const classes = mergeStyles(
-    chipStyles({ size, color, disabled }),
-    'gap-2',
+    chip({ size, color, disabled }),
     isClickable ? 'cursor-pointer' : 'cursor-default',
     className,
   );
