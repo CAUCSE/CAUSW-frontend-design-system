@@ -1,33 +1,34 @@
-import { mergeStyles } from '../../utils';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-export type AvatarVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export const avatarStyles = tv({
+  slots: {
+    root: 'inline-flex items-center justify-center overflow-hidden bg-gray-100 text-gray-600',
+    image: 'h-full w-full object-cover',
+    fallback:
+      'flex h-full w-full items-center justify-center select-none font-semibold',
+  },
+  variants: {
+    size: {
+      xs: {
+        root: 'h-9 w-9 rounded-md',
+      },
+      sm: {
+        root: 'h-10 w-10 rounded-md',
+      },
+      md: {
+        root: 'h-11 w-11 rounded-md',
+      },
+      lg: {
+        root: 'h-15 w-15 rounded-lg',
+      },
+      xl: {
+        root: 'h-20 w-20 rounded-2xl',
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
-const avatarPreset = {
-  xs: { size: 36, radius: 12 },
-  sm: { size: 40, radius: 12 },
-  md: { size: 44, radius: 12 },
-  lg: { size: 60, radius: 16 },
-  xl: { size: 80, radius: 24 },
-} as const;
-
-export function resolveAvatarPreset(variant: AvatarVariant) {
-  return avatarPreset[variant];
-}
-
-export function avatarRootStyles() {
-  return mergeStyles(
-    'inline-flex items-center justify-center overflow-hidden',
-    'bg-gray-100 text-gray-600',
-  );
-}
-
-export function avatarImageStyles() {
-  return 'h-full w-full object-cover';
-}
-
-export function avatarFallbackStyles() {
-  return mergeStyles(
-    'flex h-full w-full items-center justify-center',
-    'select-none font-semibold',
-  );
-}
+export type AvatarVariants = VariantProps<typeof avatarStyles>;

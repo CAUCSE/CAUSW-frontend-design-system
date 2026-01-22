@@ -24,16 +24,16 @@ const meta: Meta<typeof Avatar> = {
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 export const Default: Story = {
-  render: () => <Avatar variant="md" />,
+  render: () => <Avatar size="md" />,
 };
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Avatar variant="xs" src={SAMPLE_SRC} />
-      <Avatar variant="sm" src={SAMPLE_SRC} />
-      <Avatar variant="md" src={SAMPLE_SRC} />
-      <Avatar variant="lg" src={SAMPLE_SRC} />
-      <Avatar variant="xl" src={SAMPLE_SRC} />
+      <Avatar size="xs" src={SAMPLE_SRC} />
+      <Avatar size="sm" src={SAMPLE_SRC} />
+      <Avatar size="md" src={SAMPLE_SRC} />
+      <Avatar size="lg" src={SAMPLE_SRC} />
+      <Avatar size="xl" src={SAMPLE_SRC} />
     </div>
   ),
 };
@@ -46,7 +46,7 @@ export const NoProfile: Story = {
 };
 
 export const WrongProfileWithFallback: Story = {
-  render: () => <Avatar src={WRONG_SRC} fallback="Fallback" />,
+  render: () => <Avatar src={WRONG_SRC} fallback="Fd" />, // Changed Fallback to Fd to match slicing logic better or general usage
 };
 export const WrongProfileWithIconFallback: Story = {
   render: () => <Avatar src={WRONG_SRC} fallback={<StarIcon />} />,
