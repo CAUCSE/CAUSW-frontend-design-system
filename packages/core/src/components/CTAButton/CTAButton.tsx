@@ -1,14 +1,13 @@
 import { ComponentProps } from 'react';
-import { ctaButtonStyles, CTAButtonColor } from './CTAButton.styles';
+import { ctaButton, CTAButtonVariants } from './CTAButton.styles';
 import { mergeStyles } from '../../utils';
 import { Primitive, PrimitiveProps } from '../Primitive';
 
 export interface CTAButtonProps
-  extends ComponentProps<'button'>, PrimitiveProps {
-  color?: CTAButtonColor;
-  fullWidth?: boolean;
-  asChild?: boolean;
-}
+  extends
+    Omit<ComponentProps<'button'>, 'color'>,
+    PrimitiveProps,
+    CTAButtonVariants {}
 
 export function CTAButton({
   color = 'light',
@@ -22,7 +21,7 @@ export function CTAButton({
     <Primitive.button
       disabled={disabled}
       className={mergeStyles(
-        ctaButtonStyles({ color, fullWidth, disabled }),
+        ctaButton({ color, fullWidth, disabled }),
         className,
       )}
       {...props}
