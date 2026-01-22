@@ -1,6 +1,6 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
-export const avatarStyles = tv({
+export const avatar = tv({
   slots: {
     root: 'inline-flex items-center justify-center overflow-hidden bg-gray-100 text-gray-600',
     image: 'h-full w-full object-cover',
@@ -31,4 +31,4 @@ export const avatarStyles = tv({
   },
 });
 
-export type AvatarVariants = VariantProps<typeof avatarStyles>;
+export type AvatarVariants = VariantProps<typeof avatar>;

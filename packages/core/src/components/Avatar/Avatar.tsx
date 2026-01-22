@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { avatarStyles, AvatarVariants } from './Avatar.styles';
+import { avatar, AvatarVariants } from './Avatar.styles';
 import { mergeStyles } from '../../utils';
 import DEFAULT_AVATAR_SRC from '../../assets/avatar/default.jpeg';
 
@@ -24,7 +24,7 @@ export const Avatar = ({
   ...props
 }: AvatarProps) => {
   const [hasError, setHasError] = React.useState(false);
-  const { root, image, fallback: fallbackStyle } = avatarStyles({ size });
+  const { root, image, fallback: fallbackStyle } = avatar({ size });
 
   React.useEffect(() => {
     setHasError(false);
