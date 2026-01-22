@@ -1,13 +1,9 @@
 import { ComponentProps } from 'react';
-import { buttonStyles, ButtonSize, ButtonColor } from './Button.styles';
+import { button, ButtonVariants } from './Button.styles';
 import { mergeStyles } from '../../utils';
 
-export interface ButtonProps extends ComponentProps<'button'> {
-  size?: ButtonSize;
-  color?: ButtonColor;
-  active?: boolean;
-  fullWidth?: boolean;
-}
+export interface ButtonProps
+  extends Omit<ComponentProps<'button'>, 'color'>, ButtonVariants {}
 
 export function Button({
   size = 'md',
@@ -22,7 +18,7 @@ export function Button({
   return (
     <button
       className={mergeStyles(
-        buttonStyles({
+        button({
           size,
           color,
           active,
