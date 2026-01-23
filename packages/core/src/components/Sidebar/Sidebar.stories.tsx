@@ -78,7 +78,10 @@ export const Default: Story = {
                   <div onClick={() => setActive('about')}>크자회 소개</div>
                 </Sidebar.Item>
                 <Sidebar.Item active={active === 'notifications'} asChild>
-                  <div onClick={() => setActive('notifications')}>
+                  <div
+                    onClick={() => setActive('notifications')}
+                    className="flex w-full items-center gap-2"
+                  >
                     알림
                     <span className={sidebarBadgeClassName}>1</span>
                   </div>
