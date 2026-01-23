@@ -2,4 +2,4 @@
 '@causw/core': patch
 ---
 
-navbar components
+Separated the navbar into Sidebar and BottomNavigation components
