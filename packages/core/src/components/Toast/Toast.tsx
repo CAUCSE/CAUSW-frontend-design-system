@@ -1,13 +1,12 @@
 import * as ToastPrimitives from '@radix-ui/react-toast';
-import { colorStyles, getToastStyles, ToastVariant } from './Toast.styles';
+import { toast, ToastVariants } from './Toast.styles';
 import { Text } from '../Text';
-import { mergeStyles } from '../../utils';
 import { HStack } from '../HStack';
 
 export interface ToastProps extends React.ComponentProps<
   typeof ToastPrimitives.Root
 > {
-  variant?: ToastVariant;
+  variant?: ToastVariants['variant'];
   message?: string;
   icon?: React.ReactNode;
 }
@@ -19,18 +18,15 @@ export const Toast = ({
   icon,
   ...props
 }: ToastProps) => {
-  const contentColor = colorStyles[variant];
+  const { root } = toast({ variant });
 
   return (
-    <ToastPrimitives.Root
-      className={getToastStyles({ variant, className })}
-      {...props}
-    >
+    <ToastPrimitives.Root className={root({ className })} {...props}>
       <HStack gap="sm" align="center">
         {icon && <>{icon}</>}
         {message && (
           <ToastPrimitives.Description asChild>
-            <Text as="p" typography="body-16-medium" textColor={contentColor}>
+            <Text as="p" typography="body-16-medium" textColor="white">
               {message}
             </Text>
           </ToastPrimitives.Description>
@@ -44,14 +40,12 @@ export type ToastViewportProps = React.ComponentProps<
   typeof ToastPrimitives.Viewport
 >;
 
-export const ToastViewport = ({ className, ...props }: ToastViewportProps) => (
-  <ToastPrimitives.Viewport
-    className={mergeStyles([
-      'fixed bottom-20.5 left-1/2 z-50 flex max-h-screen w-full -translate-x-1/2 flex-col-reverse items-center xl:bottom-14',
-      className,
-    ])}
-    {...props}
-  />
-);
+export const ToastViewport = ({ className, ...props }: ToastViewportProps) => {
+  const { viewport } = toast();
+
+  return (
+    <ToastPrimitives.Viewport className={viewport({ className })} {...props} />
+  );
+};
 
 export const ToastProvider = ToastPrimitives.Provider;
