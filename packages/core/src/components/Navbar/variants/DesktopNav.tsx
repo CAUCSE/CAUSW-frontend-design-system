@@ -9,6 +9,7 @@ interface DesktopNavProps {
   /** layout slots */
   top?: React.ReactNode;
   footer?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function DesktopNav({
@@ -17,6 +18,7 @@ export function DesktopNav({
   onNavigate,
   top,
   footer,
+  children,
 }: DesktopNavProps) {
   return (
     <nav className={navbarStyles.desktop.root}>
@@ -25,26 +27,27 @@ export function DesktopNav({
 
       {/* CONTENT */}
       <div className={navbarStyles.desktop.content}>
-        {items.map((item) => {
-          const active = item.key === activeKey;
+        {children ??
+          items.map((item) => {
+            const active = item.key === activeKey;
 
-          return (
-            <button
-              key={item.key}
-              className={navbarStyles.desktop.item(active)}
-              onClick={() => onNavigate?.(item.key)}
-            >
-              {item.icon}
-              <span>{item.label}</span>
+            return (
+              <button
+                key={item.key}
+                className={navbarStyles.desktop.item(active)}
+                onClick={() => onNavigate?.(item.key)}
+              >
+                {item.icon}
+                <span>{item.label}</span>
 
-              {item.badgeCount !== undefined && (
-                <span className={navbarStyles.desktop.badge}>
-                  {item.badgeCount}
-                </span>
-              )}
-            </button>
-          );
-        })}
+                {item.badgeCount !== undefined && (
+                  <span className={navbarStyles.desktop.badge}>
+                    {item.badgeCount}
+                  </span>
+                )}
+              </button>
+            );
+          })}
       </div>
 
       {/* FOOTER */}
