@@ -1,0 +1,1 @@
+export { splitVariantProps } from './splitter';
