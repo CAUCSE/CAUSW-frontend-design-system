@@ -14,6 +14,7 @@ export function Navbar({
   onNavigate,
   top,
   footer,
+  children,
 }: NavbarProps) {
   if (variant === 'mobile') {
     return (
@@ -28,6 +29,8 @@ export function Navbar({
       onNavigate={onNavigate}
       top={top}
       footer={footer}
-    />
+    >
+      {children}
+    </DesktopNav>
   );
 }
