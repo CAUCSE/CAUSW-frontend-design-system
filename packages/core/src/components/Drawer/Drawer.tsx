@@ -1,46 +1,52 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { mergeStyles } from '../../utils';
+import {
+  drawerContent,
+  DrawerContentVariants,
+  drawerOverlay,
+  DrawerOverlayVariants,
+} from './Drawer.styles';
 
-export const DrawerRoot = DialogPrimitive.Root;
-export const DrawerTrigger = DialogPrimitive.Trigger;
-export const DrawerClose = DialogPrimitive.Close;
-export const DrawerPortal = DialogPrimitive.Portal;
+const DrawerRoot = DialogPrimitive.Root;
+const DrawerTrigger = DialogPrimitive.Trigger;
+const DrawerClose = DialogPrimitive.Close;
+const DrawerPortal = DialogPrimitive.Portal;
+const DrawerTitle = DialogPrimitive.Title;
+const DrawerDescription = DialogPrimitive.Description;
 
-export const DrawerOverlay = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>) => (
+type DrawerOverlayProps = React.ComponentProps<typeof DialogPrimitive.Overlay> &
+  DrawerOverlayVariants;
+
+const DrawerOverlay = ({ className, ...props }: DrawerOverlayProps) => (
   <DialogPrimitive.Overlay
-    className={mergeStyles([
-      'fixed inset-0 z-50',
-      'data-[state=open]:animate-overlay-show',
-      'data-[state=closed]:animate-overlay-hide',
-      className,
-    ])}
+    className={drawerOverlay({ className })}
     {...props}
   />
 );
 
-export const DrawerContent = ({
+type DrawerContentProps = React.ComponentProps<typeof DialogPrimitive.Content> &
+  DrawerContentVariants;
+
+const DrawerContent = ({
+  position,
   className,
   children,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DialogPrimitive.Content
-      className={mergeStyles([
-        'fixed bottom-0 z-50 w-full',
-        'data-[state=open]:animate-content-show',
-        'data-[state=closed]:animate-content-hide',
-        className,
-      ])}
-      {...props}
-    >
-      {children}
-    </DialogPrimitive.Content>
-  </DrawerPortal>
+}: DrawerContentProps) => (
+  <DialogPrimitive.Content
+    className={drawerContent({ position, className })}
+    {...props}
+  >
+    {children}
+  </DialogPrimitive.Content>
 );
 
-export const DrawerTitle = DialogPrimitive.Title;
-export const DrawerDescription = DialogPrimitive.Description;
+export const Drawer = Object.assign(DrawerRoot, {
+  Root: DrawerRoot,
+  Trigger: DrawerTrigger,
+  Close: DrawerClose,
+  Portal: DrawerPortal,
+  Overlay: DrawerOverlay,
+  Content: DrawerContent,
+  Title: DrawerTitle,
+  Description: DrawerDescription,
+});

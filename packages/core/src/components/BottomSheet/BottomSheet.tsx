@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { mergeStyles } from '../../utils';
-import {
-  DrawerContent,
-  DrawerRoot,
-  DrawerTitle,
-  DrawerTrigger,
-} from '../Drawer/Drawer';
+import { Drawer } from '../Drawer/Drawer';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
 
@@ -47,14 +42,14 @@ const BottomSheetRoot = ({
         onClose: () => handleOpenChange(false),
       }}
     >
-      <DrawerRoot open={isOpen} onOpenChange={handleOpenChange}>
+      <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
         {children}
-      </DrawerRoot>
+      </Drawer.Root>
     </BottomSheetContext.Provider>
   );
 };
 
-const BottomSheetTrigger = DrawerTrigger;
+const BottomSheetTrigger = Drawer.Trigger;
 BottomSheetTrigger.displayName = 'BottomSheetTrigger';
 
 const BottomSheetHandle = () => {
@@ -65,18 +60,22 @@ const BottomSheetContent = ({
   children,
   className,
   ...props
-}: React.ComponentProps<typeof DrawerContent>) => {
+}: React.ComponentProps<typeof Drawer.Content>) => {
   return (
-    <DrawerContent
-      className={mergeStyles([
-        'flex w-full flex-col items-center gap-8 rounded-t-2xl bg-white px-6 py-3.5 pb-10 shadow-[0_-2px_30px_0_rgba(51,53,61,0.30)]',
-        className,
-      ])}
-      {...props}
-    >
-      <BottomSheetHandle />
-      <div className="w-full">{children}</div>
-    </DrawerContent>
+    <Drawer.Portal>
+      <Drawer.Overlay />
+
+      <Drawer.Content
+        className={mergeStyles([
+          'flex w-full flex-col items-center gap-8 rounded-t-2xl bg-white px-6 py-3.5 pb-10 shadow-[0_-2px_30px_0_rgba(51,53,61,0.30)]',
+          className,
+        ])}
+        {...props}
+      >
+        <BottomSheetHandle />
+        <div className="w-full">{children}</div>
+      </Drawer.Content>
+    </Drawer.Portal>
   );
 };
 
@@ -97,11 +96,11 @@ const BottomSheetHeader = ({
       ])}
     >
       {title && (
-        <DrawerTitle asChild>
+        <Drawer.Title asChild>
           <Text as="h2" typography="subtitle-18-bold">
             {title}
           </Text>
-        </DrawerTitle>
+        </Drawer.Title>
       )}
     </div>
   );
