@@ -5,16 +5,7 @@ import {
   useRatioChartContext,
   type RatioChartSelectionMode,
 } from '../../hooks/ratioChart';
-import {
-  ratioChartRootStyles,
-  ratioChartItemStyles,
-  ratioChartItemFillStyles,
-  ratioChartItemContentStyles,
-  ratioChartLabelStyles,
-  ratioChartRatioStyles,
-  ratioChartFooterStyles,
-  ratioChartFooterTextStyles,
-} from './RatioChart.styles';
+import { ratioChart } from './RatioChart.styles';
 
 // Root Props - 단일 선택
 interface RatioChartRootSingleProps extends Omit<
@@ -144,6 +135,8 @@ const RatioChartRoot = (props: RatioChartRootProps) => {
     [counts, totalCount],
   );
 
+  const styles = ratioChart({ disabled });
+
   return (
     <RatioChartContext.Provider
       value={{
@@ -161,7 +154,7 @@ const RatioChartRoot = (props: RatioChartRootProps) => {
     >
       <div
         role="group"
-        className={mergeStyles(ratioChartRootStyles({ disabled }), className)}
+        className={mergeStyles(styles.root(), className)}
         {...rest}
       >
         {children}
@@ -228,13 +221,15 @@ const RatioChartItem = ({
   // ratio 표시 여부: count가 있거나 ratio가 명시적으로 지정된 경우
   const showRatio = count !== undefined || ratio !== undefined;
 
+  const styles = ratioChart({ disabled, selected });
+  const lightContent = ratioChart({ contentVariant: 'light' });
+  const darkContent = ratioChart({ contentVariant: 'dark' });
+
   // 텍스트 컨텐츠
   const contentElement = (
     <>
-      <span className={ratioChartLabelStyles()}>{label}</span>
-      {showRatio && (
-        <span className={ratioChartRatioStyles()}>{displayRatio}%</span>
-      )}
+      <span className={styles.label()}>{label}</span>
+      {showRatio && <span className={styles.ratio()}>{displayRatio}%</span>}
     </>
   );
 
@@ -246,21 +241,18 @@ const RatioChartItem = ({
       disabled={disabled}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      className={mergeStyles(ratioChartItemStyles({ disabled }), className)}
+      className={mergeStyles(styles.item(), className)}
       style={{ minWidth: 0 }}
       {...props}
     >
       {/* 비율 배경 */}
-      <span
-        className={ratioChartItemFillStyles({ selected })}
-        style={{ width: `${displayRatio}%` }}
-      />
+      <span className={styles.fill()} style={{ width: `${displayRatio}%` }} />
 
       {selected ? (
         <>
           {/* selected: 흰색 텍스트 (fill 영역에서만 보임) */}
           <span
-            className={ratioChartItemContentStyles({ variant: 'light' })}
+            className={lightContent.content()}
             style={{ clipPath: `inset(0 ${100 - displayRatio}% 0 0)` }}
           >
             {contentElement}
@@ -268,7 +260,7 @@ const RatioChartItem = ({
 
           {/* selected: 검은색 텍스트 (fill 밖에서만 보임) */}
           <span
-            className={ratioChartItemContentStyles({ variant: 'dark' })}
+            className={darkContent.content()}
             style={{ clipPath: `inset(0 0 0 ${displayRatio}%)` }}
           >
             {contentElement}
@@ -276,9 +268,7 @@ const RatioChartItem = ({
         </>
       ) : (
         /* unselected: 검은색 텍스트 하나만 */
-        <span className={ratioChartItemContentStyles({ variant: 'dark' })}>
-          {contentElement}
-        </span>
+        <span className={darkContent.content()}>{contentElement}</span>
       )}
     </button>
   );
@@ -328,22 +318,17 @@ const RatioChartFooter = ({
   // endDate가 있으면 자동 계산, 없으면 endTime 사용
   const displayEndTime = endDate ? formatTimeRemaining(endDate) : endTime;
 
+  const styles = ratioChart();
+
   return (
-    <div
-      className={mergeStyles(ratioChartFooterStyles(), className)}
-      {...props}
-    >
+    <div className={mergeStyles(styles.footer(), className)} {...props}>
       {children ?? (
         <>
           {!hideParticipantCount && (
-            <span className={ratioChartFooterTextStyles()}>
-              {totalCount}명 참여
-            </span>
+            <span className={styles.footerText()}>{totalCount}명 참여</span>
           )}
           {displayEndTime && (
-            <span className={ratioChartFooterTextStyles()}>
-              {displayEndTime}
-            </span>
+            <span className={styles.footerText()}>{displayEndTime}</span>
           )}
         </>
       )}
