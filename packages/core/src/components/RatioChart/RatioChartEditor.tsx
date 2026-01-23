@@ -2,17 +2,7 @@ import React, { useState, useCallback, useId } from 'react';
 import { Plus, CloseFilled } from '@causw/icons';
 import { mergeStyles } from '../../utils';
 import { Checkbox } from '../Checkbox';
-import {
-  ratioChartEditorRootStyles,
-  ratioChartEditorFieldsStyles,
-  ratioChartEditorInputStyles,
-  ratioChartEditorTextInputStyles,
-  ratioChartEditorRemoveButtonStyles,
-  ratioChartEditorAddButtonStyles,
-  ratioChartEditorAddButtonTextStyles,
-  ratioChartEditorFooterStyles,
-  ratioChartEditorDeleteButtonStyles,
-} from './RatioChartEditor.styles';
+import { ratioChartEditor } from './RatioChartEditor.styles';
 
 export interface RatioChartEditorOption {
   id: string;
@@ -129,32 +119,28 @@ export const RatioChartEditor = ({
 
   const canRemove = options.length > minOptions;
 
+  const styles = ratioChartEditor({ disabled });
+
   return (
-    <div
-      className={mergeStyles(
-        ratioChartEditorRootStyles({ disabled }),
-        className,
-      )}
-      {...props}
-    >
+    <div className={mergeStyles(styles.root(), className)} {...props}>
       {/* 입력 필드들 */}
-      <div className={ratioChartEditorFieldsStyles()}>
+      <div className={styles.fields()}>
         {options.map((option) => (
-          <div key={option.id} className={ratioChartEditorInputStyles()}>
+          <div key={option.id} className={styles.input()}>
             <input
               type="text"
               value={option.value}
               onChange={(e) => handleOptionChange(option.id, e.target.value)}
               placeholder={placeholder}
               disabled={disabled}
-              className={ratioChartEditorTextInputStyles()}
+              className={styles.textInput()}
             />
             {canRemove && (
               <button
                 type="button"
                 onClick={() => handleRemoveOption(option.id)}
                 disabled={disabled}
-                className={ratioChartEditorRemoveButtonStyles()}
+                className={styles.removeButton()}
                 aria-label="옵션 삭제"
               >
                 <CloseFilled size={20} />
@@ -168,17 +154,15 @@ export const RatioChartEditor = ({
           type="button"
           onClick={handleAddOption}
           disabled={disabled}
-          className={ratioChartEditorAddButtonStyles()}
+          className={styles.addButton()}
         >
           <Plus size={20} />
-          <span className={ratioChartEditorAddButtonTextStyles()}>
-            다른 선택 항목 추가
-          </span>
+          <span className={styles.addButtonText()}>다른 선택 항목 추가</span>
         </button>
       </div>
 
       {/* 푸터 */}
-      <div className={ratioChartEditorFooterStyles()}>
+      <div className={styles.footer()}>
         <Checkbox
           checked={allowMultiple}
           onCheckedChange={handleAllowMultipleChange}
@@ -193,7 +177,7 @@ export const RatioChartEditor = ({
             type="button"
             onClick={onDelete}
             disabled={disabled}
-            className={ratioChartEditorDeleteButtonStyles()}
+            className={styles.deleteButton()}
           >
             투표 삭제
           </button>
