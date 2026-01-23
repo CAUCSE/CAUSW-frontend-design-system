@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { mergeStyles } from '../../utils';
-import { TextColor } from '../Text';
+import { TextVariants } from '../Text';
 
 export type ToastVariant = 'default';
 
@@ -9,7 +9,7 @@ const containerStyles: Record<ToastVariant, string> = {
     'w-[20rem] md:w-[26.25rem] lg:w-[20rem] max-w-[calc(100vw-2rem)] rounded-md bg-gray-700 px-4 py-3',
 };
 
-export const colorStyles: Record<ToastVariant, TextColor> = {
+export const colorStyles: Record<ToastVariant, TextVariants['textColor']> = {
   default: 'white',
 };
 

@@ -30,7 +30,7 @@ export const Toast = ({
         {icon && <>{icon}</>}
         {message && (
           <ToastPrimitives.Description asChild>
-            <Text as="p" typography="fixed-16" textColor={contentColor}>
+            <Text as="p" typography="body-16-medium" textColor={contentColor}>
               {message}
             </Text>
           </ToastPrimitives.Description>

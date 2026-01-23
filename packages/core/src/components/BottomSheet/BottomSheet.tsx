@@ -98,7 +98,7 @@ export const BottomSheetHeader = ({
     >
       {title && (
         <DrawerTitle asChild>
-          <Text as="h2" typography="subtitle-sm-point">
+          <Text as="h2" typography="subtitle-18-bold">
             {title}
           </Text>
         </DrawerTitle>
