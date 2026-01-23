@@ -1,10 +1,16 @@
 import { ComponentProps } from 'react';
-import { floatingActionButtonStyles } from './FloatingActionButton.styles';
+import {
+  floatingActionButton,
+  FloatingActionButtonVariants,
+} from './FloatingActionButton.styles';
 import { mergeStyles } from '../../utils';
 import { Primitive, PrimitiveProps } from '../Primitive';
 
 export interface FloatingActionButtonProps
-  extends ComponentProps<'button'>, PrimitiveProps {}
+  extends
+    ComponentProps<'button'>,
+    FloatingActionButtonVariants,
+    PrimitiveProps {}
 
 export function FloatingActionButton({
   disabled = false,
@@ -15,10 +21,7 @@ export function FloatingActionButton({
   return (
     <Primitive.button
       disabled={disabled}
-      className={mergeStyles(
-        floatingActionButtonStyles({ disabled }),
-        className,
-      )}
+      className={mergeStyles(floatingActionButton({ disabled }), className)}
       {...props}
     >
       {children}
