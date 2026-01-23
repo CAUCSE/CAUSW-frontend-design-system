@@ -15,13 +15,16 @@ export const modal = tv({
   variants: {
     variant: {
       primary: {
-        actionButton: 'text-blue-700 hover:bg-blue-50 active:bg-blue-100',
+        actionButton:
+          'text-blue-700 hover:bg-blue-50 active:bg-blue-100 data-[active]:bg-blue-100',
       },
       destructive: {
-        actionButton: 'text-red-400 hover:bg-red-50 active:bg-red-100',
+        actionButton:
+          'text-red-400 hover:bg-red-50 active:bg-red-100 data-[active]:bg-red-100',
       },
       cancel: {
-        actionButton: 'text-gray-400 hover:bg-gray-50 active:bg-gray-100',
+        actionButton:
+          'text-gray-400 hover:bg-gray-50 active:bg-gray-100 data-[active]:bg-gray-100',
       },
     },
     textAlign: {
