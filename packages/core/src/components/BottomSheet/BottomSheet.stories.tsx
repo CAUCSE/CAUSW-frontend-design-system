@@ -1,27 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import {
-  BottomSheetRoot,
-  BottomSheetTrigger,
-  BottomSheetContent,
-  BottomSheetHeader,
-  BottomSheetBody,
-  BottomSheetFooter,
-} from './BottomSheet';
+import { BottomSheet } from './BottomSheet';
 import { useBottomSheet } from '../../hooks';
 import { Stack } from '../Stack';
 import { Box } from '../Box';
 import { CTAButton } from '../CTAButton';
 
-const meta: Meta<typeof BottomSheetRoot> = {
+const meta: Meta<typeof BottomSheet> = {
   title: 'Components/BottomSheet',
-  component: BottomSheetRoot,
+  component: BottomSheet,
   subcomponents: {
-    BottomSheetTrigger,
-    BottomSheetContent,
-    BottomSheetHeader,
-    BottomSheetBody,
-    BottomSheetFooter,
+    Trigger: BottomSheet.Trigger,
+    Content: BottomSheet.Content,
+    Header: BottomSheet.Header,
+    Body: BottomSheet.Body,
+    Footer: BottomSheet.Footer,
   },
   parameters: {
     layout: 'centered',
@@ -57,7 +50,7 @@ const meta: Meta<typeof BottomSheetRoot> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof BottomSheetRoot>;
+type Story = StoryObj<typeof BottomSheet>;
 
 const ExampleCloseButton = () => {
   const { onClose } = useBottomSheet();
@@ -71,21 +64,21 @@ const ExampleCloseButton = () => {
 
 export const Default: Story = {
   render: (args) => (
-    <BottomSheetRoot {...args}>
-      <BottomSheetTrigger asChild>
+    <BottomSheet {...args}>
+      <BottomSheet.Trigger asChild>
         <button className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200">
           Open
         </button>
-      </BottomSheetTrigger>
+      </BottomSheet.Trigger>
 
-      <BottomSheetContent>
-        <BottomSheetHeader title="제목" />
-        <BottomSheetBody>Content</BottomSheetBody>
-        <BottomSheetFooter>
+      <BottomSheet.Content>
+        <BottomSheet.Header title="제목" />
+        <BottomSheet.Body>Content</BottomSheet.Body>
+        <BottomSheet.Footer>
           <ExampleCloseButton />
-        </BottomSheetFooter>
-      </BottomSheetContent>
-    </BottomSheetRoot>
+        </BottomSheet.Footer>
+      </BottomSheet.Content>
+    </BottomSheet>
   ),
 };
 
@@ -118,21 +111,21 @@ export const Controlled: Story = {
           현재 상태: {open ? '열림 (Open)' : '닫힘 (Closed)'}
         </div>
 
-        <BottomSheetRoot {...args} open={open} onOpenChange={setOpen}>
-          <BottomSheetContent>
-            <BottomSheetHeader title="제어형 모드" />
-            <BottomSheetBody>
+        <BottomSheet {...args} open={open} onOpenChange={setOpen}>
+          <BottomSheet.Content>
+            <BottomSheet.Header title="제어형 모드" />
+            <BottomSheet.Body>
               <p className="text-gray-600">
                 onOpenChange 이벤트를 통해 상태를 업데이트합니다.
               </p>
-            </BottomSheetBody>
-            <BottomSheetFooter>
+            </BottomSheet.Body>
+            <BottomSheet.Footer>
               <CTAButton onClick={() => setOpen(false)} color="dark" fullWidth>
                 닫기 (상태 변경)
               </CTAButton>
-            </BottomSheetFooter>
-          </BottomSheetContent>
-        </BottomSheetRoot>
+            </BottomSheet.Footer>
+          </BottomSheet.Content>
+        </BottomSheet>
       </div>
     );
   },
@@ -154,16 +147,16 @@ export const LongContent: Story = {
   },
 
   render: (args) => (
-    <BottomSheetRoot {...args}>
-      <BottomSheetTrigger asChild>
+    <BottomSheet {...args}>
+      <BottomSheet.Trigger asChild>
         <button className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200">
           Open
         </button>
-      </BottomSheetTrigger>
+      </BottomSheet.Trigger>
 
-      <BottomSheetContent>
-        <BottomSheetHeader title="스크롤 테스트" />
-        <BottomSheetBody maxHeight={300} className="my-4">
+      <BottomSheet.Content>
+        <BottomSheet.Header title="스크롤 테스트" />
+        <BottomSheet.Body maxHeight={300} className="my-4">
           <Stack gap="md">
             <Box
               background="subtle"
@@ -181,11 +174,11 @@ export const LongContent: Story = {
               className="h-30 w-full border border-gray-200"
             />
           </Stack>
-        </BottomSheetBody>
-        <BottomSheetFooter>
+        </BottomSheet.Body>
+        <BottomSheet.Footer>
           <ExampleCloseButton />
-        </BottomSheetFooter>
-      </BottomSheetContent>
-    </BottomSheetRoot>
+        </BottomSheet.Footer>
+      </BottomSheet.Content>
+    </BottomSheet>
   ),
 };

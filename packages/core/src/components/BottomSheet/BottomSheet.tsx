@@ -11,7 +11,7 @@ import { BottomSheetContext, useBottomSheet } from '../../hooks';
 
 export type HeaderAlign = 'left' | 'center';
 
-export interface BottomSheetRootProps {
+interface BottomSheetRootProps {
   children?: React.ReactNode;
   open?: boolean;
   defaultOpen?: boolean;
@@ -19,7 +19,7 @@ export interface BottomSheetRootProps {
   headerAlign?: HeaderAlign;
 }
 
-export const BottomSheetRoot = ({
+const BottomSheetRoot = ({
   children,
   open: controlledOpen,
   defaultOpen = false,
@@ -54,14 +54,14 @@ export const BottomSheetRoot = ({
   );
 };
 
-export const BottomSheetTrigger = DrawerTrigger;
+const BottomSheetTrigger = DrawerTrigger;
 BottomSheetTrigger.displayName = 'BottomSheetTrigger';
 
-export const BottomSheetHandle = () => {
+const BottomSheetHandle = () => {
   return <div className="h-1 w-11 rounded-full bg-gray-200" />;
 };
 
-export const BottomSheetContent = ({
+const BottomSheetContent = ({
   children,
   className,
   ...props
@@ -80,7 +80,7 @@ export const BottomSheetContent = ({
   );
 };
 
-export const BottomSheetHeader = ({
+const BottomSheetHeader = ({
   title,
   className,
 }: {
@@ -107,7 +107,7 @@ export const BottomSheetHeader = ({
   );
 };
 
-export const BottomSheetBody = ({
+const BottomSheetBody = ({
   className,
   children,
   maxHeight,
@@ -126,7 +126,7 @@ export const BottomSheetBody = ({
   );
 };
 
-export const BottomSheetFooter = ({
+const BottomSheetFooter = ({
   className,
   children,
 }: {
@@ -135,3 +135,11 @@ export const BottomSheetFooter = ({
 }) => {
   return <div className={mergeStyles([className])}>{children}</div>;
 };
+
+export const BottomSheet = Object.assign(BottomSheetRoot, {
+  Trigger: BottomSheetTrigger,
+  Content: BottomSheetContent,
+  Header: BottomSheetHeader,
+  Body: BottomSheetBody,
+  Footer: BottomSheetFooter,
+});
