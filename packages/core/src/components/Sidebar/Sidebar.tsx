@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
 
 export interface SidebarProps {
   children: React.ReactNode;
@@ -10,6 +9,7 @@ export interface SidebarProps {
 interface SidebarItemProps {
   asChild?: boolean;
   active?: boolean;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
@@ -54,13 +54,20 @@ Sidebar.Footer = function SidebarFooter({
 };
 
 Sidebar.Item = function SidebarItem({
-  asChild,
+  asChild = false,
   active = false,
+  onClick,
   children,
 }: SidebarItemProps) {
-  const Comp = asChild ? Slot : 'button';
+  if (asChild) {
+    return <div className={sidebarItem(active)}>{children}</div>;
+  }
 
-  return <Comp className={sidebarItem(active)}>{children}</Comp>;
+  return (
+    <button type="button" onClick={onClick} className={sidebarItem(active)}>
+      {children}
+    </button>
+  );
 };
 
 export const sidebarBadgeClassName = sidebarBadge;

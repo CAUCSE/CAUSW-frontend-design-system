@@ -53,43 +53,35 @@ export const Default: Story = {
             <div className="flex h-full flex-col">
               <div>
                 <Sidebar.Item active={active === 'home'} asChild>
-                  <button onClick={() => setActive('home')}>홈</button>
+                  <div onClick={() => setActive('home')}>홈</div>
                 </Sidebar.Item>
 
                 <Sidebar.Item active={active === 'community'} asChild>
-                  <button onClick={() => setActive('community')}>
-                    커뮤니티
-                  </button>
+                  <div onClick={() => setActive('community')}>커뮤니티</div>
                 </Sidebar.Item>
 
                 <Sidebar.Item active={active === 'write'} asChild>
-                  <button onClick={() => setActive('write')}>글쓰기</button>
+                  <div onClick={() => setActive('write')}>글쓰기</div>
                 </Sidebar.Item>
 
                 <Sidebar.Item active={active === 'directory'} asChild>
-                  <button onClick={() => setActive('directory')}>
-                    동문수첩
-                  </button>
+                  <div onClick={() => setActive('directory')}>동문수첩</div>
                 </Sidebar.Item>
 
                 <Sidebar.Item active={active === 'profile'} asChild>
-                  <button onClick={() => setActive('profile')}>
-                    내 동문수첩
-                  </button>
+                  <div onClick={() => setActive('profile')}>내 동문수첩</div>
                 </Sidebar.Item>
               </div>
 
               <div className="mt-auto">
                 <Sidebar.Item active={active === 'about'} asChild>
-                  <button onClick={() => setActive('about')}>
-                    크자회 소개
-                  </button>
+                  <div onClick={() => setActive('about')}>크자회 소개</div>
                 </Sidebar.Item>
                 <Sidebar.Item active={active === 'notifications'} asChild>
-                  <button onClick={() => setActive('notifications')}>
+                  <div onClick={() => setActive('notifications')}>
                     알림
                     <span className={sidebarBadgeClassName}>1</span>
-                  </button>
+                  </div>
                 </Sidebar.Item>
               </div>
             </div>
@@ -124,23 +116,23 @@ export const WithoutCustomContent: Story = {
 
           <Sidebar.Content>
             <Sidebar.Item active={active === 'home'} asChild>
-              <button onClick={() => setActive('home')}>홈</button>
+              <div onClick={() => setActive('home')}>홈</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'community'} asChild>
-              <button onClick={() => setActive('community')}>커뮤니티</button>
+              <div onClick={() => setActive('community')}>커뮤니티</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'write'} asChild>
-              <button onClick={() => setActive('write')}>글쓰기</button>
+              <div onClick={() => setActive('write')}>글쓰기</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'directory'} asChild>
-              <button onClick={() => setActive('directory')}>동문수첩</button>
+              <div onClick={() => setActive('directory')}>동문수첩</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'profile'} asChild>
-              <button onClick={() => setActive('profile')}>내 동문수첩</button>
+              <div onClick={() => setActive('profile')}>내 동문수첩</div>
             </Sidebar.Item>
           </Sidebar.Content>
 
@@ -173,23 +165,23 @@ export const WithoutFooter: Story = {
 
           <Sidebar.Content>
             <Sidebar.Item active={active === 'home'} asChild>
-              <button onClick={() => setActive('home')}>홈</button>
+              <div onClick={() => setActive('home')}>홈</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'community'} asChild>
-              <button onClick={() => setActive('community')}>커뮤니티</button>
+              <div onClick={() => setActive('community')}>커뮤니티</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'write'} asChild>
-              <button onClick={() => setActive('write')}>글쓰기</button>
+              <div onClick={() => setActive('write')}>글쓰기</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'directory'} asChild>
-              <button onClick={() => setActive('directory')}>동문수첩</button>
+              <div onClick={() => setActive('directory')}>동문수첩</div>
             </Sidebar.Item>
 
             <Sidebar.Item active={active === 'profile'} asChild>
-              <button onClick={() => setActive('profile')}>내 동문수첩</button>
+              <div onClick={() => setActive('profile')}>내 동문수첩</div>
             </Sidebar.Item>
           </Sidebar.Content>
         </Sidebar>
