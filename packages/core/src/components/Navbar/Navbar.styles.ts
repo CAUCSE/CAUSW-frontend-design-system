@@ -15,7 +15,7 @@ export const navbarStyles = {
         active ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50',
       ].join(' '),
 
-    badge: 'ml-auto px-2 py-0.5 text-xs rounded-full bg-red-500 text-white',
+    badge: 'ml-auto px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-400',
   },
 
   mobile: {
