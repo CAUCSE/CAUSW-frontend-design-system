@@ -6,6 +6,7 @@ import { Navbar } from './Navbar';
 import { NavItem } from './types';
 import { Box } from '../Box';
 import { Flex } from '../Flex';
+import { navbarStyles } from './Navbar.styles';
 
 /* Mock data */
 
@@ -15,6 +16,11 @@ const items: NavItem[] = [
   { key: 'write', label: '글쓰기' },
   { key: 'directory', label: '동문수첩' },
   { key: 'profile', label: '내 정보' },
+];
+
+const utilityItems: NavItem[] = [
+  { key: 'about', label: '크자회 소개' },
+  { key: 'notifications', label: '알림', badgeCount: 1 },
 ];
 
 /* Meta */
@@ -29,7 +35,7 @@ const meta = {
   argTypes: {
     activeKey: {
       control: { type: 'select' },
-      options: items.map((item) => item.key),
+      options: [...items, ...utilityItems].map((item) => item.key),
       description: 'Currently active navigation key',
     },
   },
@@ -88,6 +94,55 @@ export const Variant: Story = {
 };
 
 export const Desktop: Story = {
+  args: {
+    variant: 'desktop',
+    items: [],
+    activeKey: 'home',
+  },
+  render: (args) => {
+    const [activeKey, setActiveKey] = React.useState(args.activeKey);
+
+    const renderItem = (item: NavItem) => {
+      const active = item.key === activeKey;
+
+      return (
+        <button
+          key={item.key}
+          className={navbarStyles.desktop.item(active)}
+          onClick={() => setActiveKey(item.key)}
+        >
+          <span>{item.label}</span>
+          {item.badgeCount !== undefined && (
+            <span className={navbarStyles.desktop.badge}>
+              {item.badgeCount}
+            </span>
+          )}
+        </button>
+      );
+    };
+
+    return (
+      <Flex className="h-screen bg-gray-100">
+        <Navbar
+          {...args}
+          items={[]}
+          top={<TopExample />}
+          footer={<FooterExample />}
+        >
+          <div className="flex h-full flex-col">
+            <div className="space-y-1">{items.map(renderItem)}</div>
+
+            <div className="mt-auto space-y-1">
+              {utilityItems.map(renderItem)}
+            </div>
+          </div>
+        </Navbar>
+      </Flex>
+    );
+  },
+};
+
+export const withoutBottomContent: Story = {
   args: {
     variant: 'desktop',
     items,
