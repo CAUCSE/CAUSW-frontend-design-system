@@ -1,10 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import {
-  drawerContent,
-  DrawerContentVariants,
-  drawerOverlay,
-  DrawerOverlayVariants,
-} from './Drawer.styles';
+import { drawer, DrawerVariants } from './Drawer.styles';
 
 const DrawerRoot = DialogPrimitive.Root;
 const DrawerTrigger = DialogPrimitive.Trigger;
@@ -13,32 +8,31 @@ const DrawerPortal = DialogPrimitive.Portal;
 const DrawerTitle = DialogPrimitive.Title;
 const DrawerDescription = DialogPrimitive.Description;
 
-type DrawerOverlayProps = React.ComponentProps<typeof DialogPrimitive.Overlay> &
-  DrawerOverlayVariants;
+type DrawerOverlayProps = React.ComponentProps<typeof DialogPrimitive.Overlay>;
 
-const DrawerOverlay = ({ className, ...props }: DrawerOverlayProps) => (
-  <DialogPrimitive.Overlay
-    className={drawerOverlay({ className })}
-    {...props}
-  />
-);
+const DrawerOverlay = ({ className, ...props }: DrawerOverlayProps) => {
+  const { overlay } = drawer();
+  return (
+    <DialogPrimitive.Overlay className={overlay({ className })} {...props} />
+  );
+};
 
 type DrawerContentProps = React.ComponentProps<typeof DialogPrimitive.Content> &
-  DrawerContentVariants;
+  DrawerVariants;
 
 const DrawerContent = ({
   position,
   className,
   children,
   ...props
-}: DrawerContentProps) => (
-  <DialogPrimitive.Content
-    className={drawerContent({ position, className })}
-    {...props}
-  >
-    {children}
-  </DialogPrimitive.Content>
-);
+}: DrawerContentProps) => {
+  const { content } = drawer({ position });
+  return (
+    <DialogPrimitive.Content className={content({ className })} {...props}>
+      {children}
+    </DialogPrimitive.Content>
+  );
+};
 
 export const Drawer = Object.assign(DrawerRoot, {
   Root: DrawerRoot,

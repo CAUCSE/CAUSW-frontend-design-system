@@ -1,22 +1,23 @@
-import { tv, VariantProps } from 'tailwind-variants';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-export const drawerOverlay = tv({
-  base: [
-    'fixed inset-0 z-50',
-    'data-[state=open]:animate-overlay-show',
-    'data-[state=closed]:animate-overlay-hide',
-  ],
-});
-
-export const drawerContent = tv({
-  base: [
-    'fixed z-50 w-full',
-    'data-[state=open]:animate-content-show',
-    'data-[state=closed]:animate-content-hide',
-  ],
+export const drawer = tv({
+  slots: {
+    overlay: [
+      'fixed inset-0 z-50',
+      'data-[state=open]:animate-overlay-show',
+      'data-[state=closed]:animate-overlay-hide',
+    ],
+    content: [
+      'fixed z-50 w-full',
+      'data-[state=open]:animate-content-show',
+      'data-[state=closed]:animate-content-hide',
+    ],
+  },
   variants: {
     position: {
-      bottom: 'bottom-0',
+      bottom: {
+        content: 'bottom-0',
+      },
     },
   },
   defaultVariants: {
@@ -24,5 +25,4 @@ export const drawerContent = tv({
   },
 });
 
-export type DrawerOverlayVariants = VariantProps<typeof drawerOverlay>;
-export type DrawerContentVariants = VariantProps<typeof drawerContent>;
+export type DrawerVariants = VariantProps<typeof drawer>;

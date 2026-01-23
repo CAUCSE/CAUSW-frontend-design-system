@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { HeaderAlign } from '../../components/BottomSheet/BottomSheet';
+import { HeaderAlign } from '../../components/BottomSheet/BottomSheet.styles';
 
 interface BottomSheetContextValue {
   headerAlign: HeaderAlign;

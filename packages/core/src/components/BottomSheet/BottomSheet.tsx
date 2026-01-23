@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { mergeStyles } from '../../utils';
 import { Drawer } from '../Drawer/Drawer';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
-
-export type HeaderAlign = 'left' | 'center';
+import { bottomSheet, HeaderAlign } from './BottomSheet.styles';
 
 interface BottomSheetRootProps {
   children?: React.ReactNode;
@@ -50,10 +48,10 @@ const BottomSheetRoot = ({
 };
 
 const BottomSheetTrigger = Drawer.Trigger;
-BottomSheetTrigger.displayName = 'BottomSheetTrigger';
 
 const BottomSheetHandle = () => {
-  return <div className="h-1 w-11 rounded-full bg-gray-200" />;
+  const { handle } = bottomSheet();
+  return <div className={handle()} />;
 };
 
 const BottomSheetContent = ({
@@ -61,17 +59,12 @@ const BottomSheetContent = ({
   className,
   ...props
 }: React.ComponentProps<typeof Drawer.Content>) => {
+  const { content } = bottomSheet();
   return (
     <Drawer.Portal>
       <Drawer.Overlay />
 
-      <Drawer.Content
-        className={mergeStyles([
-          'flex w-full flex-col items-center gap-8 rounded-t-2xl bg-white px-6 py-3.5 pb-10 shadow-[0_-2px_30px_0_rgba(51,53,61,0.30)]',
-          className,
-        ])}
-        {...props}
-      >
+      <Drawer.Content className={content({ className })} {...props}>
         <BottomSheetHandle />
         <div className="w-full">{children}</div>
       </Drawer.Content>
@@ -87,14 +80,10 @@ const BottomSheetHeader = ({
   className?: string;
 }) => {
   const { headerAlign } = useBottomSheet();
+  const { header } = bottomSheet({ headerAlign });
 
   return (
-    <div
-      className={mergeStyles([
-        headerAlign === 'center' ? 'text-center' : 'text-left',
-        className,
-      ])}
-    >
+    <div className={header({ className })}>
       {title && (
         <Drawer.Title asChild>
           <Text as="h2" typography="subtitle-18-bold">
@@ -115,11 +104,9 @@ const BottomSheetBody = ({
   className?: string;
   maxHeight?: string | number;
 }) => {
+  const { body } = bottomSheet();
   return (
-    <div
-      className={mergeStyles(['overflow-y-auto', className])}
-      style={{ maxHeight }}
-    >
+    <div className={body({ className })} style={{ maxHeight }}>
       {children}
     </div>
   );
@@ -132,7 +119,8 @@ const BottomSheetFooter = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <div className={mergeStyles([className])}>{children}</div>;
+  const { footer } = bottomSheet();
+  return <div className={footer({ className })}>{children}</div>;
 };
 
 export const BottomSheet = Object.assign(BottomSheetRoot, {
@@ -142,3 +130,10 @@ export const BottomSheet = Object.assign(BottomSheetRoot, {
   Body: BottomSheetBody,
   Footer: BottomSheetFooter,
 });
+
+BottomSheetRoot.displayName = 'BottomSheet';
+BottomSheetTrigger.displayName = 'BottomSheet.Trigger';
+BottomSheetContent.displayName = 'BottomSheet.Content';
+BottomSheetHeader.displayName = 'BottomSheet.Header';
+BottomSheetBody.displayName = 'BottomSheet.Body';
+BottomSheetFooter.displayName = 'BottomSheet.Footer';
