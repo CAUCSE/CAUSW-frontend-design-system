@@ -20,4 +20,5 @@ export interface NavbarProps {
   /** Desktop layout slots */
   top?: React.ReactNode;
   footer?: React.ReactNode;
+  children?: React.ReactNode;
 }
