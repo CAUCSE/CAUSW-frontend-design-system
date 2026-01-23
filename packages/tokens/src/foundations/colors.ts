@@ -1,6 +1,7 @@
 export const colors = {
   blue: {
     100: '#EEF4FF',
+    200: '#CADDFF',
     500: '#4F98FF',
     700: '#237EFF',
   },
@@ -18,7 +19,12 @@ export const colors = {
   },
   red: {
     100: '#FFEFEF',
+    200: '#FFCACF',
     400: '#FD5C5F',
+    500: '#DF0F12',
+  },
+  green: {
+    400: '#3ED06C',
   },
   white: {
     main: '#FFEFEF',

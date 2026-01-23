@@ -1,5 +1,3 @@
-export {
-  TextInput,
-  type TextInputProps,
-  type TextInputVariant,
-} from './TextInput';
+export { TextInput, type TextInputProps } from './TextInput';
+
+export { type TextInputVariants } from './TextInput.styles';

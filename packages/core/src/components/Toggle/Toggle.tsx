@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { mergeStyles, PolymorphicProps } from '../../utils';
-import { Text, TextStyleProps } from '../Text';
+import { PolymorphicProps } from '../../utils';
+import { Text, TextVariants } from '../Text';
 import { TextElement } from '../Text/Text';
+import { toggle, ToggleVariants } from './Toggle.styles';
 
 // Toggle Context
 interface ToggleContextValue {
@@ -22,14 +23,10 @@ const useToggleContext = () => {
 };
 
 // Toggle
-export interface ToggleRootProps extends Omit<
-  React.ComponentProps<'label'>,
-  'onChange'
-> {
-  checked?: boolean;
+export interface ToggleRootProps
+  extends Omit<React.ComponentProps<'label'>, 'onChange'>, ToggleVariants {
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
-  disabled?: boolean;
   children?: React.ReactNode;
 }
 
@@ -54,16 +51,11 @@ const ToggleRoot = ({
     onCheckedChange?.(newChecked);
   };
 
+  const { root } = toggle({ disabled });
+
   return (
     <ToggleContext.Provider value={{ checked: isChecked, disabled }}>
-      <label
-        className={mergeStyles(
-          'inline-flex cursor-pointer items-center gap-2',
-          disabled && 'cursor-not-allowed opacity-50',
-          className,
-        )}
-        {...props}
-      >
+      <label className={root({ className })} {...props}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -81,22 +73,11 @@ const ToggleRoot = ({
 
 const ToggleSwitch = () => {
   const { checked } = useToggleContext();
+  const { switch: switchStyle, switchThumb } = toggle({ checked });
 
   return (
-    <span
-      className={mergeStyles(
-        'relative inline-flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out',
-        'h-7 w-12', // 48px x 28px
-        checked ? 'bg-gray-600' : 'bg-gray-200',
-      )}
-    >
-      <span
-        className={mergeStyles(
-          'pointer-events-none inline-block rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out',
-          'h-5 w-5', // 20px
-          checked ? 'translate-x-5' : 'translate-x-0',
-        )}
-      />
+    <span className={switchStyle()}>
+      <span className={switchThumb()} />
     </span>
   );
 };
@@ -104,21 +85,24 @@ const ToggleSwitch = () => {
 // Toggle.Label
 export type ToggleLabelProps<E extends TextElement = 'span'> = PolymorphicProps<
   E,
-  TextStyleProps
+  TextVariants
 >;
 
 const ToggleLabel = <E extends TextElement = 'span'>({
   children,
-  typography = 'fixed-16',
+  typography = 'body-16-medium',
   textColor = 'gray-700',
+  className,
   ...props
 }: ToggleLabelProps<E>) => {
   const { disabled } = useToggleContext();
+  const { label } = toggle({ disabled });
 
   return (
     <Text
       typography={typography}
-      textColor={disabled ? 'gray-400' : textColor}
+      textColor={textColor}
+      className={label({ className })}
       {...props}
     >
       {children}

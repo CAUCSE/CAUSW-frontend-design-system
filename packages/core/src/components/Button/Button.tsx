@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { buttonStyles, ButtonSize, ButtonColor } from './Button.styles';
+import { mergeStyles } from '../../utils';
 
 export interface ButtonProps extends ComponentProps<'button'> {
   size?: ButtonSize;
@@ -14,18 +15,22 @@ export function Button({
   active = false,
   fullWidth = false,
   disabled = false,
+  className,
   children,
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={buttonStyles({
-        size,
-        color,
-        active,
-        disabled,
-        fullWidth,
-      })}
+      className={mergeStyles(
+        buttonStyles({
+          size,
+          color,
+          active,
+          disabled,
+          fullWidth,
+        }),
+        className,
+      )}
       disabled={disabled}
       {...props}
     >
