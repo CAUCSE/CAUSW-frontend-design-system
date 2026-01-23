@@ -1,1 +1,2 @@
-export { Dialog } from './Dialog';
+export * from './Dialog';
+export * from './Dialog.styles';
