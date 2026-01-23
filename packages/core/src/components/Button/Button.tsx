@@ -1,14 +1,17 @@
 import { ComponentProps } from 'react';
 import { button, ButtonVariants } from './Button.styles';
 import { mergeStyles } from '../../utils';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
 export interface ButtonProps
-  extends Omit<ComponentProps<'button'>, 'color'>, ButtonVariants {}
+  extends
+    Omit<ComponentProps<'button'>, 'color'>,
+    ButtonVariants,
+    PrimitiveProps {}
 
 export function Button({
   size = 'md',
   color = 'gray',
-  active = false,
   fullWidth = false,
   disabled = false,
   className,
@@ -16,21 +19,20 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
+    <Primitive.button
+      disabled={disabled}
       className={mergeStyles(
         button({
           size,
           color,
-          active,
-          disabled,
           fullWidth,
+          disabled,
         }),
         className,
       )}
-      disabled={disabled}
       {...props}
     >
       {children}
-    </button>
+    </Primitive.button>
   );
 }
