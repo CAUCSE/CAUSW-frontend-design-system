@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { bottomNavigationStyles } from './BottomNavigation.styles';
 
 export interface BottomNavigationProps {
   children: React.ReactNode;
@@ -14,22 +15,9 @@ interface BottomNavigationItemProps {
   children: React.ReactNode;
 }
 
-const bottomNavigationRoot =
-  'fixed right-0 bottom-0 left-0 flex h-15 items-center justify-between ' +
-  'border-t border-gray-200 bg-white';
-
-const bottomNavigationItem = (active: boolean) =>
-  [
-    'flex flex-col items-center justify-center flex-1',
-    'text-xs transition-colors',
-    active ? 'text-gray-700 font-semibold' : 'text-gray-300',
-  ].join(' ');
-
-const bottomNavigationIcon = (active: boolean) =>
-  active ? 'text-gray-700' : 'text-gray-300';
-
 export function BottomNavigation({ children }: BottomNavigationProps) {
-  return <nav className={bottomNavigationRoot}>{children}</nav>;
+  const { root } = bottomNavigationStyles();
+  return <nav className={root()}>{children}</nav>;
 }
 
 BottomNavigation.Item = function BottomNavigationItem({
@@ -39,20 +27,18 @@ BottomNavigation.Item = function BottomNavigationItem({
   onClick,
   children,
 }: BottomNavigationItemProps) {
+  const { item, icon: iconStyle, label } = bottomNavigationStyles({ active });
+
   if (asChild) {
-    return <div className={bottomNavigationItem(active)}>{children}</div>;
+    return <div className={item()}>{children}</div>;
   }
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={bottomNavigationItem(active)}
-    >
-      <div className={bottomNavigationIcon(active)}>
+    <button type="button" onClick={onClick} className={item()}>
+      <div className={iconStyle()}>
         {icon ?? <div className="h-6 w-6 rounded-full bg-current" />}
       </div>
-      <span className="mt-1">{children}</span>
+      <span className={label()}>{children}</span>
     </button>
   );
 };

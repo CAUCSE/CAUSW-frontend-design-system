@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { sidebarStyles } from './Sidebar.styles';
 
 export interface SidebarProps {
   children: React.ReactNode;
@@ -13,20 +14,9 @@ interface SidebarItemProps {
   children: React.ReactNode;
 }
 
-const sidebarItem = (active: boolean) =>
-  [
-    'w-full flex items-center gap-2 px-2 py-2 rounded-sm',
-    'text-md transition-colors',
-    active
-      ? 'bg-gray-100 text-gray-700 font-bold'
-      : 'text-gray-500 hover:bg-gray-50',
-  ].join(' ');
-
-const sidebarBadge =
-  'ml-auto px-2 py-0.5 text-sm rounded-sm bg-red-100 text-red-400';
-
 export function Sidebar({ children }: SidebarProps) {
-  return <nav className="flex h-screen w-65 flex-col bg-white">{children}</nav>;
+  const { root } = sidebarStyles();
+  return <nav className={root()}>{children}</nav>;
 }
 
 Sidebar.Header = function SidebarHeader({
@@ -34,7 +24,8 @@ Sidebar.Header = function SidebarHeader({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="px-4.5 py-8">{children}</div>;
+  const { header } = sidebarStyles();
+  return <div className={header()}>{children}</div>;
 };
 
 Sidebar.Content = function SidebarContent({
@@ -42,7 +33,8 @@ Sidebar.Content = function SidebarContent({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex-1 overflow-y-auto px-4.5 py-2">{children}</div>;
+  const { content } = sidebarStyles();
+  return <div className={content()}>{children}</div>;
 };
 
 Sidebar.Footer = function SidebarFooter({
@@ -50,7 +42,8 @@ Sidebar.Footer = function SidebarFooter({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="border-t border-gray-100 px-4 py-4">{children}</div>;
+  const { footer } = sidebarStyles();
+  return <div className={footer()}>{children}</div>;
 };
 
 Sidebar.Item = function SidebarItem({
@@ -59,15 +52,17 @@ Sidebar.Item = function SidebarItem({
   onClick,
   children,
 }: SidebarItemProps) {
+  const { item } = sidebarStyles({ active });
+
   if (asChild) {
-    return <div className={sidebarItem(active)}>{children}</div>;
+    return <div className={item()}>{children}</div>;
   }
 
   return (
-    <button type="button" onClick={onClick} className={sidebarItem(active)}>
+    <button type="button" onClick={onClick} className={item()}>
       {children}
     </button>
   );
 };
 
-export const sidebarBadgeClassName = sidebarBadge;
+export const sidebarBadgeClassName = sidebarStyles().badge();
