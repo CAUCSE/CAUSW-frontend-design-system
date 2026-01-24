@@ -51,19 +51,13 @@ interface SidebarItemProps
   extends ComponentProps<'button'>, PrimitiveProps, SidebarVariants {}
 const SidebarItem = ({
   selected = false,
-  onClick,
   children,
   ...props
 }: SidebarItemProps) => {
   const { item } = sidebarStyles({ selected });
 
   return (
-    <Primitive.button
-      type="button"
-      onClick={onClick}
-      className={item()}
-      {...props}
-    >
+    <Primitive.button type="button" className={item()} {...props}>
       {children}
     </Primitive.button>
   );
