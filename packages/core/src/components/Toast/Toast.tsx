@@ -23,7 +23,7 @@ export const Toast = ({
   return (
     <ToastPrimitives.Root className={root({ className })} {...props}>
       <HStack gap="sm" align="center">
-        {icon && <>{icon}</>}
+        {icon && icon}
         {message && (
           <ToastPrimitives.Description asChild>
             <Text as="p" typography="body-16-medium" textColor="white">
