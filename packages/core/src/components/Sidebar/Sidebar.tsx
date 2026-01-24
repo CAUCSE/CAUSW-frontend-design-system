@@ -1,7 +1,7 @@
 'use client';
 
 import { ComponentProps } from 'react';
-import { sidebarStyles } from './Sidebar.styles';
+import { sidebarStyles, SidebarVariants } from './Sidebar.styles';
 import { Primitive, PrimitiveProps } from '../Primitive';
 
 // Root
@@ -47,28 +47,25 @@ const SidebarContent = ({ children, ...props }: SidebarContentProps) => {
 };
 
 // Item
-interface SidebarItemProps {
-  asChild?: boolean;
-  active?: boolean;
-  onClick?: () => void;
-  children: React.ReactNode;
-}
+interface SidebarItemProps
+  extends ComponentProps<'button'>, PrimitiveProps, SidebarVariants {}
 const SidebarItem = ({
-  asChild = false,
-  active = false,
+  selected = false,
   onClick,
   children,
+  ...props
 }: SidebarItemProps) => {
-  const { item } = sidebarStyles({ active });
-
-  if (asChild) {
-    return <div className={item()}>{children}</div>;
-  }
+  const { item } = sidebarStyles({ selected });
 
   return (
-    <button type="button" onClick={onClick} className={item()}>
+    <Primitive.button
+      type="button"
+      onClick={onClick}
+      className={item()}
+      {...props}
+    >
       {children}
-    </button>
+    </Primitive.button>
   );
 };
 
