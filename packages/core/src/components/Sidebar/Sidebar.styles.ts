@@ -15,7 +15,7 @@ export const sidebarStyles = tv({
         item: 'bg-gray-100 text-gray-700 typo-subtitle-16-bold',
       },
       false: {
-        item: 'text-gray-500 hover:bg-gray-50 typo-body-16-medium',
+        item: 'text-gray-500 enabled:hover:bg-gray-50 enabled:active:bg-gray-50 typo-body-16-medium',
       },
     },
   },
