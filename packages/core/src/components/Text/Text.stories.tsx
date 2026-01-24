@@ -12,33 +12,25 @@ const meta = {
     typography: {
       control: 'select',
       options: [
-        'caption-sm',
-        'caption-sm-point',
-        'caption-md',
-        'caption-md-point',
-        'body2-sm',
-        'body2-sm-point',
-        'body2-md',
-        'body2-md-point',
-        'body-sm',
-        'body-sm-point',
-        'body-md',
-        'body-md-point',
-        'subtitle-sm',
-        'subtitle-sm-point',
-        'subtitle-md',
-        'subtitle-md-point',
-        'title-sm',
-        'title-md',
-        'head-sm',
-        'head-md',
-        'fixed-12',
-        'fixed-14',
-        'fixed-15',
-        'fixed-16',
-        'fixed-18',
-        'fixed-20',
-        'fixed-24',
+        'title-48-bold',
+        'title-32-bold',
+        'title-30-bold',
+        'title-24-bold',
+        'title-22-bold',
+        'subtitle-20-bold',
+        'subtitle-18-bold',
+        'subtitle-16-bold',
+        'body-18-medium',
+        'body-16-medium',
+        'body-16-regular',
+        'body-15-semibold',
+        'body-15-medium',
+        'body-14-semibold',
+        'body-14-medium',
+        'body-14-regular',
+        'caption-12-semibold',
+        'caption-12-medium',
+        'caption-12-regular',
       ],
       description: 'Typography preset',
     },
@@ -55,7 +47,7 @@ const meta = {
         'gray-700',
         'gray-800',
         'gray-900',
-        'blue-50',
+        'blue-100',
         'blue-500',
         'blue-700',
         'red-100',
@@ -96,118 +88,82 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'The quick brown fox jumps over the lazy dog.',
-    typography: 'body-sm',
-  },
-};
-
-// Caption variants
-export const CaptionSmall: Story = {
-  args: {
-    children: 'Caption Small - The quick brown fox',
-    typography: 'caption-sm',
-  },
-};
-
-export const CaptionSmallPoint: Story = {
-  args: {
-    children: 'Caption Small Point - The quick brown fox',
-    typography: 'caption-sm-point',
-  },
-};
-
-// Body2 variants
-export const Body2Small: Story = {
-  args: {
-    children: 'Body2 Small - The quick brown fox',
-    typography: 'body2-sm',
-  },
-};
-
-export const Body2SmallPoint: Story = {
-  args: {
-    children: 'Body2 Small Point - The quick brown fox',
-    typography: 'body2-sm-point',
-  },
-};
-
-// Body variants
-export const BodySmall: Story = {
-  args: {
-    children: 'Body Small - The quick brown fox',
-    typography: 'body-sm',
-  },
-};
-
-export const BodySmallPoint: Story = {
-  args: {
-    children: 'Body Small Point - The quick brown fox',
-    typography: 'body-sm-point',
+    typography: 'body-16-regular',
   },
 };
 
 // Title variants
-export const TitleSmall: Story = {
+export const TitleLarge: Story = {
   args: {
-    children: 'Title Small',
-    typography: 'title-sm',
-    as: 'h2',
+    children: 'Title 48 Bold',
+    typography: 'title-48-bold',
+    as: 'h1',
   },
 };
 
 export const TitleMedium: Story = {
   args: {
-    children: 'Title Medium',
-    typography: 'title-md',
-    as: 'h1',
+    children: 'Title 32 Bold',
+    typography: 'title-32-bold',
+    as: 'h2',
   },
 };
 
-// Head variants
-export const HeadSmall: Story = {
+export const TitleSmall: Story = {
   args: {
-    children: 'Head Small',
-    typography: 'head-sm',
-    as: 'h1',
+    children: 'Title 24 Bold',
+    typography: 'title-24-bold',
+    as: 'h3',
   },
 };
 
-export const HeadMedium: Story = {
+// Subtitle variants
+export const SubtitleLarge: Story = {
   args: {
-    children: 'Head Medium',
-    typography: 'head-md',
-    as: 'h1',
+    children: 'Subtitle 20 Bold',
+    typography: 'subtitle-20-bold',
+    as: 'h4',
   },
 };
 
-// Fixed size variants
-export const Fixed14: Story = {
+export const SubtitleMedium: Story = {
   args: {
-    children: 'Fixed 14px - The quick brown fox',
-    typography: 'fixed-14',
+    children: 'Subtitle 18 Bold',
+    typography: 'subtitle-18-bold',
+    as: 'h5',
   },
 };
 
-export const Fixed20: Story = {
+// Body variants
+export const BodyLarge: Story = {
   args: {
-    children: 'Fixed 20px - The quick brown fox',
-    typography: 'fixed-20',
+    children: 'Body 18 Medium',
+    typography: 'body-18-medium',
+    as: 'p',
   },
 };
 
-// Color examples
-export const WithColor: Story = {
+export const BodyMedium: Story = {
   args: {
-    children: 'Blue Text',
-    typography: 'body-md',
-    textColor: 'blue-500',
+    children: 'Body 16 Regular',
+    typography: 'body-16-regular',
+    as: 'p',
   },
 };
 
-export const ErrorColor: Story = {
+export const BodySmall: Story = {
   args: {
-    children: 'Error Text',
-    typography: 'body-sm',
-    textColor: 'red-400',
+    children: 'Body 14 Regular',
+    typography: 'body-14-regular',
+    as: 'p',
+  },
+};
+
+export const CaptionRegular: Story = {
+  args: {
+    children: 'Caption 12 Regular',
+    typography: 'caption-12-regular',
+    as: 'span',
   },
 };
 
@@ -218,88 +174,43 @@ export const AllTypographyPresets: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <Text typography="head-md" as="h1">
-        head-md - 48px Bold
+      <Text typography="title-48-bold" as="h1">
+        title-48-bold
       </Text>
-      <Text typography="head-sm" as="h2">
-        head-sm - 30px Bold
+      <Text typography="title-32-bold" as="h2">
+        title-32-bold
       </Text>
-      <Text typography="title-md" as="h2">
-        title-md - 32px Bold
+      <Text typography="title-30-bold" as="h2">
+        title-30-bold
       </Text>
-      <Text typography="title-sm" as="h3">
-        title-sm - 22px Bold
+      <Text typography="title-24-bold" as="h3">
+        title-24-bold
       </Text>
-      <Text typography="subtitle-md">subtitle-md - 20px Medium</Text>
-      <Text typography="subtitle-md-point">subtitle-md-point - 20px Bold</Text>
-      <Text typography="subtitle-sm">subtitle-sm - 18px Medium</Text>
-      <Text typography="subtitle-sm-point">subtitle-sm-point - 18px Bold</Text>
-      <Text typography="body-md">body-md - 18px Medium</Text>
-      <Text typography="body-md-point">body-md-point - 18px Bold</Text>
-      <Text typography="body-sm">body-sm - 16px Regular</Text>
-      <Text typography="body-sm-point">body-sm-point - 16px Bold</Text>
-      <Text typography="body2-md">body2-md - 16px Medium</Text>
-      <Text typography="body2-md-point">body2-md-point - 16px Semibold</Text>
-      <Text typography="body2-sm">body2-sm - 14px Regular</Text>
-      <Text typography="body2-sm-point">body2-sm-point - 14px Semibold</Text>
-      <Text typography="caption-md">caption-md - 14px Medium</Text>
-      <Text typography="caption-md-point">
-        caption-md-point - 14px Semibold
+      <Text typography="title-22-bold" as="h4">
+        title-22-bold
       </Text>
-      <Text typography="caption-sm">caption-sm - 12px Regular</Text>
-      <Text typography="caption-sm-point">
-        caption-sm-point - 12px Semibold
-      </Text>
-    </div>
-  ),
-};
 
-// Fixed sizes showcase
-export const FixedSizes: Story = {
-  args: {
-    children: '',
-  },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text typography="fixed-24">fixed-24 - 24px Bold</Text>
-      <Text typography="fixed-20">fixed-20 - 20px Semibold</Text>
-      <Text typography="fixed-18">fixed-18 - 18px Medium</Text>
-      <Text typography="fixed-16">fixed-16 - 16px Medium</Text>
-      <Text typography="fixed-15">fixed-15 - 15px Semibold</Text>
-      <Text typography="fixed-14">fixed-14 - 14px Medium</Text>
-      <Text typography="fixed-12">fixed-12 - 12px Medium</Text>
-    </div>
-  ),
-};
+      <div className="h-4" />
 
-// Color palette
-export const ColorPalette: Story = {
-  args: {
-    children: '',
-  },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text typography="body-sm" textColor="gray-900">
-        gray-900
-      </Text>
-      <Text typography="body-sm" textColor="gray-700">
-        gray-700 (default)
-      </Text>
-      <Text typography="body-sm" textColor="gray-500">
-        gray-500
-      </Text>
-      <Text typography="body-sm" textColor="gray-400">
-        gray-400
-      </Text>
-      <Text typography="body-sm" textColor="blue-500">
-        blue-500
-      </Text>
-      <Text typography="body-sm" textColor="blue-700">
-        blue-700
-      </Text>
-      <Text typography="body-sm" textColor="red-400">
-        red-400
-      </Text>
+      <Text typography="subtitle-20-bold">subtitle-20-bold</Text>
+      <Text typography="subtitle-18-bold">subtitle-18-bold</Text>
+      <Text typography="subtitle-16-bold">subtitle-16-bold</Text>
+
+      <div className="h-4" />
+
+      <Text typography="body-18-medium">body-18-medium</Text>
+      <Text typography="body-16-medium">body-16-medium</Text>
+      <Text typography="body-16-regular">body-16-regular</Text>
+      <Text typography="body-15-semibold">body-15-semibold</Text>
+      <Text typography="body-15-medium">body-15-medium</Text>
+      <Text typography="body-14-semibold">body-14-semibold</Text>
+      <Text typography="body-14-medium">body-14-medium</Text>
+      <Text typography="body-14-regular">body-14-regular</Text>
+
+      <div className="h-4" />
+      <Text typography="caption-12-semibold">caption-12-semibold</Text>
+      <Text typography="caption-12-medium">caption-12-medium</Text>
+      <Text typography="caption-12-regular">caption-12-regular</Text>
     </div>
   ),
 };
@@ -311,16 +222,16 @@ export const Alignment: Story = {
   },
   render: () => (
     <div className="flex w-[600px] flex-col gap-4 border border-gray-400 p-4">
-      <Text as="p" align="left" typography="body-sm">
+      <Text as="p" align="left" typography="body-16-regular">
         왼쪽 정렬 (left) - 텍스트가 왼쪽에 정렬됩니다.
       </Text>
-      <Text as="p" align="center" typography="body-sm">
+      <Text as="p" align="center" typography="body-16-regular">
         가운데 정렬 (center) - 텍스트가 가운데에 정렬됩니다.
       </Text>
-      <Text as="p" align="right" typography="body-sm">
+      <Text as="p" align="right" typography="body-16-regular">
         오른쪽 정렬 (right) - 텍스트가 오른쪽에 정렬됩니다.
       </Text>
-      <Text as="p" align="justify" typography="body-sm">
+      <Text as="p" align="justify" typography="body-16-regular">
         양쪽 정렬 (justify) - 텍스트가 양쪽 끝에 맞춰 정렬됩니다. 긴 텍스트에서
         효과가 더 잘 보입니다.
       </Text>
