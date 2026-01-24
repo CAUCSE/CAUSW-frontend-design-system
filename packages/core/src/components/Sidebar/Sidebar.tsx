@@ -1,19 +1,37 @@
 'use client';
 
-import { ComponentProps } from 'react';
-import { sidebarStyles, SidebarVariants } from './Sidebar.styles';
+import { ComponentProps, SVGProps } from 'react';
+import { sidebar, SidebarVariants } from './Sidebar.styles';
 import { Primitive, PrimitiveProps } from '../Primitive';
+
+// Root
+import {
+  SidebarContext,
+  useSidebarContext,
+  SidebarItemContext,
+  useSidebarItemContext,
+  SidebarValue,
+} from './hooks/useSidebarContext';
 
 // Root
 export interface SidebarProps extends ComponentProps<'nav'>, PrimitiveProps {
   children: React.ReactNode;
+  selected?: SidebarValue;
+  onSelectChange?: (value: SidebarValue) => void;
 }
-const SidebarRoot = ({ children, ...props }: SidebarProps) => {
-  const { root } = sidebarStyles();
+const SidebarRoot = ({
+  children,
+  selected,
+  onSelectChange,
+  ...props
+}: SidebarProps) => {
+  const { root } = sidebar();
   return (
-    <Primitive.nav className={root()} {...props}>
-      {children}
-    </Primitive.nav>
+    <SidebarContext.Provider value={{ selected, onSelectChange }}>
+      <Primitive.nav className={root()} {...props}>
+        {children}
+      </Primitive.nav>
+    </SidebarContext.Provider>
   );
 };
 
@@ -23,7 +41,7 @@ export interface SidebarHeaderProps
   children: React.ReactNode;
 }
 const SidebarHeader = ({ children, ...props }: SidebarHeaderProps) => {
-  const { header } = sidebarStyles();
+  const { header } = sidebar();
   return (
     <Primitive.div className={header()} {...props}>
       {children}
@@ -38,7 +56,7 @@ interface SidebarContentProps extends ComponentProps<'div'>, PrimitiveProps {
 }
 
 const SidebarContent = ({ children, ...props }: SidebarContentProps) => {
-  const { content } = sidebarStyles();
+  const { content } = sidebar();
   return (
     <Primitive.div className={content()} {...props}>
       {children}
@@ -48,18 +66,75 @@ const SidebarContent = ({ children, ...props }: SidebarContentProps) => {
 
 // Item
 interface SidebarItemProps
-  extends ComponentProps<'button'>, PrimitiveProps, SidebarVariants {}
+  extends
+    ComponentProps<'button'>,
+    PrimitiveProps,
+    Omit<SidebarVariants, 'selected'> {
+  value?: SidebarValue;
+  selected?: boolean;
+}
 const SidebarItem = ({
-  selected = false,
+  selected,
+  value,
   children,
+  onClick,
   ...props
 }: SidebarItemProps) => {
-  const { item } = sidebarStyles({ selected });
+  const rootContext = useSidebarContext();
+
+  const isSelected =
+    selected ??
+    (rootContext.selected !== undefined && value !== undefined
+      ? rootContext.selected === value
+      : false);
+
+  const { item } = sidebar({ selected: isSelected });
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    if (
+      !e.defaultPrevented &&
+      rootContext.onSelectChange &&
+      value !== undefined
+    ) {
+      rootContext.onSelectChange(value);
+    }
+  };
 
   return (
-    <Primitive.button type="button" className={item()} {...props}>
+    <SidebarItemContext.Provider value={{ selected: isSelected }}>
+      <Primitive.button
+        type="button"
+        className={item()}
+        onClick={handleClick}
+        {...props}
+      >
+        {children}
+      </Primitive.button>
+    </SidebarItemContext.Provider>
+  );
+};
+
+interface SidebarItemIconProps
+  extends SVGProps<SVGSVGElement>, PrimitiveProps {}
+const SidebarItemIcon = ({ children, ...props }: SidebarItemIconProps) => {
+  const itemContext = useSidebarItemContext();
+  const { icon } = sidebar({ selected: itemContext.selected });
+  return (
+    <Primitive.svg asChild className={icon()} {...props}>
       {children}
-    </Primitive.button>
+    </Primitive.svg>
+  );
+};
+
+interface SidebarItemTextProps extends ComponentProps<'span'>, PrimitiveProps {}
+const SidebarItemText = ({ children, ...props }: SidebarItemTextProps) => {
+  const itemContext = useSidebarItemContext();
+  const { text } = sidebar({ selected: itemContext.selected });
+  return (
+    <Primitive.span className={text()} {...props}>
+      {children}
+    </Primitive.span>
   );
 };
 
@@ -68,7 +143,7 @@ interface SidebarFooterProps extends ComponentProps<'div'>, PrimitiveProps {
   children: React.ReactNode;
 }
 const SidebarFooter = ({ children, ...props }: SidebarFooterProps) => {
-  const { footer } = sidebarStyles();
+  const { footer } = sidebar();
   return (
     <Primitive.div className={footer()} {...props}>
       {children}
@@ -76,11 +151,13 @@ const SidebarFooter = ({ children, ...props }: SidebarFooterProps) => {
   );
 };
 
-export const sidebarBadgeClassName = sidebarStyles().badge();
+export const sidebarBadgeClassName = sidebar().badge();
 
 export const Sidebar = Object.assign(SidebarRoot, {
   Header: SidebarHeader,
   Content: SidebarContent,
   Item: SidebarItem,
+  ItemIcon: SidebarItemIcon,
+  ItemText: SidebarItemText,
   Footer: SidebarFooter,
 });

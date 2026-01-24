@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Sidebar, sidebarBadgeClassName } from './Sidebar';
+import { Sidebar } from './Sidebar';
 import { Box } from '../Box';
 import { Flex } from '../Flex';
 import { HStack } from '../HStack';
@@ -47,7 +47,7 @@ export const Default: Story = {
 
     return (
       <Flex className="h-screen bg-gray-100">
-        <Sidebar>
+        <Sidebar selected={active} onSelectChange={(v) => setActive(String(v))}>
           <Sidebar.Header>
             <HeaderExample />
           </Sidebar.Header>
@@ -56,86 +56,75 @@ export const Default: Story = {
             {/* custom content */}
             <div className="flex h-full flex-col">
               <VStack gap="sm">
-                <Sidebar.Item
-                  selected={active === 'home'}
-                  onClick={() => setActive('home')}
-                  asChild
-                >
+                <Sidebar.Item value="home" asChild>
                   <HStack className="gap-3.5">
-                    <Home size={18} />
-                    <div>홈</div>
+                    <Sidebar.ItemIcon>
+                      <Home />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>홈</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item
-                  selected={active === 'community'}
-                  onClick={() => setActive('community')}
-                  asChild
-                >
+                <Sidebar.Item value="community" asChild>
                   <HStack className="gap-3.5">
-                    <Board size={18} />
-                    <div>커뮤니티</div>
+                    <Sidebar.ItemIcon>
+                      <Board size={18} />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>커뮤니티</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item
-                  selected={active === 'write'}
-                  onClick={() => setActive('write')}
-                  asChild
-                >
+                <Sidebar.Item value="write" asChild>
                   <HStack className="gap-3.5">
-                    <Pen size={18} />
-                    <div>글쓰기</div>
+                    <Sidebar.ItemIcon>
+                      <Pen size={18} />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>글쓰기</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item
-                  selected={active === 'directory'}
-                  onClick={() => setActive('directory')}
-                  asChild
-                >
+                <Sidebar.Item value="directory" asChild>
                   <HStack className="gap-3.5">
-                    <Contacts size={18} />
-                    <div>동문수첩</div>
+                    <Sidebar.ItemIcon>
+                      <Contacts size={18} />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>동문수첩</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item
-                  selected={active === 'profile'}
-                  onClick={() => setActive('profile')}
-                  asChild
-                >
+                <Sidebar.Item value="profile" asChild>
                   <HStack className="gap-3.5">
-                    <Book size={18} />
-                    <div>내 동문수첩</div>
+                    <Sidebar.ItemIcon>
+                      <Book size={18} />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>내 동문수첩</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
               </VStack>
 
               <VStack gap="sm" className="mt-auto">
-                <Sidebar.Item
-                  selected={active === 'about'}
-                  onClick={() => setActive('about')}
-                  asChild
-                >
+                <Sidebar.Item value="about" asChild>
                   <HStack className="gap-3.5">
-                    <Question size={18} />
-                    <div>크자회 소개</div>
+                    <Sidebar.ItemIcon>
+                      <Question size={18} />
+                    </Sidebar.ItemIcon>
+                    <Sidebar.ItemText>크자회 소개</Sidebar.ItemText>
                   </HStack>
                 </Sidebar.Item>
-                <Sidebar.Item
-                  selected={active === 'notifications'}
-                  onClick={() => setActive('notifications')}
-                  asChild
-                >
-                  <HStack className="gap-3.5">
+                <Sidebar.Item value="notifications" asChild>
+                  <HStack className="gap-3.5 pr-2">
                     <div className="relative">
-                      <Bell size={18} />
                       <Float floatType="absolute" top={-2} right={-2}>
                         <div className="h-1 w-1 rounded-full bg-red-500" />
                       </Float>
+                      <Sidebar.ItemIcon asChild>
+                        <Bell size={18} />
+                      </Sidebar.ItemIcon>
                     </div>
-                    <div>알림</div>
+                    <Sidebar.ItemText>알림</Sidebar.ItemText>
+                    <Box className="ml-auto flex h-6 w-6 items-center justify-center rounded-sm bg-red-100 text-xs text-red-400">
+                      1
+                    </Box>
                   </HStack>
                 </Sidebar.Item>
               </VStack>
@@ -151,100 +140,6 @@ export const Default: Story = {
           <Box className="text-xl font-bold">Active: {active}</Box>
           <Box className="mt-2 text-sm text-gray-500">
             Custom content + Footer 포함 기본 예시
-          </Box>
-        </Box>
-      </Flex>
-    );
-  },
-};
-
-export const WithoutCustomContent: Story = {
-  render: () => {
-    const [active, setActive] = React.useState('home');
-
-    return (
-      <Flex className="h-screen bg-gray-100">
-        <Sidebar>
-          <Sidebar.Header>
-            <HeaderExample />
-          </Sidebar.Header>
-
-          <Sidebar.Content>
-            <Sidebar.Item selected={active === 'home'} asChild>
-              <div onClick={() => setActive('home')}>홈</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'community'} asChild>
-              <div onClick={() => setActive('community')}>커뮤니티</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'write'} asChild>
-              <div onClick={() => setActive('write')}>글쓰기</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'directory'} asChild>
-              <div onClick={() => setActive('directory')}>동문수첩</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'profile'} asChild>
-              <div onClick={() => setActive('profile')}>내 동문수첩</div>
-            </Sidebar.Item>
-          </Sidebar.Content>
-
-          <Sidebar.Footer>
-            <FooterExample />
-          </Sidebar.Footer>
-        </Sidebar>
-
-        <Box className="flex-1 p-8">
-          <Box className="text-xl font-bold">Active: {active}</Box>
-          <Box className="mt-2 text-sm text-gray-500">
-            Custom content 없이 기본 Item만 사용한 예시
-          </Box>
-        </Box>
-      </Flex>
-    );
-  },
-};
-
-export const WithoutFooter: Story = {
-  render: () => {
-    const [active, setActive] = React.useState('home');
-
-    return (
-      <Flex className="h-screen bg-gray-100">
-        <Sidebar>
-          <Sidebar.Header>
-            <HeaderExample />
-          </Sidebar.Header>
-
-          <Sidebar.Content>
-            <Sidebar.Item selected={active === 'home'} asChild>
-              <div onClick={() => setActive('home')}>홈</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'community'} asChild>
-              <div onClick={() => setActive('community')}>커뮤니티</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'write'} asChild>
-              <div onClick={() => setActive('write')}>글쓰기</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'directory'} asChild>
-              <div onClick={() => setActive('directory')}>동문수첩</div>
-            </Sidebar.Item>
-
-            <Sidebar.Item selected={active === 'profile'} asChild>
-              <div onClick={() => setActive('profile')}>내 동문수첩</div>
-            </Sidebar.Item>
-          </Sidebar.Content>
-        </Sidebar>
-
-        <Box className="flex-1 p-8">
-          <Box className="text-xl font-bold">Active: {active}</Box>
-          <Box className="mt-2 text-sm text-gray-500">
-            Footer 없는 Sidebar 예시
           </Box>
         </Box>
       </Flex>
