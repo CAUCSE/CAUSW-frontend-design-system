@@ -15,18 +15,18 @@ interface BottomNavigationItemProps {
   children: React.ReactNode;
 }
 
-export function BottomNavigation({ children }: BottomNavigationProps) {
+const BottomNavigationRoot = ({ children }: BottomNavigationProps) => {
   const { root } = bottomNavigationStyles();
   return <nav className={root()}>{children}</nav>;
-}
+};
 
-BottomNavigation.Item = function BottomNavigationItem({
+const BottomNavigationItem = ({
   asChild = false,
   active = false,
   icon,
   onClick,
   children,
-}: BottomNavigationItemProps) {
+}: BottomNavigationItemProps) => {
   const { item, icon: iconStyle, label } = bottomNavigationStyles({ active });
 
   if (asChild) {
@@ -42,3 +42,7 @@ BottomNavigation.Item = function BottomNavigationItem({
     </button>
   );
 };
+
+export const BottomNavigation = Object.assign(BottomNavigationRoot, {
+  Item: BottomNavigationItem,
+});
