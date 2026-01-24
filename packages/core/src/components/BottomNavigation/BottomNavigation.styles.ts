@@ -1,27 +1,28 @@
-import { tv } from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
-export const bottomNavigationStyles = tv({
+export const bottomNavigation = tv({
   slots: {
-    root: 'fixed right-0 bottom-0 left-0 z-50 flex h-15 items-center justify-between border-t border-gray-200 bg-white px-6 pb-safe',
+    root: 'fixed right-0 bottom-0 left-0 z-sticky flex h-15 items-center justify-between border-t border-gray-200 px-12 py-2 pb-safe',
     item: 'group flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-colors',
-    icon: 'text-2xl transition-colors',
-    label: 'font-medium',
+    icon: 'w-5 h-5',
+    label: 'typo-caption-12-semibold text-center',
   },
   variants: {
-    active: {
+    selected: {
       true: {
-        item: 'text-gray-700',
-        icon: 'text-gray-700',
-        label: 'font-semibold',
+        icon: 'fill-gray-700',
+        label: 'text-gray-600',
       },
       false: {
-        item: 'text-gray-300 hover:text-gray-500',
-        icon: 'text-gray-300 group-hover:text-gray-500',
-        label: 'font-medium',
+        icon: 'fill-gray-300 group-hover:fill-gray-500 group-active:fill-gray-500',
+        label:
+          'text-gray-300 group-hover:text-gray-500 group-active:text-gray-500',
       },
     },
   },
   defaultVariants: {
-    active: false,
+    selected: false,
   },
 });
+
+export type BottomNavigationVariants = VariantProps<typeof bottomNavigation>;
