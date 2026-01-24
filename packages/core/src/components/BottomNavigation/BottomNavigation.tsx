@@ -7,37 +7,84 @@ import {
 } from './BottomNavigation.styles';
 import { Primitive, PrimitiveProps } from '../Primitive';
 
+import {
+  BottomNavigationContext,
+  useBottomNavigationContext,
+  BottomNavigationItemContext,
+  useBottomNavigationItemContext,
+} from './hooks/useBottomNavigationContext';
+
 export interface BottomNavigationRootProps
-  extends ComponentProps<'nav'>, PrimitiveProps {}
+  extends ComponentProps<'nav'>, PrimitiveProps {
+  selected?: string;
+  onSelectChange?: (value: string) => void;
+}
 
 const BottomNavigationRoot = ({
   children,
+  selected,
+  onSelectChange,
   ...props
 }: BottomNavigationRootProps) => {
   const { root } = bottomNavigation();
   return (
-    <Primitive.nav className={root()} {...props}>
-      {children}
-    </Primitive.nav>
+    <BottomNavigationContext.Provider value={{ selected, onSelectChange }}>
+      <Primitive.nav className={root()} {...props}>
+        {children}
+      </Primitive.nav>
+    </BottomNavigationContext.Provider>
   );
 };
 
 interface BottomNavigationItemProps
-  extends ComponentProps<'div'>, PrimitiveProps, BottomNavigationVariants {
+  extends
+    ComponentProps<'button'>,
+    PrimitiveProps,
+    Omit<BottomNavigationVariants, 'selected'> {
+  value?: string;
+  selected?: boolean;
   children: React.ReactNode;
 }
 
 const BottomNavigationItem = ({
-  selected = false,
+  selected,
+  value,
   children,
+  onClick,
   ...props
 }: BottomNavigationItemProps) => {
-  const { item } = bottomNavigation({ selected, ...props });
+  const rootContext = useBottomNavigationContext();
+
+  const isSelected =
+    selected ??
+    (rootContext.selected !== undefined && value !== undefined
+      ? rootContext.selected === value
+      : false);
+
+  const { item } = bottomNavigation({ selected: isSelected, ...props });
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    if (
+      !e.defaultPrevented &&
+      rootContext.onSelectChange &&
+      value !== undefined
+    ) {
+      rootContext.onSelectChange(value);
+    }
+  };
 
   return (
-    <Primitive.div className={item()} {...props}>
-      {children}
-    </Primitive.div>
+    <BottomNavigationItemContext.Provider value={{ selected: isSelected }}>
+      <Primitive.button
+        type="button"
+        className={item()}
+        onClick={handleClick}
+        {...props}
+      >
+        {children}
+      </Primitive.button>
+    </BottomNavigationItemContext.Provider>
   );
 };
 
@@ -48,9 +95,13 @@ interface BottomNavigationIconProps
 
 const BottomNavigationIcon = ({
   children,
+  selected,
   ...props
 }: BottomNavigationIconProps) => {
-  const { icon } = bottomNavigation({ ...props });
+  const itemContext = useBottomNavigationItemContext();
+  const isSelected = selected ?? itemContext.selected;
+
+  const { icon } = bottomNavigation({ selected: isSelected, ...props });
 
   return (
     <Primitive.svg asChild className={icon()} {...props}>
@@ -66,9 +117,13 @@ interface BottomNavigationLabelProps
 
 const BottomNavigationLabel = ({
   children,
+  selected,
   ...props
 }: BottomNavigationLabelProps) => {
-  const { label } = bottomNavigation({ ...props });
+  const itemContext = useBottomNavigationItemContext();
+  const isSelected = selected ?? itemContext.selected;
+
+  const { label } = bottomNavigation({ selected: isSelected, ...props });
 
   return (
     <Primitive.span className={label()} {...props}>
