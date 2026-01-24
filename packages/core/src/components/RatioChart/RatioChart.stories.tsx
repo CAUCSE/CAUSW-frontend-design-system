@@ -1,0 +1,717 @@
+import { useState, useMemo } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { RatioChart } from './RatioChart';
+import {
+  RatioChartEditor,
+  type RatioChartEditorOption,
+} from './RatioChartEditor';
+
+const meta: Meta<typeof RatioChart> = {
+  title: 'Components/RatioChart',
+  component: RatioChart,
+  parameters: {
+    layout: 'centered',
+    backgrounds: {
+      default: 'white',
+      values: [
+        { name: 'white', value: '#ffffff' },
+        { name: 'gray', value: '#f3f4f6' },
+      ],
+    },
+  },
+  tags: ['autodocs'],
+};
+
+export default meta;
+type Story = StoryObj<typeof RatioChart>;
+
+// ============ Playground ============
+
+interface PlaygroundProps {
+  // Root
+  mode: 'single' | 'multiple';
+  disabled: boolean;
+  // Items
+  itemCount: number;
+  useCount: boolean;
+  item1Label: string;
+  item1Value: number;
+  item1Disabled: boolean;
+  item2Label: string;
+  item2Value: number;
+  item2Disabled: boolean;
+  item3Label: string;
+  item3Value: number;
+  item3Disabled: boolean;
+  item4Label: string;
+  item4Value: number;
+  item4Disabled: boolean;
+  item5Label: string;
+  item5Value: number;
+  item5Disabled: boolean;
+  // Footer
+  showFooter: boolean;
+  useEndDate: boolean;
+  endDays: number;
+  endTime: string;
+  hideParticipantCount: boolean;
+}
+
+const PlaygroundComponent = (props: PlaygroundProps) => {
+  const {
+    mode,
+    disabled,
+    itemCount,
+    useCount,
+    item1Label,
+    item1Value,
+    item1Disabled,
+    item2Label,
+    item2Value,
+    item2Disabled,
+    item3Label,
+    item3Value,
+    item3Disabled,
+    item4Label,
+    item4Value,
+    item4Disabled,
+    item5Label,
+    item5Value,
+    item5Disabled,
+    showFooter,
+    useEndDate,
+    endDays,
+    endTime,
+    hideParticipantCount,
+  } = props;
+
+  const [singleValue, setSingleValue] = useState('item1');
+  const [multipleValue, setMultipleValue] = useState<string[]>([]);
+
+  const items = useMemo(
+    () => [
+      {
+        value: 'item1',
+        label: item1Label,
+        count: item1Value,
+        disabled: item1Disabled,
+      },
+      {
+        value: 'item2',
+        label: item2Label,
+        count: item2Value,
+        disabled: item2Disabled,
+      },
+      {
+        value: 'item3',
+        label: item3Label,
+        count: item3Value,
+        disabled: item3Disabled,
+      },
+      {
+        value: 'item4',
+        label: item4Label,
+        count: item4Value,
+        disabled: item4Disabled,
+      },
+      {
+        value: 'item5',
+        label: item5Label,
+        count: item5Value,
+        disabled: item5Disabled,
+      },
+    ],
+    [
+      item1Label,
+      item1Value,
+      item1Disabled,
+      item2Label,
+      item2Value,
+      item2Disabled,
+      item3Label,
+      item3Value,
+      item3Disabled,
+      item4Label,
+      item4Value,
+      item4Disabled,
+      item5Label,
+      item5Value,
+      item5Disabled,
+    ],
+  );
+
+  const visibleItems = items.slice(0, itemCount);
+  const totalCount = visibleItems.reduce((sum, item) => sum + item.count, 0);
+
+  const endDate = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + endDays);
+    return date;
+  }, [endDays]);
+
+  return (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">Playground</h3>
+
+      {mode === 'single' ? (
+        <RatioChart.Root
+          mode="single"
+          value={singleValue}
+          onValueChange={setSingleValue}
+          disabled={disabled}
+        >
+          {visibleItems.map((item) =>
+            useCount ? (
+              <RatioChart.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                count={item.count}
+                disabled={item.disabled}
+              />
+            ) : (
+              <RatioChart.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                ratio={
+                  totalCount > 0
+                    ? Math.round((item.count / totalCount) * 100)
+                    : 0
+                }
+                disabled={item.disabled}
+              />
+            ),
+          )}
+          {showFooter && (
+            <RatioChart.Footer
+              endDate={useEndDate ? endDate : undefined}
+              endTime={!useEndDate ? endTime : undefined}
+              hideParticipantCount={hideParticipantCount}
+            />
+          )}
+        </RatioChart.Root>
+      ) : (
+        <RatioChart.Root
+          mode="multiple"
+          value={multipleValue}
+          onValueChange={setMultipleValue}
+          disabled={disabled}
+        >
+          {visibleItems.map((item) =>
+            useCount ? (
+              <RatioChart.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                count={item.count}
+                disabled={item.disabled}
+              />
+            ) : (
+              <RatioChart.Item
+                key={item.value}
+                value={item.value}
+                label={item.label}
+                ratio={
+                  totalCount > 0
+                    ? Math.round((item.count / totalCount) * 100)
+                    : 0
+                }
+                disabled={item.disabled}
+              />
+            ),
+          )}
+          {showFooter && (
+            <RatioChart.Footer
+              endDate={useEndDate ? endDate : undefined}
+              endTime={!useEndDate ? endTime : undefined}
+              hideParticipantCount={hideParticipantCount}
+            />
+          )}
+        </RatioChart.Root>
+      )}
+
+      <div className="text-sm text-gray-500">
+        <p>
+          선택된 값:{' '}
+          {mode === 'single'
+            ? singleValue
+            : multipleValue.length > 0
+              ? multipleValue.join(', ')
+              : '없음'}
+        </p>
+        {useCount && <p>총 참여: {totalCount}명</p>}
+      </div>
+    </div>
+  );
+};
+
+export const Playground: StoryObj<PlaygroundProps> = {
+  render: (args) => <PlaygroundComponent {...args} />,
+  args: {
+    // Root
+    mode: 'single',
+    disabled: false,
+    // Items
+    itemCount: 3,
+    useCount: true,
+    item1Label: '두쫀쿠',
+    item1Value: 8,
+    item1Disabled: false,
+    item2Label: '마라탕',
+    item2Value: 5,
+    item2Disabled: false,
+    item3Label: '엽떡',
+    item3Value: 2,
+    item3Disabled: false,
+    item4Label: '치킨',
+    item4Value: 0,
+    item4Disabled: false,
+    item5Label: '구이',
+    item5Value: 0,
+    item5Disabled: false,
+    // Footer
+    showFooter: true,
+    useEndDate: false,
+    endDays: 3,
+    endTime: '72시간 후 종료',
+    hideParticipantCount: false,
+  },
+  argTypes: {
+    // Root
+    mode: {
+      control: 'radio',
+      options: ['single', 'multiple'],
+      description: '선택 모드',
+      table: { category: 'Root' },
+    },
+    disabled: {
+      control: 'boolean',
+      description: '전체 비활성화',
+      table: { category: 'Root' },
+    },
+    // Items
+    itemCount: {
+      control: { type: 'range', min: 2, max: 5, step: 1 },
+      description: '항목 개수',
+      table: { category: 'Items' },
+    },
+    useCount: {
+      control: 'boolean',
+      description: 'count 자동 계산 사용 (false면 ratio 직접 지정)',
+      table: { category: 'Items' },
+    },
+    item1Label: { control: 'text', table: { category: 'Item 1' } },
+    item1Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 1' },
+    },
+    item1Disabled: { control: 'boolean', table: { category: 'Item 1' } },
+    item2Label: { control: 'text', table: { category: 'Item 2' } },
+    item2Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 2' },
+    },
+    item2Disabled: { control: 'boolean', table: { category: 'Item 2' } },
+    item3Label: { control: 'text', table: { category: 'Item 3' } },
+    item3Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 3' },
+    },
+    item3Disabled: { control: 'boolean', table: { category: 'Item 3' } },
+    item4Label: { control: 'text', table: { category: 'Item 4' } },
+    item4Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 4' },
+    },
+    item4Disabled: { control: 'boolean', table: { category: 'Item 4' } },
+    item5Label: { control: 'text', table: { category: 'Item 5' } },
+    item5Value: {
+      control: { type: 'number', min: 0 },
+      table: { category: 'Item 5' },
+    },
+    item5Disabled: { control: 'boolean', table: { category: 'Item 5' } },
+    // Footer
+    showFooter: {
+      control: 'boolean',
+      description: 'Footer 표시',
+      table: { category: 'Footer' },
+    },
+    useEndDate: {
+      control: 'boolean',
+      description: 'endDate 사용 (false면 endTime 문자열 사용)',
+      table: { category: 'Footer' },
+    },
+    endDays: {
+      control: { type: 'number', min: 0 },
+      description: '종료까지 남은 일수 (useEndDate=true일 때)',
+      table: { category: 'Footer' },
+    },
+    endTime: {
+      control: 'text',
+      description: '종료 시간 문자열 (useEndDate=false일 때)',
+      table: { category: 'Footer' },
+    },
+    hideParticipantCount: {
+      control: 'boolean',
+      description: '참여 인원 숨기기',
+      table: { category: 'Footer' },
+    },
+  },
+};
+
+// ============ Basic Stories ============
+
+export const Default: Story = {
+  render: () => (
+    <RatioChart.Root>
+      <RatioChart.Item value="option1" label="짬뽕" ratio={80} />
+      <RatioChart.Item value="option2" label="짜장면" ratio={20} />
+    </RatioChart.Root>
+  ),
+};
+
+export const Controlled: Story = {
+  render: () => {
+    const [selected, setSelected] = useState('option1');
+
+    return (
+      <div className="flex flex-col gap-[1rem]">
+        <RatioChart.Root value={selected} onValueChange={setSelected}>
+          <RatioChart.Item value="option1" label="짬뽕" ratio={80} />
+          <RatioChart.Item value="option2" label="짜장면" ratio={20} />
+        </RatioChart.Root>
+        <p className="text-sm text-gray-500">선택된 값: {selected}</p>
+      </div>
+    );
+  },
+};
+
+export const MultipleSelection: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    return (
+      <div className="flex flex-col gap-[1rem]">
+        <RatioChart.Root
+          mode="multiple"
+          value={selected}
+          onValueChange={setSelected}
+        >
+          <RatioChart.Item value="option1" label="ICT" ratio={45} />
+          <RatioChart.Item value="option2" label="동네" ratio={30} />
+          <RatioChart.Item value="option3" label="크자회" ratio={25} />
+        </RatioChart.Root>
+        <p className="text-sm text-gray-500">
+          선택된 값: {selected.length > 0 ? selected.join(', ') : '없음'}
+        </p>
+      </div>
+    );
+  },
+};
+
+export const VariousRatios: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[1rem]">
+      <RatioChart.Root defaultValue="high">
+        <RatioChart.Item value="high" label="높은 비율" ratio={90} />
+        <RatioChart.Item value="low" label="낮은 비율" ratio={10} />
+      </RatioChart.Root>
+
+      <RatioChart.Root defaultValue="equal1">
+        <RatioChart.Item value="equal1" label="동일 비율 A" ratio={50} />
+        <RatioChart.Item value="equal2" label="동일 비율 B" ratio={50} />
+      </RatioChart.Root>
+
+      <RatioChart.Root defaultValue="zero">
+        <RatioChart.Item value="zero" label="0%" ratio={0} />
+        <RatioChart.Item value="full" label="100%" ratio={100} />
+      </RatioChart.Root>
+    </div>
+  ),
+};
+
+export const WithoutRatio: Story = {
+  render: () => (
+    <RatioChart.Root defaultValue="option1">
+      <RatioChart.Item value="option1" label="옵션 A" />
+      <RatioChart.Item value="option2" label="옵션 B" />
+    </RatioChart.Root>
+  ),
+};
+
+export const Disabled: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[1rem]">
+      <p className="text-sm text-gray-500">전체 비활성화:</p>
+      <RatioChart.Root disabled defaultValue="option1">
+        <RatioChart.Item value="option1" label="TypeScript" ratio={80} />
+        <RatioChart.Item value="option2" label="JavaScript" ratio={20} />
+      </RatioChart.Root>
+
+      <p className="text-sm text-gray-500">개별 항목 비활성화:</p>
+      <RatioChart.Root defaultValue="option1">
+        <RatioChart.Item value="option1" label="선택 가능" ratio={60} />
+        <RatioChart.Item value="option2" label="비활성화" ratio={40} disabled />
+      </RatioChart.Root>
+    </div>
+  ),
+};
+
+export const ThreeOptions: Story = {
+  render: () => (
+    <RatioChart.Root defaultValue="option1">
+      <RatioChart.Item value="option1" label="찬성" ratio={55} />
+      <RatioChart.Item value="option2" label="반대" ratio={30} />
+      <RatioChart.Item value="option3" label="기권" ratio={15} />
+    </RatioChart.Root>
+  ),
+};
+
+export const VotingExample: Story = {
+  render: () => {
+    const [vote, setVote] = useState<string>('');
+
+    const handleVote = (value: string) => {
+      setVote(value);
+    };
+
+    return (
+      <div className="flex w-[25rem] flex-col gap-[1rem]">
+        <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+        <RatioChart.Root value={vote} onValueChange={handleVote}>
+          <RatioChart.Item value="jjamppong" label="짬뽕" ratio={65} />
+          <RatioChart.Item value="jjajang" label="짜장면" ratio={35} />
+        </RatioChart.Root>
+        {vote && (
+          <p className="text-sm text-gray-600">
+            {vote === 'jjamppong' ? '짬뽕' : '짜장면'}에 투표했습니다!
+          </p>
+        )}
+      </div>
+    );
+  },
+};
+
+export const FlexibleWidth: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[1rem]">
+      <div className="w-[20rem]">
+        <p className="mb-[0.5rem] text-sm text-gray-500">최소 너비 (320px)</p>
+        <RatioChart.Root defaultValue="option1">
+          <RatioChart.Item value="option1" label="A" ratio={70} />
+          <RatioChart.Item value="option2" label="B" ratio={30} />
+        </RatioChart.Root>
+      </div>
+
+      <div className="w-[30rem]">
+        <p className="mb-[0.5rem] text-sm text-gray-500">넓은 너비 (480px)</p>
+        <RatioChart.Root defaultValue="option1">
+          <RatioChart.Item
+            value="option1"
+            label="긴 레이블 텍스트"
+            ratio={70}
+          />
+          <RatioChart.Item value="option2" label="짧은 텍스트" ratio={30} />
+        </RatioChart.Root>
+      </div>
+    </div>
+  ),
+};
+
+// ============ Footer Stories (count 기반 자동 비율 계산) ============
+
+export const WithFooter: Story = {
+  name: 'Footer - Auto Ratio',
+  render: () => {
+    const [selected, setSelected] = useState('option1');
+
+    return (
+      <div className="flex w-[25rem] flex-col gap-[1rem]">
+        <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+        <RatioChart.Root value={selected} onValueChange={setSelected}>
+          <RatioChart.Item value="option1" label="짬뽕" count={8} />
+          <RatioChart.Item value="option2" label="짜장면" count={2} />
+          <RatioChart.Footer endTime="72시간 후 종료" />
+        </RatioChart.Root>
+        <p className="text-sm text-gray-500">
+          count만 전달하면 자동으로 total과 ratio 계산 (8+2=10, 80%/20%)
+        </p>
+      </div>
+    );
+  },
+};
+
+export const BeforeVoting: Story = {
+  name: 'Footer - Before Voting',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+      <RatioChart.Root>
+        <RatioChart.Item value="option1" label="짬뽕" count={0} />
+        <RatioChart.Item value="option2" label="짜장면" count={0} />
+        <RatioChart.Footer endTime="72시간 후 종료" />
+      </RatioChart.Root>
+      <p className="text-sm text-gray-500">아직 투표 전 상태 (0명 참여)</p>
+    </div>
+  ),
+};
+
+export const AfterVoting: Story = {
+  name: 'Footer - After Voting',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">오늘 점심 뭐 먹을까요?</h3>
+      <RatioChart.Root defaultValue="option1" disabled>
+        <RatioChart.Item value="option1" label="짬뽕" count={65} />
+        <RatioChart.Item value="option2" label="짜장면" count={35} />
+        <RatioChart.Footer endTime="종료됨" />
+      </RatioChart.Root>
+      <p className="text-sm text-gray-500">
+        투표 종료 상태 (disabled + 종료됨 표시)
+      </p>
+    </div>
+  ),
+};
+
+export const FooterWithEndDate: Story = {
+  name: 'Footer - With EndDate',
+  render: () => {
+    // 현재 시간에서 3일 후
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 3);
+
+    return (
+      <div className="flex w-[25rem] flex-col gap-[1rem]">
+        <h3 className="font-bold">이번 주 회식 메뉴</h3>
+        <RatioChart.Root>
+          <RatioChart.Item value="option1" label="고기" count={15} />
+          <RatioChart.Item value="option2" label="해산물" count={8} />
+          <RatioChart.Item value="option3" label="한식" count={7} />
+          <RatioChart.Footer endDate={endDate} />
+        </RatioChart.Root>
+        <p className="text-sm text-gray-500">
+          endDate를 전달하면 자동으로 남은 시간 계산
+        </p>
+      </div>
+    );
+  },
+};
+
+export const FooterCustomChildren: Story = {
+  name: 'Footer - Custom Children',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">커스텀 Footer</h3>
+      <RatioChart.Root>
+        <RatioChart.Item value="option1" label="옵션 A" count={10} />
+        <RatioChart.Item value="option2" label="옵션 B" count={5} />
+        <RatioChart.Footer>
+          <span className="typo-body-14 text-gray-400">익명 투표</span>
+          <span className="typo-body-14 text-blue-500">결과 보기</span>
+        </RatioChart.Footer>
+      </RatioChart.Root>
+      <p className="text-sm text-gray-500">
+        children으로 커스텀 Footer 내용 전달 가능
+      </p>
+    </div>
+  ),
+};
+
+export const ManualRatio: Story = {
+  name: 'Manual Ratio',
+  render: () => (
+    <div className="flex w-[25rem] flex-col gap-[1rem]">
+      <h3 className="font-bold">기존 ratio 방식</h3>
+      <RatioChart.Root>
+        <RatioChart.Item value="option1" label="짬뽕" ratio={80} />
+        <RatioChart.Item value="option2" label="짜장면" ratio={20} />
+      </RatioChart.Root>
+      <p className="text-sm text-gray-500">
+        ratio를 직접 지정하는 방식도 호환됨
+      </p>
+    </div>
+  ),
+};
+
+// ============ Edit Mode Stories ============
+
+export const EditModeDefault: Story = {
+  name: 'Edit Mode - Default',
+  render: () => <RatioChartEditor onDelete={() => alert('투표 삭제')} />,
+};
+
+export const EditModeControlled: Story = {
+  name: 'Edit Mode - Controlled',
+  render: () => {
+    const [options, setOptions] = useState<RatioChartEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '' },
+    ]);
+    const [allowMultiple, setAllowMultiple] = useState(false);
+
+    return (
+      <div className="flex flex-col gap-[1rem]">
+        <RatioChartEditor
+          options={options}
+          onOptionsChange={setOptions}
+          allowMultiple={allowMultiple}
+          onAllowMultipleChange={setAllowMultiple}
+          onDelete={() => alert('투표 삭제')}
+        />
+        <div className="text-sm text-gray-500">
+          <p>옵션: {JSON.stringify(options.map((o) => o.value))}</p>
+          <p>복수 선택: {allowMultiple ? '허용' : '비허용'}</p>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const EditModeWithThreeOptions: Story = {
+  name: 'Edit Mode - Three Options',
+  render: () => {
+    const [options, setOptions] = useState<RatioChartEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '' },
+      { id: '3', value: '' },
+    ]);
+
+    return (
+      <RatioChartEditor
+        options={options}
+        onOptionsChange={setOptions}
+        onDelete={() => alert('투표 삭제')}
+      />
+    );
+  },
+};
+
+export const EditModeFilled: Story = {
+  name: 'Edit Mode - Filled Options',
+  render: () => {
+    const [options, setOptions] = useState<RatioChartEditorOption[]>([
+      { id: '1', value: '짬뽕' },
+      { id: '2', value: '짜장면' },
+      { id: '3', value: '탕수육' },
+    ]);
+    const [allowMultiple, setAllowMultiple] = useState(true);
+
+    return (
+      <RatioChartEditor
+        options={options}
+        onOptionsChange={setOptions}
+        allowMultiple={allowMultiple}
+        onAllowMultipleChange={setAllowMultiple}
+        onDelete={() => alert('투표 삭제')}
+      />
+    );
+  },
+};
+
+export const EditModeDisabled: Story = {
+  name: 'Edit Mode - Disabled',
+  render: () => (
+    <RatioChartEditor disabled onDelete={() => alert('투표 삭제')} />
+  ),
+};
