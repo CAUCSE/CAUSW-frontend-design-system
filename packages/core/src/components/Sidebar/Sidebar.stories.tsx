@@ -4,8 +4,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Sidebar, sidebarBadgeClassName } from './Sidebar';
 import { Box } from '../Box';
 import { Flex } from '../Flex';
+import { HStack } from '../HStack';
+import { VStack } from '../VStack';
+import { Bell, Board, Book, Contacts, Home, Pen, Question } from '@causw/icons';
+import { Float } from '../Float';
 
-const meta = {
+const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
   component: Sidebar,
   parameters: {
@@ -15,7 +19,7 @@ const meta = {
   args: {
     children: undefined,
   },
-} satisfies Meta<typeof Sidebar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -51,42 +55,90 @@ export const Default: Story = {
           <Sidebar.Content>
             {/* custom content */}
             <div className="flex h-full flex-col">
-              <div>
-                <Sidebar.Item active={active === 'home'} asChild>
-                  <div onClick={() => setActive('home')}>홈</div>
+              <VStack gap="sm">
+                <Sidebar.Item
+                  selected={active === 'home'}
+                  onClick={() => setActive('home')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Home size={18} />
+                    <div>홈</div>
+                  </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item active={active === 'community'} asChild>
-                  <div onClick={() => setActive('community')}>커뮤니티</div>
+                <Sidebar.Item
+                  selected={active === 'community'}
+                  onClick={() => setActive('community')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Board size={18} />
+                    <div>커뮤니티</div>
+                  </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item active={active === 'write'} asChild>
-                  <div onClick={() => setActive('write')}>글쓰기</div>
+                <Sidebar.Item
+                  selected={active === 'write'}
+                  onClick={() => setActive('write')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Pen size={18} />
+                    <div>글쓰기</div>
+                  </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item active={active === 'directory'} asChild>
-                  <div onClick={() => setActive('directory')}>동문수첩</div>
+                <Sidebar.Item
+                  selected={active === 'directory'}
+                  onClick={() => setActive('directory')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Contacts size={18} />
+                    <div>동문수첩</div>
+                  </HStack>
                 </Sidebar.Item>
 
-                <Sidebar.Item active={active === 'profile'} asChild>
-                  <div onClick={() => setActive('profile')}>내 동문수첩</div>
+                <Sidebar.Item
+                  selected={active === 'profile'}
+                  onClick={() => setActive('profile')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Book size={18} />
+                    <div>내 동문수첩</div>
+                  </HStack>
                 </Sidebar.Item>
-              </div>
+              </VStack>
 
-              <div className="mt-auto">
-                <Sidebar.Item active={active === 'about'} asChild>
-                  <div onClick={() => setActive('about')}>크자회 소개</div>
+              <VStack gap="sm" className="mt-auto">
+                <Sidebar.Item
+                  selected={active === 'about'}
+                  onClick={() => setActive('about')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <Question size={18} />
+                    <div>크자회 소개</div>
+                  </HStack>
                 </Sidebar.Item>
-                <Sidebar.Item active={active === 'notifications'} asChild>
-                  <div
-                    onClick={() => setActive('notifications')}
-                    className="flex w-full items-center gap-2"
-                  >
-                    알림
-                    <span className={sidebarBadgeClassName}>1</span>
-                  </div>
+                <Sidebar.Item
+                  selected={active === 'notifications'}
+                  onClick={() => setActive('notifications')}
+                  asChild
+                >
+                  <HStack className="gap-3.5">
+                    <div className="relative">
+                      <Bell size={18} />
+                      <Float floatType="absolute" top={-2} right={-2}>
+                        <div className="h-1 w-1 rounded-full bg-red-500" />
+                      </Float>
+                    </div>
+                    <div>알림</div>
+                  </HStack>
                 </Sidebar.Item>
-              </div>
+              </VStack>
             </div>
           </Sidebar.Content>
 
@@ -118,23 +170,23 @@ export const WithoutCustomContent: Story = {
           </Sidebar.Header>
 
           <Sidebar.Content>
-            <Sidebar.Item active={active === 'home'} asChild>
+            <Sidebar.Item selected={active === 'home'} asChild>
               <div onClick={() => setActive('home')}>홈</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'community'} asChild>
+            <Sidebar.Item selected={active === 'community'} asChild>
               <div onClick={() => setActive('community')}>커뮤니티</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'write'} asChild>
+            <Sidebar.Item selected={active === 'write'} asChild>
               <div onClick={() => setActive('write')}>글쓰기</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'directory'} asChild>
+            <Sidebar.Item selected={active === 'directory'} asChild>
               <div onClick={() => setActive('directory')}>동문수첩</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'profile'} asChild>
+            <Sidebar.Item selected={active === 'profile'} asChild>
               <div onClick={() => setActive('profile')}>내 동문수첩</div>
             </Sidebar.Item>
           </Sidebar.Content>
@@ -167,23 +219,23 @@ export const WithoutFooter: Story = {
           </Sidebar.Header>
 
           <Sidebar.Content>
-            <Sidebar.Item active={active === 'home'} asChild>
+            <Sidebar.Item selected={active === 'home'} asChild>
               <div onClick={() => setActive('home')}>홈</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'community'} asChild>
+            <Sidebar.Item selected={active === 'community'} asChild>
               <div onClick={() => setActive('community')}>커뮤니티</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'write'} asChild>
+            <Sidebar.Item selected={active === 'write'} asChild>
               <div onClick={() => setActive('write')}>글쓰기</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'directory'} asChild>
+            <Sidebar.Item selected={active === 'directory'} asChild>
               <div onClick={() => setActive('directory')}>동문수첩</div>
             </Sidebar.Item>
 
-            <Sidebar.Item active={active === 'profile'} asChild>
+            <Sidebar.Item selected={active === 'profile'} asChild>
               <div onClick={() => setActive('profile')}>내 동문수첩</div>
             </Sidebar.Item>
           </Sidebar.Content>
