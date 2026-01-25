@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 import { Separator } from './Separator';
@@ -6,7 +5,7 @@ import { Box } from '../Box';
 import { Flex } from '../Flex';
 
 const meta = {
-  title: 'Components/Separator',
+  title: 'Layouts/Separator',
   component: Separator,
   parameters: {
     layout: 'centered',

@@ -18,7 +18,7 @@ const createItems = (count: number) =>
   ));
 
 const meta = {
-  title: 'Components/Grid',
+  title: 'Layouts/Grid',
   component: Grid,
   parameters: {
     layout: 'centered',
