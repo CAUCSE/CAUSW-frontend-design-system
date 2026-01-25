@@ -1,7 +1,7 @@
 import type { MonoIconProps } from '../types';
 import { DEFAULT_SIZE, MONO_COLORS } from '../types';
 
-export const Radio = ({
+export const RadioIndicator = ({
   size = DEFAULT_SIZE,
   active = false,
   title,
@@ -24,4 +24,4 @@ export const Radio = ({
   </svg>
 );
 
-Radio.displayName = 'Radio';
+RadioIndicator.displayName = 'RadioIndicator';
