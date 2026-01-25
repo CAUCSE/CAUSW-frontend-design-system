@@ -1,15 +1,22 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
 export const toast = tv({
-  base: [
-    'group pointer-events-auto relative flex items-center justify-center overflow-hidden text-center transition-all',
-    'data-[state=open]:animate-toast-slide-in',
-    'data-[state=closed]:animate-toast-hide',
-  ],
+  slots: {
+    root: [
+      'group pointer-events-auto relative flex items-center justify-center overflow-hidden text-center transition-all',
+      'data-[state=open]:animate-toast-slide-in',
+      'data-[state=closed]:animate-toast-hide',
+      'w-[20rem] md:w-[26.25rem] lg:w-[20rem] max-w-[calc(100vw-2rem)] rounded-md px-4 py-3',
+    ],
+    viewport: [
+      'fixed bottom-20.5 left-1/2 z-toast flex max-h-screen w-full -translate-x-1/2 flex-col-reverse items-center xl:bottom-14',
+    ],
+  },
   variants: {
     variant: {
-      default:
-        'w-[20rem] md:w-[26.25rem] max-w-[calc(100vw-2rem)] rounded-md bg-gray-700 px-4 py-3',
+      default: {
+        root: 'bg-gray-700',
+      },
     },
   },
   defaultVariants: {

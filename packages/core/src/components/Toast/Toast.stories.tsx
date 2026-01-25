@@ -1,110 +1,133 @@
-import type { Meta, StoryContext, StoryObj } from '@storybook/react';
-import React, { useState, useEffect } from 'react';
-import { Toast, ToastProvider, ToastViewport } from './Toast';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Toast } from './Toast';
+import { Toaster } from './Toaster';
+import { toast } from './toastStore';
 
 const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',
-  component: Toast,
-  subcomponents: { ToastProvider, ToastViewport },
+  component: Toaster,
   parameters: {
     layout: 'centered',
-    docs: {
-      source: {
-        transform: (
-          _code: string,
-          storyContext: StoryContext<React.ComponentProps<typeof Toast>>,
-        ) => {
-          const { args } = storyContext;
-          return `
-            const [open, setOpen] = useState(false);
-
-            return (
-              <ToastProvider>
-                <Toast 
-                  open={open} 
-                  onOpenChange={setOpen} 
-                  message="${args.message}"
-                  ${args.duration ? `duration={${args.duration}}` : ''}
-                />
-                <ToastViewport />
-              </ToastProvider>
-              )`;
-        },
-      },
-    },
   },
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ToastProvider>
-        <Story />
-        <ToastViewport />
-      </ToastProvider>
-    ),
-  ],
   argTypes: {
     variant: {
       control: 'select',
       options: ['default'],
+      description: '토스트의 스타일 변형입니다. (현재 default만 존재)',
+      table: {
+        type: { summary: 'string' },
+      },
     },
-    message: { type: 'string', control: 'text' },
-    open: { type: 'boolean', control: 'boolean' },
+    message: {
+      type: 'string',
+      control: 'text',
+      description: '표시할 메시지 내용입니다.',
+    },
     duration: {
       control: { type: 'number', min: 1000, step: 1000 },
       description: '토스트가 떠있는 시간(ms)입니다.',
+      table: {
+        defaultValue: { summary: '3000' },
+      },
     },
   },
   args: {
     message: '토스트 알림이에요',
     variant: 'default',
-    duration: 5000,
+    duration: 3000,
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Toast>;
 
-const InteractiveToast = (args: React.ComponentProps<typeof Toast>) => {
-  const [open, setOpen] = useState(false);
+export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '기본적인 토스트입니다. `toast()` 함수를 호출하여 메시지를 띄웁니다.',
+      },
+    },
+  },
+  render: (args) => (
+    <>
+      <button
+        onClick={() => toast(args.message || '', { duration: args.duration })}
+        className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200"
+      >
+        Show Toast
+      </button>
+      <Toaster />
+    </>
+  ),
+};
 
-  useEffect(() => {
-    if (args.open !== undefined) setOpen(args.open);
-  }, [args.open]);
+export const Success: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '성공 상태를 알립니다. `toast.success()`를 호출하면 성공 아이콘과 함께 렌더링됩니다.',
+      },
+    },
+  },
+  render: (args) => (
+    <>
+      <button
+        onClick={() => toast.success(args.message || '')}
+        className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200"
+      >
+        Show Toast
+      </button>
+      <Toaster />
+    </>
+  ),
+};
 
-  return (
+export const Error: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '에러 발생을 알립니다. `toast.error()`를 호출하면 에러 아이콘이 표시됩니다.',
+      },
+    },
+  },
+  render: (args) => (
+    <>
+      <button
+        onClick={() => toast.error(args.message || '')}
+        className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200"
+      >
+        Show Toast
+      </button>
+      <Toaster />
+    </>
+  ),
+};
+
+export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '작업 진행 중임을 알립니다. `toast.loading()`를 호출하면 로딩 스피너가 포함됩니다.',
+      },
+    },
+  },
+  render: (args) => (
     <>
       <button
         onClick={() => {
-          setOpen(false);
-          setTimeout(() => setOpen(true), 100);
+          toast.loading(args.message || '');
         }}
         className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200"
       >
         Show Toast
       </button>
-      <Toast {...args} open={open} onOpenChange={setOpen} />
+      <Toaster />
     </>
-  );
-};
-
-export const Default: Story = {
-  render: (args) => <InteractiveToast {...args} />,
-};
-
-export const Opened: Story = {
-  args: {
-    message: '사물함 등록이 완료되었습니다.',
-    variant: 'default',
-    open: true,
-  },
-  render: (args) => <InteractiveToast {...args} />,
-};
-
-export const FastDismiss: Story = {
-  args: {
-    message: '1.5초 뒤에 자동으로 사라집니다.',
-    duration: 1500,
-    open: true,
-  },
-  render: (args) => <InteractiveToast {...args} />,
+  ),
 };

@@ -40,4 +40,5 @@ export const Primitive = {
   li: createPrimitive('li'),
   svg: createPrimitive('svg'),
   circle: createPrimitive('circle'),
+  nav: createPrimitive('nav'),
 };

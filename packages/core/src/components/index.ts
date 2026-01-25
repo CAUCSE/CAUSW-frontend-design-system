@@ -16,6 +16,7 @@ export * from './Flex';
 export * from './Grid';
 export * from './Separator';
 export * from './Spacer';
+export * from './RatioChart';
 export * from './Select';
 export * from './Dialog';
 export * from './Dropdown';

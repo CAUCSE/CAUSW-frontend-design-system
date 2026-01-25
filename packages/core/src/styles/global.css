@@ -9,7 +9,6 @@
 }
 
 @layer utilities {
-
   /* Title variants */
   .typo-title-48-bold {
     @apply font-sans text-6xl leading-normal font-bold;
@@ -54,7 +53,7 @@
   }
 
   .typo-body-16-regular {
-    @apply font-sans text-base leading-normal font-regular;
+    @apply font-regular font-sans text-base leading-normal;
   }
 
   .typo-body-15-semibold {
@@ -74,24 +73,23 @@
   }
 
   .typo-body-14-regular {
-    @apply font-sans text-xs leading-normal font-regular;
+    @apply font-regular font-sans text-xs leading-normal;
   }
 
   .typo-caption-12-semibold {
-    @apply font-sans text-2xs leading-normal font-semibold;
+    @apply text-2xs font-sans leading-normal font-semibold;
   }
 
   .typo-caption-12-medium {
-    @apply font-sans text-2xs leading-normal font-medium;
+    @apply text-2xs font-sans leading-normal font-medium;
   }
 
   .typo-caption-12-regular {
-    @apply font-sans text-2xs leading-normal font-regular;
+    @apply text-2xs font-regular font-sans leading-normal;
   }
 }
 
 @theme {
-
   --z-index-sticky: 250;
   --z-index-dropdown: 500;
   --z-index-bottomsheet: 600;
@@ -177,6 +175,33 @@
     }
 
     to {
+      transform: translateY(100%);
+    }
+  }
+
+  --animate-overlay-show: fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-overlay-hide: fade-out 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-content-show: content-show 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-content-hide: content-hide 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes content-show {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+
+  @keyframes content-hide {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
       transform: translateY(100%);
     }
   }
