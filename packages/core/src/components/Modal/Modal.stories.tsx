@@ -50,7 +50,7 @@ export const TwoButtons: Story = {
           <Modal.Close asChild>
             <Modal.ActionButton variant="cancel">취소</Modal.ActionButton>
           </Modal.Close>
-          <div className="w-[1px] bg-gray-200" />
+          <Separator orientation="vertical" className="mx-0" />
           <Modal.Close asChild>
             <Modal.ActionButton variant="primary">확인</Modal.ActionButton>
           </Modal.Close>
