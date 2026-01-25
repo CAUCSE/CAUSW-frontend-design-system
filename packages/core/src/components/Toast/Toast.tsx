@@ -1,31 +1,26 @@
 import * as ToastPrimitives from '@radix-ui/react-toast';
-import { colorStyles, getToastStyles, ToastVariant } from './Toast.styles';
-import { Text } from '../Text';
+import { toast, ToastVariants } from './Toast.styles';
+import { Text, TextVariants } from '../Text';
 import { mergeStyles } from '../../utils';
 
-export interface ToastProps extends React.ComponentProps<
-  typeof ToastPrimitives.Root
-> {
-  variant?: ToastVariant;
+export interface ToastProps
+  extends React.ComponentProps<typeof ToastPrimitives.Root>, ToastVariants {
   message?: string;
+  textColor: TextVariants['textColor'];
 }
 
 export const Toast = ({
   className,
+  textColor = 'white',
   variant = 'default',
   message,
   ...props
 }: ToastProps) => {
-  const contentColor = colorStyles[variant];
-
   return (
-    <ToastPrimitives.Root
-      className={getToastStyles({ variant, className })}
-      {...props}
-    >
+    <ToastPrimitives.Root className={toast({ variant, className })} {...props}>
       {message && (
         <ToastPrimitives.Description asChild>
-          <Text as="p" typography="body-16-medium" textColor={contentColor}>
+          <Text as="p" typography="body-16-medium" textColor={textColor}>
             {message}
           </Text>
         </ToastPrimitives.Description>
