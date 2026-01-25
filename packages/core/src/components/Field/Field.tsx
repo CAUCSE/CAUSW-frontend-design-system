@@ -1,11 +1,9 @@
-import React, { useId } from 'react';
-import { PolymorphicProps } from '../../utils/polymorphic';
+import React, { ComponentProps, useId } from 'react';
 import { Text, type TextVariants } from '../Text';
 import {
   FieldContext,
   useFieldContext,
 } from '../../hooks/field/useFieldContext';
-import { TextElement } from '../Text/Text';
 import { field } from './Field.styles';
 
 // Field Root
@@ -34,24 +32,23 @@ const FieldRoot = ({
   );
 };
 
-export type FieldLabelProps<E extends TextElement = 'label'> = PolymorphicProps<
-  E,
-  TextVariants
->;
+export interface FieldLabelProps
+  extends ComponentProps<'label'>, TextVariants {}
 
-const FieldLabel = <E extends TextElement = 'label'>({
+const FieldLabel = ({
   children,
   className,
   typography = 'subtitle-16-bold',
   textColor = 'gray-700',
   ...labelProps
-}: FieldLabelProps<E>) => {
+}: FieldLabelProps) => {
   const fieldContext = useFieldContext();
   const id = fieldContext?.id;
   const { label } = field();
 
   return (
     <Text
+      as="label"
       typography={typography}
       textColor={textColor}
       htmlFor={id}
