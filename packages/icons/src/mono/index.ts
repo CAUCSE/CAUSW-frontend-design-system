@@ -21,6 +21,7 @@ export { Minus } from './Minus';
 export { Pen } from './Pen';
 export { Plus } from './Plus';
 export { Question } from './Question';
+export { Radio } from './Radio';
 export { Recent } from './Recent';
 export { Setting } from './Setting';
 export { Share } from './Share';
