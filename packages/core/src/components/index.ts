@@ -23,3 +23,7 @@ export * from './Dropdown';
 export * from './Float';
 export * from './Chip';
 export * from './Avatar';
+export * from './Tab';
+export * from './Toast';
+export * from './Modal';
+export * from './Primitive';

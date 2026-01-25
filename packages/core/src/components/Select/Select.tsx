@@ -4,19 +4,26 @@ import { ArrowDown } from '@causw/icons';
 import { select, type SelectVariants } from './Select.styles';
 
 const SelectRoot = SelectPrimitive.Root;
+export type SelectProps = React.ComponentProps<typeof SelectRoot>;
 
 const SelectGroup = SelectPrimitive.Group;
+export type SelectGroupProps = React.ComponentProps<typeof SelectGroup>;
 
 const SelectValue = SelectPrimitive.Value;
+export type SelectValueProps = React.ComponentProps<typeof SelectValue>;
 
 // arrowIcon의 색은 props가 뚫리면 수정할 예정
+export interface SelectTriggerProps
+  extends
+    React.ComponentProps<typeof SelectPrimitive.Trigger>,
+    Pick<SelectVariants, 'error'> {}
+
 const SelectTrigger = ({
   className,
   children,
   error,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> &
-  Pick<SelectVariants, 'error'>) => {
+}: SelectTriggerProps) => {
   const { trigger } = select({ error });
 
   return (
@@ -30,6 +37,13 @@ const SelectTrigger = ({
 };
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
+export interface SelectContentProps
+  extends
+    React.ComponentProps<typeof SelectPrimitive.Content>,
+    Pick<SelectVariants, 'position'> {
+  maxHeight?: string | number;
+}
+
 const SelectContent = ({
   className,
   children,
@@ -37,9 +51,7 @@ const SelectContent = ({
   sideOffset = 4,
   maxHeight = '15rem', // Default max height
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Content> & {
-  maxHeight?: string | number;
-} & Pick<SelectVariants, 'position'>) => {
+}: SelectContentProps) => {
   const { content, viewport } = select({ position });
 
   return (
@@ -59,20 +71,19 @@ const SelectContent = ({
 };
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-const SelectLabel = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Label>) => {
+export type SelectLabelProps = React.ComponentProps<
+  typeof SelectPrimitive.Label
+>;
+
+const SelectLabel = ({ className, ...props }: SelectLabelProps) => {
   const { label } = select();
   return <SelectPrimitive.Label className={label({ className })} {...props} />;
 };
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-const SelectItem = ({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) => {
+export type SelectItemProps = React.ComponentProps<typeof SelectPrimitive.Item>;
+
+const SelectItem = ({ className, children, ...props }: SelectItemProps) => {
   const { item } = select();
 
   return (

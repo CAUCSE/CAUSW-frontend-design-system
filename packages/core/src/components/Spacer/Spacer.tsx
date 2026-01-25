@@ -1,13 +1,11 @@
 import React, { type ElementType } from 'react';
-import { spacerStyles, type SpacerStylesOptions } from './Spacer.styles';
+import { spacer, type SpacerVariants } from './Spacer.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-export type SpacerBaseProps = SpacerStylesOptions;
-
 export type SpacerProps<E extends ElementType = 'div'> = PolymorphicProps<
   E,
-  SpacerBaseProps
+  SpacerVariants
 >;
 
 export const Spacer = <E extends ElementType = 'div'>({
@@ -17,7 +15,7 @@ export const Spacer = <E extends ElementType = 'div'>({
   ...props
 }: SpacerProps<E>) => {
   const Component = as || 'div';
-  const classes = spacerStyles({ size });
+  const classes = spacer({ size });
 
   return React.createElement(Component, {
     'aria-hidden': 'true',

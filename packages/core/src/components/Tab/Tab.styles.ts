@@ -1,56 +1,36 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
-export const tabList = tv({
-  base: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar [-webkit-overflow-scrolling:touch]',
+export const tabs = tv({
+  slots: {
+    list: 'flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar [-webkit-overflow-scrolling:touch]',
+    item: 'cursor-pointer transition-colors select-none flex-shrink-0',
+  },
   variants: {
     variant: {
-      underline: 'border-b border-gray-200',
-      chip: 'gap-2',
+      underline: {
+        list: 'border-b border-gray-200',
+        item: [
+          'flex-1 min-w-fit px-3 py-3 text-center border-b-2 typo-subtitle-16-bold',
+          'hover:border-gray-500 hover:text-gray-500',
+          'aria-selected:border-gray-700 aria-selected:text-gray-700',
+          'aria-[selected=false]:border-transparent aria-[selected=false]:text-gray-300',
+          'aria-[selected=false]:hover:text-gray-400 aria-[selected=false]:active:text-gray-400',
+        ].join(' '),
+      },
+      chip: {
+        list: 'gap-2',
+        item: [
+          'px-3 py-2 rounded-[0.5rem] typo-body-14-medium',
+          'aria-selected:bg-gray-700 aria-selected:text-white',
+          'aria-[selected=false]:bg-white aria-[selected=false]:text-gray-600',
+          'aria-[selected=false]:hover:bg-gray-200 aria-[selected=false]:active:bg-gray-200',
+        ].join(' '),
+      },
     },
   },
   defaultVariants: {
     variant: 'underline',
   },
 });
-export type TabListVariants = VariantProps<typeof tabList>;
 
-export const tabItem = tv({
-  base: 'cursor-pointer transition-colors select-none flex-shrink-0',
-  variants: {
-    variant: {
-      underline:
-        'flex-1 min-w-fit px-3 py-3 text-center border-b-2 typo-subtitle-16-bold',
-      chip: 'px-3 py-2 rounded-[0.5rem] typo-body-14-medium',
-    },
-    active: {
-      true: '',
-      false: '',
-    },
-  },
-  compoundVariants: [
-    {
-      variant: 'underline',
-      active: true,
-      class: 'border-gray-700 text-gray-700',
-    },
-    {
-      variant: 'underline',
-      active: false,
-      class: 'border-transparent text-gray-300',
-    },
-    {
-      variant: 'chip',
-      active: true,
-      class: 'bg-gray-700 text-white',
-    },
-    {
-      variant: 'chip',
-      active: false,
-      class: 'bg-white text-gray-600',
-    },
-  ],
-  defaultVariants: {
-    variant: 'underline',
-    active: false,
-  },
-});
+export type TabVariants = VariantProps<typeof tabs>;

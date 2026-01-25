@@ -4,7 +4,7 @@ import { HStack } from './HStack';
 import { Box } from '../Box';
 
 const meta = {
-  title: 'Components/HStack',
+  title: 'Layouts/HStack',
   component: HStack,
   parameters: {
     layout: 'centered',

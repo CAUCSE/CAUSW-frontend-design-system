@@ -20,7 +20,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '`Dialog`는 `modal` 형태의 웹 컴포넌트입니다. 헤더와 푸터 같은 영역이 정해져 있지 않습니다.\n\n`Dialog.Content` 내부에 자유롭게 `VStack`, `HStack`, `Text`, `Button` 등을 조합하여 원하는 레이아웃을 구성할 수 있습니다.',
+          '`Dialog`는 `modal` 형태의 웹 컴포넌트입니다. Modal보다 더 추상화된 버전입니다.\n\n 크게 Content와 Trigger로 구성되어 있습니다. Content 내부에는 Title, Description, Footer 등이 정의되어 있습니다.\n\n`Dialog.Content` 내부에 자유롭게 `VStack`, `HStack`, `Text`, `Button` 등을 조합하여 원하는 레이아웃을 구성할 수 있습니다.',
       },
     },
   },
@@ -119,7 +119,9 @@ export const TogglePopup: Story = {
       </Dialog.Trigger>
       <Dialog.Content maxWidth={420}>
         <VStack gap="lg">
-          <Text typography="subtitle-20-bold">Privacy Settings</Text>
+          <Dialog.Title>
+            <Text typography="subtitle-20-bold">Privacy Settings</Text>
+          </Dialog.Title>
 
           <VStack gap="md">
             <Toggle className="w-full">
@@ -136,16 +138,18 @@ export const TogglePopup: Story = {
             </Toggle>
           </VStack>
 
-          <HStack gap="sm">
-            <Dialog.Close asChild>
-              <CTAButton color="light" className="w-1/2">
-                Close
+          <Dialog.Footer>
+            <HStack gap="sm">
+              <Dialog.Close asChild>
+                <CTAButton color="light" className="w-1/2">
+                  Close
+                </CTAButton>
+              </Dialog.Close>
+              <CTAButton color="dark" className="w-1/2">
+                Save
               </CTAButton>
-            </Dialog.Close>
-            <CTAButton color="dark" className="w-1/2">
-              Save
-            </CTAButton>
-          </HStack>
+            </HStack>
+          </Dialog.Footer>
         </VStack>
       </Dialog.Content>
     </Dialog>
@@ -164,17 +168,23 @@ export const Controlled: Story = {
         <Dialog.Content width={400}>
           <VStack gap="lg">
             <VStack gap="sm">
-              <Text typography="title-30-bold">Controlled Dialog</Text>
-              <Text typography="body-18-medium" textColor="gray-500">
-                This dialog is controlled by external React state.
-              </Text>
+              <Dialog.Title>
+                <Text typography="title-30-bold">Controlled Dialog</Text>
+              </Dialog.Title>
+              <Dialog.Description>
+                <Text typography="body-18-medium" textColor="gray-500">
+                  This dialog is controlled by external React state.
+                </Text>
+              </Dialog.Description>
             </VStack>
 
-            <HStack justify="end" gap="sm">
-              <CTAButton color="light" onClick={() => setOpen(false)}>
-                Close using State
-              </CTAButton>
-            </HStack>
+            <Dialog.Footer>
+              <HStack justify="end" gap="sm">
+                <CTAButton color="light" onClick={() => setOpen(false)}>
+                  Close using State
+                </CTAButton>
+              </HStack>
+            </Dialog.Footer>
           </VStack>
         </Dialog.Content>
       </Dialog>
@@ -236,10 +246,14 @@ export const PreventClose: Story = {
         >
           <VStack gap="lg">
             <VStack gap="sm">
-              <Text typography="title-30-bold">Prevent Closing</Text>
-              <Text typography="body-18-medium" textColor="gray-500">
-                Try clicking outside the dialog.
-              </Text>
+              <Dialog.Title>
+                <Text typography="title-30-bold">Prevent Closing</Text>
+              </Dialog.Title>
+              <Dialog.Description>
+                <Text typography="body-18-medium" textColor="gray-500">
+                  Try clicking outside the dialog.
+                </Text>
+              </Dialog.Description>
             </VStack>
 
             <div className="flex items-center gap-2 rounded border border-yellow-200 bg-yellow-50 p-2">
@@ -262,11 +276,13 @@ export const PreventClose: Story = {
               instead of closing immediately.
             </Text>
 
-            <HStack justify="end" gap="sm">
-              <CTAButton color="light" onClick={handleClose}>
-                Close
-              </CTAButton>
-            </HStack>
+            <Dialog.Footer>
+              <HStack justify="end" gap="sm">
+                <CTAButton color="light" onClick={handleClose}>
+                  Close
+                </CTAButton>
+              </HStack>
+            </Dialog.Footer>
           </VStack>
         </Dialog.Content>
       </Dialog>
@@ -296,7 +312,9 @@ export const FeedbackPopup: Story = {
               align="center"
               className="mb-[39px] w-full"
             >
-              <Text typography="title-30-bold">건의/오류 제보하기</Text>
+              <Dialog.Title>
+                <Text typography="title-30-bold">건의/오류 제보하기</Text>
+              </Dialog.Title>
               <Dialog.Close asChild>
                 <button className="text-gray-500 transition-colors hover:text-gray-700">
                   <svg
@@ -313,9 +331,11 @@ export const FeedbackPopup: Story = {
               </Dialog.Close>
             </HStack>
 
-            <Text typography="body-18-medium">
-              크자회 서비스에 관한 의견을 자유롭게 남겨주세요
-            </Text>
+            <Dialog.Description>
+              <Text typography="body-18-medium">
+                크자회 서비스에 관한 의견을 자유롭게 남겨주세요
+              </Text>
+            </Dialog.Description>
 
             {/* Satisfaction Survey */}
             <VStack className="mb-[24px] w-full rounded-[12px] bg-white p-[24px]">
@@ -361,9 +381,11 @@ export const FeedbackPopup: Story = {
               </TextArea>
             </Field>
             {/* Footer CTA */}
-            <Flex justify="center">
-              <CTAButton color="blue">제출하기</CTAButton>
-            </Flex>
+            <Dialog.Footer>
+              <Flex justify="center">
+                <CTAButton color="blue">제출하기</CTAButton>
+              </Flex>
+            </Dialog.Footer>
           </VStack>
         </Dialog.Content>
       </Dialog>
@@ -380,7 +402,9 @@ export const Fullscreen: Story = {
       <Dialog.Content fullscreen>
         <VStack gap="lg" className="h-full">
           <HStack justify="between" align="center">
-            <Text typography="title-48-bold">Fullscreen Dialog</Text>
+            <Dialog.Title>
+              <Text typography="title-48-bold">Fullscreen Dialog</Text>
+            </Dialog.Title>
             <Dialog.Close asChild>
               <CTAButton color="light">Close</CTAButton>
             </Dialog.Close>
@@ -420,29 +444,35 @@ export const ResponsiveFullscreen: Story = {
         >
           <VStack gap="lg" className="h-full">
             <HStack justify="between" align="center">
-              <Text typography="title-48-bold">Responsive Dialog</Text>
+              <Dialog.Title>
+                <Text typography="title-48-bold">Responsive Dialog</Text>
+              </Dialog.Title>
               <Dialog.Close asChild>
                 <CTAButton color="light">Close</CTAButton>
               </Dialog.Close>
             </HStack>
 
-            <div className="flex flex-1 items-center justify-center rounded-md bg-gray-100 p-4 text-gray-400">
-              <VStack align="center" gap="sm">
-                <Text typography="subtitle-20-bold">Resize the window!</Text>
-                <Text typography="body-16-regular" textColor="gray-500">
-                  Current Mode:{' '}
-                  {isMobile ? 'Fullscreen (Mobile)' : 'Modal (Desktop)'}
-                </Text>
-              </VStack>
-            </div>
+            <Dialog.Description>
+              <div className="flex flex-1 items-center justify-center rounded-md bg-gray-100 p-4 text-gray-400">
+                <VStack align="center" gap="sm">
+                  <Text typography="subtitle-20-bold">Resize the window!</Text>
+                  <Text typography="body-16-regular" textColor="gray-500">
+                    Current Mode:{' '}
+                    {isMobile ? 'Fullscreen (Mobile)' : 'Modal (Desktop)'}
+                  </Text>
+                </VStack>
+              </div>
+            </Dialog.Description>
 
-            <HStack justify="end" className="md:hidden">
-              <Dialog.Close asChild>
-                <CTAButton color="blue" className="w-full">
-                  Done
-                </CTAButton>
-              </Dialog.Close>
-            </HStack>
+            <Dialog.Footer>
+              <HStack justify="end" className="md:hidden">
+                <Dialog.Close asChild>
+                  <CTAButton color="blue" className="w-full">
+                    Done
+                  </CTAButton>
+                </Dialog.Close>
+              </HStack>
+            </Dialog.Footer>
           </VStack>
         </Dialog.Content>
       </Dialog>

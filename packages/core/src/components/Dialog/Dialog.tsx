@@ -8,19 +8,23 @@ import {
 } from './Dialog.styles';
 import { splitVariantProps } from '../../utils';
 import { ComponentProps } from 'react';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
 const DialogRoot = DialogPrimitive.Root;
+export type DialogProps = ComponentProps<typeof DialogRoot>;
 
 const DialogTrigger = DialogPrimitive.Trigger;
+export type DialogTriggerProps = ComponentProps<typeof DialogTrigger>;
 
 const DialogPortal = DialogPrimitive.Portal;
+export type DialogPortalProps = ComponentProps<typeof DialogPortal>;
 
 const DialogClose = DialogPrimitive.Close;
+export type DialogCloseProps = ComponentProps<typeof DialogClose>;
 
-const DialogOverlay = ({
-  className,
-  ...props
-}: ComponentProps<typeof DialogPrimitive.Overlay>) => {
+export type DialogOverlayProps = ComponentProps<typeof DialogPrimitive.Overlay>;
+
+const DialogOverlay = ({ className, ...props }: DialogOverlayProps) => {
   const { overlay } = dialog();
 
   return (
@@ -59,8 +63,34 @@ const DialogContent = ({
 };
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
+export type DialogTitleProps = ComponentProps<typeof DialogPrimitive.Title>;
+
+const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
+  return <DialogPrimitive.Title {...props} />;
+};
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+
+export type DialogDescriptionProps = ComponentProps<
+  typeof DialogPrimitive.Description
+>;
+
+const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
+  return <DialogPrimitive.Description {...props} />;
+};
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
+
+export type DialogFooterProps = ComponentProps<'div'> & PrimitiveProps;
+
+const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
+  return <Primitive.div {...props} />;
+};
+DialogFooter.displayName = 'DialogFooter';
+
 export const Dialog = Object.assign(DialogRoot, {
   Trigger: DialogTrigger,
   Content: DialogContent,
+  Title: DialogTitle,
+  Description: DialogDescription,
+  Footer: DialogFooter,
   Close: DialogClose,
 });

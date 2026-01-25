@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { tabItem, tabList, TabListVariants } from './Tab.styles';
-import { mergeStyles } from '../../utils';
+import { tabs, TabVariants } from './Tab.styles';
 
-interface TabContextValue extends TabListVariants {
+interface TabContextValue extends TabVariants {
   value: string;
   setValue: (v: string) => void;
   baseId: string;
@@ -19,7 +18,7 @@ const useTabContext = () => {
   return ctx;
 };
 
-export interface TabRootProps extends TabListVariants {
+export interface TabRootProps extends TabVariants {
   scrollAlign?: ScrollLogicalPosition;
   defaultValue?: string;
   value?: string;
@@ -76,12 +75,13 @@ export type TabListProps = React.ComponentPropsWithoutRef<'div'> & {
 
 const TabList = ({ className, ...props }: TabListProps) => {
   const { variant, listRef } = useTabContext();
+  const { list } = tabs({ variant });
 
   return (
     <div
       ref={listRef}
       role="tablist"
-      className={tabList({ variant, className })}
+      className={list({ className })}
       {...props}
     />
   );
@@ -109,6 +109,7 @@ const TabItem = ({
   } = useTabContext();
 
   const active = activeValue === value;
+  const { item } = tabs({ variant });
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setValue(value);
@@ -131,11 +132,7 @@ const TabItem = ({
       aria-selected={active}
       id={`${baseId}-TabItem-${value}`}
       aria-controls={`${baseId}-content-${value}`}
-      className={tabItem({
-        variant,
-        active,
-        className: mergeStyles(className),
-      })}
+      className={item({ className })}
       onClick={handleClick}
       {...props}
     />

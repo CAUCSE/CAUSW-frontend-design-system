@@ -1,16 +1,11 @@
 import React, { type ElementType } from 'react';
-import {
-  separatorStyles,
-  type SeparatorStylesOptions,
-} from './Separator.styles';
+import { separator, type SeparatorVariants } from './Separator.styles';
 import { mergeStyles } from '../../utils';
 import type { PolymorphicProps } from '../../utils/polymorphic';
 
-export type SeparatorBaseProps = SeparatorStylesOptions;
-
 export type SeparatorProps<E extends ElementType = 'div'> = PolymorphicProps<
   E,
-  SeparatorBaseProps
+  SeparatorVariants
 >;
 
 export const Separator = <E extends ElementType = 'div'>({
@@ -20,7 +15,7 @@ export const Separator = <E extends ElementType = 'div'>({
   ...props
 }: SeparatorProps<E>) => {
   const Component = as || 'div';
-  const classes = separatorStyles({ orientation });
+  const classes = separator({ orientation });
 
   return React.createElement(Component, {
     role: 'separator',
