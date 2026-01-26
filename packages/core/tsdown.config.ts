@@ -11,4 +11,5 @@ export default defineConfig({
     '.png': 'dataurl',
     '.svg': 'dataurl',
   },
+  external: ['tailwindcss'],
 });
