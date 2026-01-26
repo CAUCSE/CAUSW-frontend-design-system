@@ -6,10 +6,12 @@ import {
   startOfMonth,
   endOfMonth,
   addDays,
+  subDays,
   getDay,
   getDaysInMonth,
   isSameDay,
-  differenceInDays,
+  isWithinInterval,
+  differenceInCalendarDays,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -25,9 +27,8 @@ import {
 } from './Calendar.styles';
 import { mergeStyles } from '../../utils';
 
-const CELL_GAP_PX = 4;
-
 export type CalendarEvent = {
+  id: string | number;
   title: string;
   startDate: string;
   endDate?: string;
@@ -39,6 +40,11 @@ export interface CalendarProps extends CalendarVariants {
   events?: CalendarEvent[];
   defaultMonth?: Date;
   today?: Date;
+  selectedStartDate?: Date;
+  selectedEndDate?: Date;
+  onDateClick?: (date: Date) => void;
+  onEventClick?: (event: CalendarEvent) => void;
+  enableHover?: boolean;
 }
 
 const parseDateStr = (dateStr: string) => {
@@ -59,6 +65,11 @@ export const Calendar = ({
   defaultMonth = new Date(),
   today = new Date(),
   size,
+  selectedStartDate,
+  selectedEndDate,
+  onDateClick,
+  onEventClick,
+  enableHover = false,
 }: CalendarProps) => {
   const {
     wrapper,
@@ -76,12 +87,11 @@ export const Calendar = ({
     cellEmpty,
     eventList,
     eventItemHeight,
-  } = calendar({ size });
+  } = calendar({ size, hoverEffect: enableHover });
 
   const [currentMonth, setCurrentMonth] = useState(defaultMonth);
-  const monthStart = startOfMonth(currentMonth);
   const totalDays = getDaysInMonth(currentMonth);
-  const startDayIndex = getDay(monthStart);
+  const startDayIndex = getDay(startOfMonth(currentMonth));
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handlePrevMonth = () => setCurrentMonth((prev) => subMonths(prev, 1));
@@ -115,7 +125,6 @@ export const Calendar = ({
   return (
     <Box className={wrapper({ className })}>
       <Box className={layoutContainer()}>
-        {/* 1. 헤더 */}
         <Grid columns={7} className={header()}>
           <Flex className={navContainerLeft()}>
             <button
@@ -126,13 +135,11 @@ export const Calendar = ({
               <ChevronLeft className={navIcon()} />
             </button>
           </Flex>
-
           <Box className="col-span-5 flex items-center justify-center">
             <span className={caption()}>
               {format(currentMonth, 'yyyy년 M월', { locale: ko })}
             </span>
           </Box>
-
           <Flex className={navContainerRight()}>
             <button
               onClick={handleNextMonth}
@@ -144,7 +151,6 @@ export const Calendar = ({
           </Flex>
         </Grid>
 
-        {/* 2. 요일 헤더 */}
         <Grid columns={7} className={gridHeader()}>
           {weekDays.map((day) => (
             <Flex
@@ -158,7 +164,6 @@ export const Calendar = ({
           ))}
         </Grid>
 
-        {/* 3. 날짜 그리드 */}
         <Grid columns={7} className={gridBody()}>
           {Array.from({ length: startDayIndex }).map((_, i) => (
             <Box key={`empty-${i}`} className={cellEmpty()} />
@@ -172,9 +177,35 @@ export const Calendar = ({
               day,
             );
             const dateKey = formatDateStr(currentDate);
-            const dayIndex = getDay(currentDate);
-            const isTodayDate = isSameDay(currentDate, today);
+
             const daysEvents = eventsByDate.get(dateKey) || [];
+
+            const isToday = isSameDay(currentDate, today);
+            const isStart =
+              selectedStartDate && isSameDay(currentDate, selectedStartDate);
+            const isEnd =
+              selectedEndDate && isSameDay(currentDate, selectedEndDate);
+            const isBetween =
+              selectedStartDate &&
+              selectedEndDate &&
+              isWithinInterval(currentDate, {
+                start: selectedStartDate,
+                end: selectedEndDate,
+              }) &&
+              !isStart &&
+              !isEnd;
+
+            let selectionState:
+              | 'none'
+              | 'today'
+              | 'selected'
+              | 'range'
+              | 'rangeStart'
+              | 'rangeEnd' = 'none';
+            if (isStart) selectionState = 'selected';
+            else if (isEnd) selectionState = 'selected';
+            else if (isBetween) selectionState = 'range';
+            else if (isToday) selectionState = 'today';
 
             return (
               <Flex
@@ -183,59 +214,67 @@ export const Calendar = ({
                 align="center"
                 justify="start"
                 className={cell()}
+                onClick={() => onDateClick?.(currentDate)}
               >
-                <span
-                  className={calendar({ isToday: isTodayDate }).dayNumber()}
-                >
+                <span className={calendar({ selectionState }).dayNumber()}>
                   {day}
                 </span>
-
                 <Flex className={eventList()}>
                   {daysEvents.map((ev, idx) => {
                     const { start, end } = getEventRange(ev);
+
+                    const currentDayIndex = getDay(currentDate);
+                    const weekStart = subDays(currentDate, currentDayIndex);
+                    const weekEnd = addDays(currentDate, 6 - currentDayIndex);
+
+                    const segmentStart = start < weekStart ? weekStart : start;
+                    const segmentEnd = end > weekEnd ? weekEnd : end;
+                    const segmentDuration =
+                      differenceInCalendarDays(segmentEnd, segmentStart) + 1;
+                    const indexInSegment = differenceInCalendarDays(
+                      currentDate,
+                      segmentStart,
+                    );
+
+                    const targetIndex = Math.floor((segmentDuration - 1) / 2);
+                    const isRenderCell = indexInSegment === targetIndex;
+
                     const startDateKey = formatDateStr(start);
                     const endDateKey = formatDateStr(end);
-                    const isStart = dateKey === startDateKey;
-                    const isEnd = dateKey === endDateKey;
+                    const isStartEvent = dateKey === startDateKey;
+                    const isEndEvent = dateKey === endDateKey;
                     const isSingleDay = startDateKey === endDateKey;
-                    const isSunday = dayIndex === 0;
-
-                    const daysLeftInWeek = 7 - dayIndex;
-                    const daysLeftInEvent =
-                      differenceInDays(end, currentDate) + 1;
-                    const span = Math.min(daysLeftInWeek, daysLeftInEvent);
-                    const shouldRenderText = isSingleDay || isStart || isSunday;
 
                     return (
                       <div
-                        key={`${ev.title}-${ev.startDate}-${idx}`}
+                        key={`${ev.id}-${idx}`}
                         className={mergeStyles([
-                          'relative',
+                          'relative w-full',
                           eventItemHeight(),
                           eventBarStyles.variants[ev.type],
-                          isSingleDay ? 'mx-[2px] rounded-[4px]' : '',
-                          !isSingleDay && isStart
-                            ? 'ml-[2px] rounded-l-[4px] rounded-r-none'
+                          isSingleDay
+                            ? 'mx-[2px] !w-[calc(100%-4px)] rounded-[4px]'
                             : '',
-                          !isSingleDay && isEnd
-                            ? 'mr-[2px] rounded-l-none rounded-r-[4px]'
+                          !isSingleDay && isStartEvent
+                            ? 'mr-0 ml-[2px] !w-[calc(100%-2px)] rounded-l-[4px] rounded-r-none'
                             : '',
-                          !isSingleDay && !isStart && !isEnd
-                            ? 'mx-0 rounded-none'
+                          !isSingleDay && isEndEvent
+                            ? 'mr-[2px] ml-0 !w-[calc(100%-2px)] rounded-l-none rounded-r-[4px]'
+                            : '',
+                          !isSingleDay && !isStartEvent && !isEndEvent
+                            ? 'mx-0 w-full rounded-none'
                             : '',
                         ])}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEventClick?.(ev);
+                        }}
                       >
-                        {shouldRenderText && (
-                          <div
-                            className={eventBarStyles.textWrapper}
-                            style={{
-                              width:
-                                span > 1
-                                  ? `calc(${span * 100}% + ${(span - 1) * CELL_GAP_PX}px)`
-                                  : '100%',
-                            }}
-                          >
-                            {ev.title}
+                        {isRenderCell && (
+                          <div className={eventBarStyles.textWrapper}>
+                            <span className="block w-full truncate px-1 text-center">
+                              {ev.title}
+                            </span>
                           </div>
                         )}
                       </div>
