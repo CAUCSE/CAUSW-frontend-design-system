@@ -2,14 +2,19 @@
   "name": "@causw/core",
   "version": "0.0.10",
   "description": "Core components and utilities for CAUSW Design System - CAU Software Community Service",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./styles": {
       "import": "./src/styles/global.css",
@@ -21,8 +26,8 @@
     "src/styles"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --external react --treeshake",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint src"
   },
   "dependencies": {

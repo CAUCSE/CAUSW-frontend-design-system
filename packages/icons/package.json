@@ -2,24 +2,39 @@
   "name": "@causw/icons",
   "version": "0.0.9",
   "description": "Icon components for CAUSW Design System - CAU Software Community Service",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./mono": {
-      "types": "./dist/mono/index.d.ts",
-      "import": "./dist/mono/index.mjs",
-      "require": "./dist/mono/index.js"
+      "import": {
+        "types": "./dist/mono/index.d.mts",
+        "default": "./dist/mono/index.mjs"
+      },
+      "require": {
+        "types": "./dist/mono/index.d.cts",
+        "default": "./dist/mono/index.cjs"
+      }
     },
     "./colored": {
-      "types": "./dist/colored/index.d.ts",
-      "import": "./dist/colored/index.mjs",
-      "require": "./dist/colored/index.js"
+      "import": {
+        "types": "./dist/colored/index.d.mts",
+        "default": "./dist/colored/index.mjs"
+      },
+      "require": {
+        "types": "./dist/colored/index.d.cts",
+        "default": "./dist/colored/index.cjs"
+      }
     }
   },
   "files": [
@@ -30,8 +45,8 @@
     "generate:mono": "tsx scripts/generate.ts --mono",
     "generate:colored": "tsx scripts/generate.ts --colored",
     "prebuild": "pnpm generate",
-    "build": "tsup src/index.ts src/mono/index.ts src/colored/index.ts --format cjs,esm --dts --external react --treeshake",
-    "dev": "tsup src/index.ts src/mono/index.ts src/colored/index.ts --format cjs,esm --dts --external react --watch",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint src",
     "test": "echo \"No tests yet\""
   },
