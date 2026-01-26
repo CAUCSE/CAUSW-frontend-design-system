@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { mergeStyles, PolymorphicProps } from '../../utils';
-import { Text, TextStyleProps } from '../Text';
+import { PolymorphicProps } from '../../utils';
+import { Text, TextVariants } from '../Text';
 import { TextElement } from '../Text/Text';
+import { checkbox, CheckboxVariants } from './Checkbox.styles';
 
 // Checkbox Context
 interface CheckboxContextValue {
@@ -22,14 +23,10 @@ const useCheckboxContext = () => {
 };
 
 // Checkbox
-export interface CheckboxRootProps extends Omit<
-  React.ComponentProps<'label'>,
-  'onChange'
-> {
-  checked?: boolean;
+export interface CheckboxRootProps
+  extends Omit<React.ComponentProps<'label'>, 'onChange'>, CheckboxVariants {
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
-  disabled?: boolean;
   children?: React.ReactNode;
 }
 
@@ -54,16 +51,11 @@ const CheckboxRoot = ({
     onCheckedChange?.(newChecked);
   };
 
+  const { root } = checkbox({ disabled });
+
   return (
     <CheckboxContext.Provider value={{ checked: isChecked, disabled }}>
-      <label
-        className={mergeStyles(
-          'inline-flex cursor-pointer items-center gap-2',
-          disabled && 'cursor-not-allowed opacity-50',
-          className,
-        )}
-        {...props}
-      >
+      <label className={root({ className })} {...props}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -80,56 +72,47 @@ const CheckboxRoot = ({
 // Checkbox.Indicator
 const CheckboxIndicator = () => {
   const { checked } = useCheckboxContext();
+  const { indicator, indicatorIcon } = checkbox({ checked });
 
-  if (checked) {
-    return (
+  return (
+    <span className={indicator()}>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
+        viewBox="0 0 14 14"
         fill="none"
-        className="flex-shrink-0"
+        xmlns="http://www.w3.org/2000/svg"
+        className={indicatorIcon()}
       >
-        <rect width="18" height="18" rx="4" fill="#1E2939" />
         <path
-          d="M5 9.08333L7.94737 12L13 7"
-          stroke="white"
+          d="M11.6666 3.5L5.24992 9.91667L2.33325 7"
+          stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
-    );
-  }
-
-  return (
-    <span
-      className={mergeStyles(
-        'flex-shrink-0',
-        'aspect-square h-[18px] w-[18px]',
-        'rounded border-2 border-gray-200 bg-white',
-      )}
-    />
+    </span>
   );
 };
 
 // Checkbox.Label
 export type CheckboxLabelProps<E extends TextElement = 'span'> =
-  PolymorphicProps<E, TextStyleProps>;
+  PolymorphicProps<E, TextVariants>;
 
 const CheckboxLabel = <E extends TextElement = 'span'>({
   children,
-  typography = 'body-sm',
+  typography = 'body-16-regular',
   textColor = 'gray-600',
+  className,
   ...props
 }: CheckboxLabelProps<E>) => {
   const { disabled } = useCheckboxContext();
+  const { label } = checkbox({ disabled });
 
   return (
     <Text
       typography={typography}
-      textColor={disabled ? 'gray-400' : textColor}
+      textColor={textColor}
+      className={label({ className })}
       {...props}
     >
       {children}

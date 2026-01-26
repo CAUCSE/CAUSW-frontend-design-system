@@ -1,20 +1,16 @@
-import { mergeStyles } from '../../utils';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-export type SeparatorOrientation = 'horizontal' | 'vertical';
+export const separator = tv({
+  base: 'bg-gray-200',
+  variants: {
+    orientation: {
+      horizontal: 'h-px w-full my-2',
+      vertical: 'h-full w-px mx-2 self-stretch',
+    },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
+  },
+});
 
-const orientationClasses: Record<SeparatorOrientation, string> = {
-  horizontal: 'h-px w-full my-2',
-  vertical: 'h-full w-px mx-2 self-stretch',
-};
-
-const colorClasses = 'bg-gray-200';
-
-export interface SeparatorStylesOptions {
-  orientation?: SeparatorOrientation;
-}
-
-export function separatorStyles({
-  orientation = 'horizontal',
-}: SeparatorStylesOptions): string {
-  return mergeStyles([colorClasses, orientationClasses[orientation]]);
-}
+export type SeparatorVariants = VariantProps<typeof separator>;

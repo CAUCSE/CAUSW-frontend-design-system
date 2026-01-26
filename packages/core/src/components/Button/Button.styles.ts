@@ -1,55 +1,33 @@
-import { mergeStyles } from '../../utils';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-export type ButtonSize = 'sm' | 'md';
-export type ButtonColor = 'white' | 'gray' | 'red';
-
-const baseStyles =
-  'inline-flex items-center justify-center gap-[0.375rem] ' +
-  'whitespace-nowrap rounded-[0.5rem] ' +
-  'transition-colors duration-150 ' +
-  'disabled:opacity-50 disabled:pointer-events-none';
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body2-sm-point',
-  md: 'h-[2.375rem] px-[0.75rem] typo-body2-sm-point',
-};
-
-const colorStyles: Record<ButtonColor, { base: string; active: string }> = {
-  // base와 active에 대한 설정이 아직 정해지지 않음
-  white: {
-    base: 'bg-white text-gray-400',
-    active: 'bg-white text-gray-400',
+export const button = tv({
+  base: 'inline-flex items-center justify-center gap-[0.375rem] whitespace-nowrap rounded-[0.5rem] transition-colors duration-150',
+  variants: {
+    size: {
+      sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body-14-semibold',
+      md: 'h-[2.375rem] px-[0.75rem] typo-body-14-semibold',
+    },
+    color: {
+      white:
+        'bg-white text-gray-400 enabled:hover:bg-gray-100 enabled:active:bg-gray-100 enabled:data-[active]:bg-gray-100',
+      gray: 'bg-gray-100 text-gray-400 enabled:hover:bg-gray-200 enabled:active:bg-gray-200 enabled:data-[active]:bg-gray-200',
+      red: 'bg-red-100 text-red-400 enabled:hover:bg-red-200 enabled:active:bg-red-200 enabled:data-[active]:bg-red-200',
+    },
+    fullWidth: {
+      true: 'w-full',
+      false: '',
+    },
+    disabled: {
+      true: 'bg-gray-100 text-gray-400 opacity-50 cursor-not-allowed',
+      false: '',
+    },
   },
-  gray: {
-    base: 'bg-gray-100 text-gray-400',
-    active: 'bg-gray-100 text-gray-400',
+  defaultVariants: {
+    size: 'md',
+    disabled: false,
+    color: 'gray',
+    fullWidth: false,
   },
-  red: {
-    base: 'bg-red-100 text-red-400',
-    active: 'bg-red-100 text-red-400',
-  },
-};
+});
 
-export interface ButtonStyleOptions {
-  size: ButtonSize;
-  color: ButtonColor;
-  active?: boolean;
-  disabled?: boolean;
-  fullWidth?: boolean;
-}
-
-export function buttonStyles({
-  size,
-  color,
-  active = false,
-  disabled = false,
-  fullWidth = false,
-}: ButtonStyleOptions) {
-  return mergeStyles(
-    baseStyles,
-    disabled ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer',
-    sizeStyles[size],
-    active ? colorStyles[color].active : colorStyles[color].base,
-    fullWidth && 'w-full',
-  );
-}
+export type ButtonVariants = VariantProps<typeof button>;

@@ -4,7 +4,7 @@ import { Flex } from './Flex';
 import { Box } from '../Box';
 
 const meta = {
-  title: 'Layout Components/Flex',
+  title: 'Layouts/Flex',
   component: Flex,
   parameters: {
     layout: 'centered',

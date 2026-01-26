@@ -36,9 +36,7 @@ export const Default: Story = {
   render: () => (
     <div className="flex gap-2">
       <Button color="gray">text</Button>
-      <Button color="red" active>
-        text
-      </Button>
+      <Button color="red">text</Button>
       <Button color="white">text</Button>
     </div>
   ),
@@ -68,7 +66,6 @@ export const LikeButtons: Story = {
     return (
       <Button
         color={active ? 'red' : 'gray'}
-        active={active}
         onClick={() => setActive((prev) => !prev)}
       >
         <HeartIcon />
@@ -85,7 +82,7 @@ export const Disabled: Story = {
         <HeartIcon />
         좋아요 0
       </Button>
-      <Button disabled color="red" active>
+      <Button disabled color="red">
         <HeartIcon />
         좋아요 1
       </Button>

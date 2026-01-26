@@ -1,47 +1,30 @@
-import { ComponentProps, ReactNode } from 'react';
-import { Slot } from '@radix-ui/react-slot';
+import { ComponentProps } from 'react';
 import {
-  floatingActionButtonStyles,
-  FABIconPosition,
+  floatingActionButton,
+  FloatingActionButtonVariants,
 } from './FloatingActionButton.styles';
 import { mergeStyles } from '../../utils';
+import { Primitive, PrimitiveProps } from '../Primitive';
 
-export interface FloatingActionButtonProps extends ComponentProps<'button'> {
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  asChild?: boolean;
-}
+export interface FloatingActionButtonProps
+  extends
+    ComponentProps<'button'>,
+    FloatingActionButtonVariants,
+    PrimitiveProps {}
 
 export function FloatingActionButton({
-  leftIcon,
-  rightIcon,
   disabled = false,
-  asChild = false,
   children,
   className,
   ...props
 }: FloatingActionButtonProps) {
-  const iconPosition: FABIconPosition = leftIcon
-    ? 'left'
-    : rightIcon
-      ? 'right'
-      : 'none';
-
-  const Component = asChild ? Slot : 'button';
-
   return (
-    <Component
-      type={asChild ? undefined : 'button'}
+    <Primitive.button
       disabled={disabled}
-      className={mergeStyles(
-        floatingActionButtonStyles({ iconPosition, disabled }),
-        className,
-      )}
+      className={mergeStyles(floatingActionButton({ disabled }), className)}
       {...props}
     >
-      {leftIcon && <span className="flex items-center">{leftIcon}</span>}
-      {children && <span>{children}</span>}
-      {rightIcon && <span className="flex items-center">{rightIcon}</span>}
-    </Component>
+      {children}
+    </Primitive.button>
   );
 }

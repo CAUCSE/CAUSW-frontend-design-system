@@ -1,0 +1,1 @@
+export { convertPxToRem } from './converter';

@@ -1,2 +1,3 @@
 export { Text } from './Text';
-export type { TextProps, TextStyleProps, Typography, TextColor } from './Text';
+export { type TextProps, type TextElement } from './Text';
+export { type TextVariants } from './Text.styles';
