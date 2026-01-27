@@ -18,42 +18,19 @@ export const SpeakerColored = ({
     {...props}
   >
     {title && <title>{title}</title>}
-    <path
-      d="M7.99951 14.9995H4.16539C3.52135 14.9995 2.99951 14.5182 2.99951 13.9241V8.07493C2.99951 7.48086 3.52135 6.99951 4.16539 6.99951H7.99951V14.9995Z"
-      fill="url(#paint0_linear_1797_7914)"
-    />
-    <path
-      d="M7.99951 15.0555V6.94299L16.6748 2.10594C17.29 1.76304 17.9995 2.29037 17.9995 3.09158V18.9075C17.9995 19.7082 17.29 20.236 16.6748 19.8931L7.99951 15.0555Z"
-      fill="#F9BEC3"
-    />
-    <path
-      d="M17.9995 7.99951H19.6005C20.3733 7.99951 20.9995 8.72154 20.9995 9.61263V12.3864C20.9995 13.2775 20.3733 13.9995 19.6005 13.9995H17.9995"
-      fill="url(#paint1_linear_1797_7914)"
-    />
-    <defs>
-      <linearGradient
-        id="paint0_linear_1797_7914"
-        x1="3.37451"
-        y1="6.99951"
-        x2="10.0036"
-        y2="10.5212"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F5A1A8" />
-        <stop offset="1" stopColor="#FD3848" />
-      </linearGradient>
-      <linearGradient
-        id="paint1_linear_1797_7914"
-        x1="18.2245"
-        y1="7.99951"
-        x2="22.5443"
-        y2="9.8354"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F5A1A8" />
-        <stop offset="1" stopColor="#FD3848" />
-      </linearGradient>
-    </defs>
+    <path d="M7.99951 14.9995H4.16539C3.52135 14.9995 2.99951 14.5182 2.99951 13.9241V8.07493C2.99951 7.48086 3.52135 6.99951 4.16539 6.99951H7.99951V14.9995Z" fill="url(#paint0_linear_1797_7914)"/>
+<path d="M7.99951 15.0555V6.94299L16.6748 2.10594C17.29 1.76304 17.9995 2.29037 17.9995 3.09158V18.9075C17.9995 19.7082 17.29 20.236 16.6748 19.8931L7.99951 15.0555Z" fill="#F9BEC3"/>
+<path d="M17.9995 7.99951H19.6005C20.3733 7.99951 20.9995 8.72154 20.9995 9.61263V12.3864C20.9995 13.2775 20.3733 13.9995 19.6005 13.9995H17.9995" fill="url(#paint1_linear_1797_7914)"/>
+<defs>
+<linearGradient id="paint0_linear_1797_7914" x1="3.37451" y1="6.99951" x2="10.0036" y2="10.5212" gradientUnits="userSpaceOnUse">
+<stop stopColor="#F5A1A8"/>
+<stop offset="1" stopColor="#FD3848"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1797_7914" x1="18.2245" y1="7.99951" x2="22.5443" y2="9.8354" gradientUnits="userSpaceOnUse">
+<stop stopColor="#F5A1A8"/>
+<stop offset="1" stopColor="#FD3848"/>
+</linearGradient>
+</defs>
   </svg>
 );
 
