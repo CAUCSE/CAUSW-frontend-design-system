@@ -34,30 +34,39 @@ function generateMonoComponent(
     .trim();
 
   return `import type { MonoIconProps } from '../types';
-import { DEFAULT_SIZE, MONO_COLORS } from '../types';
+import { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from '../types';
 
 export const ${componentName} = ({
   size = DEFAULT_SIZE,
   active = false,
+  color,
   title,
   ...props
-}: MonoIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="${viewBox}"
-    width={size}
-    height={size}
-    fill={active ? MONO_COLORS.active : MONO_COLORS.inactive}
-    color={active ? MONO_COLORS.active : MONO_COLORS.inactive}
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    ${innerContent}
-  </svg>
-);
+}: MonoIconProps) => {
+  const resolvedColor = color
+    ? ICON_TOKEN_COLORS[color]
+    : active
+      ? MONO_COLORS.active
+      : MONO_COLORS.inactive;
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="${viewBox}"
+      width={size}
+      height={size}
+      fill={resolvedColor}
+      color={resolvedColor}
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      ${innerContent}
+    </svg>
+  );
+};
 
 ${componentName}.displayName = '${componentName}';
 `;
@@ -188,8 +197,9 @@ async function main() {
   ColoredIconProps,
   MonoIconComponent,
   ColoredIconComponent,
+  IconTokenColor,
 } from './types';
-export { DEFAULT_SIZE } from './types';
+export { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from './types';
 
 export * from './mono';
 export * from './colored';
