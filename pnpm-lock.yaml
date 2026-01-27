@@ -185,6 +185,9 @@ importers:
 
   packages/icons:
     dependencies:
+      '@causw/tokens':
+        specifier: workspace:*
+        version: link:../tokens
       react:
         specifier: '>=19'
         version: 19.2.3
