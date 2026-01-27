@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as MonoIcons from './mono';
 import * as ColoredIcons from './colored';
+import { ICON_TOKEN_COLORS, type IconTokenColor } from './types';
 
 interface PlaygroundArgs {
   icon: string;
   size: number;
   active: boolean;
-  color: string;
+  color: IconTokenColor | '';
 }
 
 const meta = {
@@ -28,6 +29,9 @@ const coloredIconNames = Object.keys(
 ) as (keyof typeof ColoredIcons)[];
 const allIconNames = [...monoIconNames, ...coloredIconNames];
 
+// 토큰 색상 옵션 (빈 값 + 모든 토큰 색상)
+const tokenColorOptions = ['', ...Object.keys(ICON_TOKEN_COLORS)] as const;
+
 // Playground
 export const Playground: PlaygroundStory = {
   args: {
@@ -48,11 +52,12 @@ export const Playground: PlaygroundStory = {
     },
     active: {
       control: 'boolean',
-      description: '활성 상태 (mono만 적용)',
+      description: '활성 상태 (mono만 적용, color 미지정시)',
     },
     color: {
-      control: 'color',
-      description: '커스텀 색상 (mono만 적용, 지정시 active 무시)',
+      control: 'select',
+      options: tokenColorOptions,
+      description: '토큰 색상 (mono만 적용, 지정시 active 무시)',
     },
   },
   render: ({ icon, size, active, color }) => {
@@ -64,9 +69,42 @@ export const Playground: PlaygroundStory = {
     }
 
     const Icon = MonoIcons[icon as keyof typeof MonoIcons];
-    const colorProps = color ? { fill: color, color } : {};
-    return <Icon size={size} active={active} {...colorProps} />;
+    return <Icon size={size} active={active} color={color || undefined} />;
   },
+};
+
+// 토큰 색상 갤러리
+export const TokenColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {Object.entries(ICON_TOKEN_COLORS).map(([name, hex]) => (
+        <div
+          key={name}
+          style={{ display: 'flex', alignItems: 'center', gap: '16px' }}
+        >
+          <MonoIcons.Heart size={24} color={name as IconTokenColor} />
+          <span
+            style={{
+              minWidth: '100px',
+              fontFamily: 'monospace',
+              fontSize: '14px',
+            }}
+          >
+            {name}
+          </span>
+          <span
+            style={{
+              color: '#6B7280',
+              fontFamily: 'monospace',
+              fontSize: '12px',
+            }}
+          >
+            {hex}
+          </span>
+        </div>
+      ))}
+    </div>
+  ),
 };
 
 // Mono 아이콘 전체 갤러리 (비활성)
@@ -159,7 +197,7 @@ export const MonoActiveInactive: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
         <p style={{ marginBottom: '8px', color: '#6B7280' }}>
-          비활성 (기본) - #CACED5
+          비활성 (기본) - gray-300
         </p>
         <div style={{ display: 'flex', gap: '16px' }}>
           <MonoIcons.Heart size={24} />
@@ -170,7 +208,7 @@ export const MonoActiveInactive: Story = {
         </div>
       </div>
       <div>
-        <p style={{ marginBottom: '8px', color: '#6B7280' }}>활성 - #4A5565</p>
+        <p style={{ marginBottom: '8px', color: '#6B7280' }}>활성 - gray-600</p>
         <div style={{ display: 'flex', gap: '16px' }}>
           <MonoIcons.Heart size={24} active />
           <MonoIcons.Bell size={24} active />
