@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 0.0.10
+
+### Patch Changes
+
+- 3f266d9: 아이콘 생성 스크립트에 캐시 기반 생성을 추가하고, 아이콘에 CSS 토큰 기반 색상을 추가
+
 ## 0.0.9
 
 ### Patch Changes
