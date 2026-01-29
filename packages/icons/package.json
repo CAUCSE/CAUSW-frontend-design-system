@@ -63,6 +63,9 @@
   "peerDependencies": {
     "react": ">=19"
   },
+  "dependencies": {
+    "@causw/tokens": "workspace:*"
+  },
   "devDependencies": {
     "glob": "^13.0.0"
   }
