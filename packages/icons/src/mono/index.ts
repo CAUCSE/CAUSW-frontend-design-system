@@ -2,7 +2,7 @@ export { ArrowDown } from './ArrowDown';
 export { Bell } from './Bell';
 export { Board } from './Board';
 export { Book } from './Book';
-export { Calendar } from './Calendar';
+export { CalendarIcon } from './CalendarIcon';
 export { Call } from './Call';
 export { Camera } from './Camera';
 export { ChevronLeft } from './ChevronLeft';

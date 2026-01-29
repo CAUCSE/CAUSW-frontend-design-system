@@ -15,8 +15,8 @@ const config = [
       ".turbo",
       "storybook-static",
       // 스크립트로 생성되는 아이콘들
-      "packages/icons/src/mono",
-      "packages/icons/src/colored",
+      "**/src/mono/**",
+      "**/src/colored/**"
     ],
   },
 

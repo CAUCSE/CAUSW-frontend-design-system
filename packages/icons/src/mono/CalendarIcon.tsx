@@ -1,7 +1,7 @@
 import type { MonoIconProps } from '../types';
 import { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from '../types';
 
-export const Calendar = ({
+export const CalendarIcon = ({
   size = DEFAULT_SIZE,
   active = false,
   color,
@@ -33,4 +33,4 @@ export const Calendar = ({
   );
 };
 
-Calendar.displayName = 'Calendar';
+CalendarIcon.displayName = 'CalendarIcon';
