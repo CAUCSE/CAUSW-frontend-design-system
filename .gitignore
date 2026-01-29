@@ -42,6 +42,7 @@ storybook-static
 # Temporary files
 *.tmp
 .cache
+.icons-cache.json
 
 # MCP Setting
 mcp.json
