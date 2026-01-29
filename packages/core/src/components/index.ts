@@ -27,3 +27,8 @@ export * from './Tab';
 export * from './Toast';
 export * from './Modal';
 export * from './Primitive';
+export * from './Sidebar';
+export * from './BottomNavigation';
+export * from './Calendar';
+export * from './BottomSheet';
+export * from './Drawer';
