@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.0
+
+### Major Changes
+
+- 5b4948a: calendar 모노 아이콘도 변경
+
 ## 0.0.11
 
 ### Patch Changes
