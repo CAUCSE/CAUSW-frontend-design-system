@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.13
+
+### Patch Changes
+
+- 4dc9805: add ommitted components on index file
+
 ## 0.0.12
 
 ### Patch Changes
