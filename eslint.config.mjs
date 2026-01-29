@@ -9,7 +9,15 @@ const config = [
 
   // 공통 ignore 패턴
   {
-    ignores: ["dist", "node_modules", ".turbo", "storybook-static"],
+    ignores: [
+      "dist",
+      "node_modules",
+      ".turbo",
+      "storybook-static",
+      // 스크립트로 생성되는 아이콘들
+      "packages/icons/src/mono",
+      "packages/icons/src/colored",
+    ],
   },
 
   // TypeScript + React 파일들
