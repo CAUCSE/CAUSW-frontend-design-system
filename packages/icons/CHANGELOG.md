@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 0.0.11
+
+### Patch Changes
+
+- 5eb07a9: 캘린더 아이콘 네이밍 변경
+
 ## 0.0.10
 
 ### Patch Changes
