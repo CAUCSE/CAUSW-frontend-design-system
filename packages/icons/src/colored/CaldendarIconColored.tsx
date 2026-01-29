@@ -1,7 +1,7 @@
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
 
-export const CalendarColored = ({
+export const CaldendarIconColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -32,4 +32,4 @@ export const CalendarColored = ({
   </svg>
 );
 
-CalendarColored.displayName = 'CalendarColored';
+CaldendarIconColored.displayName = 'CaldendarIconColored';
