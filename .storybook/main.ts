@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     '../packages/core/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
     '../packages/icons/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
+  staticDirs: ['./public'],
 
   addons: [
     getAbsolutePath("@storybook/addon-links"),
