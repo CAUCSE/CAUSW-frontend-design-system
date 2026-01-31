@@ -13,6 +13,7 @@
     "format:check": "prettier --check \"packages/**/*.{ts,tsx,js,jsx,json}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "preview-storybook": "npx serve storybook-static",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish",
