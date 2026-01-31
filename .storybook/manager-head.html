@@ -1,0 +1,25 @@
+<style>
+  /* Target the branding link in the sidebar header */
+  .sidebar-header a, 
+  a[href="https://github.com/CAUCSE/CAUSW-frontend-design-system"] {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  /* Insert the icon before the text */
+  .sidebar-header a::before, 
+  a[href="https://github.com/CAUCSE/CAUSW-frontend-design-system"]::before {
+    content: '';
+    display: inline-block;
+    width: 24px;  /* Small icon size */
+    height: 24px;
+    background-image: url('/icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+  }
+</style>
