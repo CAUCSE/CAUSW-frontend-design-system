@@ -31,26 +31,6 @@ const dispatch = (message: string, type: ToastType, options?: ToastOptions) => {
   return id;
 };
 
-export const toast = (message: string, options?: ToastOptions) =>
-  dispatch(message, 'default', options);
-
-toast.success = (message: string, options?: ToastOptions) =>
-  dispatch(message, 'success', options);
-
-toast.error = (message: string, options?: ToastOptions) =>
-  dispatch(message, 'error', options);
-
-toast.loading = (message: string, options?: ToastOptions) =>
-  dispatch(message, 'loading', {
-    ...options,
-    duration: options?.duration ?? 100000,
-  });
-
-toast.dismiss = (id: string) => {
-  memoryState = memoryState.filter((t) => t.id !== id);
-  notify();
-};
-
 export const useToastStore = () => {
   return useSyncExternalStore(
     (listener) => {
@@ -62,3 +42,19 @@ export const useToastStore = () => {
     () => memoryState,
   );
 };
+
+export const toast = Object.assign(dispatch, {
+  success: (message: string, options?: ToastOptions) =>
+    dispatch(message, 'success', options),
+  error: (message: string, options?: ToastOptions) =>
+    dispatch(message, 'error', options),
+  loading: (message: string, options?: ToastOptions) =>
+    dispatch(message, 'loading', {
+      ...options,
+      duration: options?.duration ?? 100000,
+    }),
+  dismiss: (id: string) => {
+    memoryState = memoryState.filter((t) => t.id !== id);
+    notify();
+  },
+});
