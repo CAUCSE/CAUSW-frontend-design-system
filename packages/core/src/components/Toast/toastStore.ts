@@ -43,7 +43,10 @@ export const useToastStore = () => {
   );
 };
 
-export const toast = Object.assign(dispatch, {
+const toastRoot = (message: string, options?: ToastOptions) =>
+  dispatch(message, 'default', options);
+
+export const toast = Object.assign(toastRoot, {
   success: (message: string, options?: ToastOptions) =>
     dispatch(message, 'success', options),
   error: (message: string, options?: ToastOptions) =>
