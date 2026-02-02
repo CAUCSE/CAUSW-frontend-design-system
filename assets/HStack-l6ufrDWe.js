@@ -1,0 +1,1 @@
+import{j as a}from"./jsx-runtime-D_zvdyIk.js";import{S as r}from"./Stack-DAKO6ne7.js";const t=({...o})=>a.jsx(r,{direction:"horizontal",...o});t.displayName="HStack";t.__docgenInfo={description:"",methods:[],displayName:"HStack"};export{t as H};
