@@ -30,17 +30,6 @@ export const causwPreset: Partial<Config> = {
       fontSize: typography.fontSize,
       fontWeight: typography.fontWeight,
       lineHeight: typography.lineHeight,
-
-      keyframes: {
-        'skeleton-pulse': {
-          '0%': { opacity: '0.4' },
-          '50%': { opacity: '0.7' },
-          '100%': { opacity: '0.4' },
-        },
-      },
-      animation: {
-        'skeleton-pulse': 'skeleton-pulse 1.5s ease-in-out infinite',
-      },
     },
   },
 };
