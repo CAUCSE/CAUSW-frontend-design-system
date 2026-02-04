@@ -5,6 +5,8 @@ export interface SpinnerProps extends SpinnerVariants {
   className?: string;
 }
 
+//TODO: svg는 아이콘 패키지로 마이그레이션 필요
+
 export const Spinner = ({
   className,
   size,
