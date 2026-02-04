@@ -65,7 +65,7 @@ Skeleton은 레이아웃을 책임지지 않으며,
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Defualt: Story = {
+export const Default: Story = {
   args: {
     width: 320,
     height: 48,
