@@ -1,12 +1,8 @@
 import { tv, type VariantProps } from 'tailwind-variants';
+import { convertPxToRem } from '../../utils';
 
 export const skeleton = tv({
-  base: [
-    'relative',
-    'overflow-hidden',
-    'bg-gray-200',
-    'animate-skeleton-pulse',
-  ],
+  base: ['relative', 'overflow-hidden', 'animate-skeleton-pulse'],
 
   variants: {
     radius: {
@@ -29,3 +25,28 @@ export const skeleton = tv({
 });
 
 export type SkeletonVariants = VariantProps<typeof skeleton>;
+
+export interface SkeletonSizeOptions {
+  width?: number | string;
+  height?: number | string;
+  minWidth?: number;
+  maxWidth?: number;
+  minHeight?: number;
+  maxHeight?: number;
+}
+
+export const skeletonSizeStyles = ({
+  width,
+  height,
+  minWidth,
+  maxWidth,
+  minHeight,
+  maxHeight,
+}: SkeletonSizeOptions) => ({
+  width: typeof width === 'number' ? convertPxToRem(width) : width,
+  height: typeof height === 'number' ? convertPxToRem(height) : height,
+  minWidth: minWidth ? convertPxToRem(minWidth) : undefined,
+  maxWidth: maxWidth ? convertPxToRem(maxWidth) : undefined,
+  minHeight: minHeight ? convertPxToRem(minHeight) : undefined,
+  maxHeight: maxHeight ? convertPxToRem(maxHeight) : undefined,
+});
