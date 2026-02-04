@@ -32,3 +32,4 @@ export * from './BottomNavigation';
 export * from './Calendar';
 export * from './BottomSheet';
 export * from './Drawer';
+export * from './Skeleton';
