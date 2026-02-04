@@ -1,66 +1,47 @@
 import * as React from 'react';
-import { skeleton, type SkeletonVariants } from './Skeleton.styles';
-import { convertPxToRem, mergeStyles } from '../../utils';
+import {
+  skeleton,
+  skeletonSizeStyles,
+  type SkeletonVariants,
+  type SkeletonSizeOptions,
+} from './Skeleton.styles';
+import { mergeStyles } from '../../utils';
 
-export interface SkeletonSizeOptions {
-  width?: number | string;
-  height?: number | string;
-  minWidth?: number;
-  maxWidth?: number;
-  minHeight?: number;
-  maxHeight?: number;
-}
+export interface SkeletonProps
+  extends React.ComponentProps<'div'>, SkeletonVariants, SkeletonSizeOptions {}
 
-export const skeletonSizeStyles = ({
-  width,
-  height,
+export const Skeleton = ({
+  radius,
+  tone,
+  width = '100%',
+  height = '1rem',
   minWidth,
   maxWidth,
   minHeight,
   maxHeight,
-}: SkeletonSizeOptions) => {
-  return {
-    width: typeof width === 'number' ? convertPxToRem(width) : width,
-    height: typeof height === 'number' ? convertPxToRem(height) : height,
-    minWidth: minWidth ? convertPxToRem(minWidth) : undefined,
-    maxWidth: maxWidth ? convertPxToRem(maxWidth) : undefined,
-    minHeight: minHeight ? convertPxToRem(minHeight) : undefined,
-    maxHeight: maxHeight ? convertPxToRem(maxHeight) : undefined,
-  };
+  style,
+  className,
+  ...rest
+}: SkeletonProps) => {
+  return (
+    <div
+      role="status"
+      aria-busy="true"
+      className={mergeStyles(skeleton({ radius, tone }), className)}
+      style={{
+        ...skeletonSizeStyles({
+          width,
+          height,
+          minWidth,
+          maxWidth,
+          minHeight,
+          maxHeight,
+        }),
+        ...style,
+      }}
+      {...rest}
+    />
+  );
 };
-
-export interface SkeletonProps
-  extends
-    React.HTMLAttributes<HTMLDivElement>,
-    SkeletonVariants,
-    SkeletonSizeOptions {}
-
-export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  (
-    {
-      radius,
-      tone,
-      width = '100%',
-      height = '1rem',
-      style,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    return (
-      <div
-        ref={ref}
-        role="status"
-        aria-busy="true"
-        className={mergeStyles(skeleton({ radius, tone }), className)}
-        style={{
-          ...skeletonSizeStyles({ width, height, ...props }),
-          ...style,
-        }}
-      />
-    );
-  },
-);
 
 Skeleton.displayName = 'Skeleton';
