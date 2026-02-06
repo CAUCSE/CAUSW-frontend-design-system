@@ -1,4 +1,4 @@
-name: Deploy Storybook
+name: 스토리북 배포
 
 on:
   push:

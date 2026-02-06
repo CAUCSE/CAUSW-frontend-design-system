@@ -1,4 +1,4 @@
-name: Changeset Check
+name: changeset 체크
 
 on:
   pull_request:
