@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
 export const button = tv({
-  base: 'inline-flex items-center justify-center gap-[0.375rem] whitespace-nowrap rounded-[0.5rem] transition-colors duration-150',
+  base: 'inline-flex items-center justify-center gap-[0.375rem] whitespace-nowrap rounded-[0.5rem] transition-colors duration-150 cursor-pointer',
   variants: {
     size: {
       sm: 'min-w-[3rem] h-[1.875rem] px-[0.5rem] typo-body-14-semibold',

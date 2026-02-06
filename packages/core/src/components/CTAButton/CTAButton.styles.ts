@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from 'tailwind-variants';
 
 export const ctaButton = tv({
-  base: 'inline-flex items-center justify-center h-[3.375rem] px-[0.5rem] py-[0.875rem] rounded-[0.75rem] typo-body-15-semibold whitespace-nowrap select-none transition-colors',
+  base: 'inline-flex items-center justify-center h-[3.375rem] px-[0.5rem] py-[0.875rem] rounded-[0.75rem] typo-body-15-semibold whitespace-nowrap select-none transition-colors cursor-pointer',
   variants: {
     color: {
       blue: 'bg-blue-100 text-blue-700 enabled:hover:bg-blue-200 enabled:active:bg-blue-200 enabled:data-[active]:bg-blue-200',
