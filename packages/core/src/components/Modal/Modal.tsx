@@ -2,6 +2,7 @@ import { ComponentProps } from 'react';
 import { Dialog } from '../Dialog';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { modal, ModalVariants } from './Modal.styles';
+import { CTAButton } from '../CTAButton';
 
 export type ModalOverlayProps = ComponentProps<typeof DialogPrimitive.Overlay>;
 const ModalOverlay = ({ className, ...props }: ModalOverlayProps) => {
@@ -71,12 +72,10 @@ const ModalFooter = ({ className, children, ...props }: ModalFooterProps) => {
 };
 ModalFooter.displayName = 'ModalFooter';
 
-export interface ModalActionProps
-  extends ComponentProps<'button'>, Pick<ModalVariants, 'variant'> {}
-const ModalAction = ({ className, variant, ...props }: ModalActionProps) => {
-  const { actionButton } = modal();
-  const classes = actionButton({ className, variant });
-  return <button className={classes} {...props} />;
+export type ModalActionProps = ComponentProps<typeof CTAButton>;
+
+const ModalAction = (props: ModalActionProps) => {
+  return <CTAButton fullWidth {...props} />;
 };
 ModalAction.displayName = 'ModalAction';
 
