@@ -19,7 +19,7 @@ const SearchIcon = () => (
 );
 
 const meta: Meta<typeof Field> = {
-  title: 'Layout Components/Field',
+  title: 'Components/Field',
   component: Field,
   parameters: {
     layout: 'centered',
