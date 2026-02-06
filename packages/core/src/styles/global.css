@@ -2,6 +2,22 @@
 @import 'tailwindcss';
 @config '@causw/tokens/config';
 
+@layer base {
+  button:focus,
+  [role="button"]:focus,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: none;
+  }
+
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid black;
+    outline-offset: 1px;
+    border-radius: 10px;
+  }
+}
+
 * {
   letter-spacing: -0.02rem;
   -webkit-font-smoothing: antialiased;
