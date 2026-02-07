@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Modal } from './Modal';
 import { Button } from '../Button';
-import { Separator } from '../Separator';
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',
@@ -31,7 +30,7 @@ export const Default: Story = {
         <Modal.Title>회원 탈퇴</Modal.Title>
         <Modal.Footer>
           <Modal.Close asChild>
-            <Modal.ActionButton variant="primary">확인</Modal.ActionButton>
+            <Modal.ActionButton color="dark">확인</Modal.ActionButton>
           </Modal.Close>
         </Modal.Footer>
       </Modal.Content>
@@ -49,11 +48,10 @@ export const TwoButtons: Story = {
         <Modal.Title>로그아웃 하시겠습니까?</Modal.Title>
         <Modal.Footer>
           <Modal.Close asChild>
-            <Modal.ActionButton variant="cancel">취소</Modal.ActionButton>
+            <Modal.ActionButton color="light">취소</Modal.ActionButton>
           </Modal.Close>
-          <Separator orientation="vertical" className="mx-0" />
           <Modal.Close asChild>
-            <Modal.ActionButton variant="primary">확인</Modal.ActionButton>
+            <Modal.ActionButton color="dark">확인</Modal.ActionButton>
           </Modal.Close>
         </Modal.Footer>
       </Modal.Content>
@@ -72,11 +70,10 @@ export const Destructive: Story = {
         <Modal.Description>이 작업은 되돌릴 수 없습니다.</Modal.Description>
         <Modal.Footer>
           <Modal.Close asChild>
-            <Modal.ActionButton variant="cancel">취소</Modal.ActionButton>
+            <Modal.ActionButton color="light">취소</Modal.ActionButton>
           </Modal.Close>
-          <div className="w-[1px] bg-gray-200" />
           <Modal.Close asChild>
-            <Modal.ActionButton variant="destructive">삭제</Modal.ActionButton>
+            <Modal.ActionButton color="red">삭제</Modal.ActionButton>
           </Modal.Close>
         </Modal.Footer>
       </Modal.Content>
@@ -97,10 +94,10 @@ export const TextAlign: Story = {
         </Modal.Description>
         <Modal.Footer>
           <Modal.Close asChild>
-            <Modal.ActionButton variant="cancel">취소</Modal.ActionButton>
+            <Modal.ActionButton color="light">취소</Modal.ActionButton>
           </Modal.Close>
           <Modal.Close asChild>
-            <Modal.ActionButton variant="destructive">삭제</Modal.ActionButton>
+            <Modal.ActionButton color="red">삭제</Modal.ActionButton>
           </Modal.Close>
         </Modal.Footer>
       </Modal.Content>

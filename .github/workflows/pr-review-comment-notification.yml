@@ -6,6 +6,7 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    if: github.event.comment.user.type != 'Bot'
     steps:
       - name: Send Discord Notification
         env:
