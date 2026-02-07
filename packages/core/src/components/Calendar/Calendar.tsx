@@ -40,6 +40,7 @@ export interface CalendarProps extends CalendarVariants {
   events?: CalendarEvent[];
   defaultMonth?: Date;
   today?: Date;
+  showToday?: boolean;
   selectedStartDate?: Date;
   selectedEndDate?: Date;
   onDateClick?: (date: Date) => void;
@@ -64,6 +65,7 @@ export const Calendar = ({
   events = [],
   defaultMonth = new Date(),
   today = new Date(),
+  showToday = true,
   size,
   selectedStartDate,
   selectedEndDate,
@@ -180,7 +182,7 @@ export const Calendar = ({
 
             const daysEvents = eventsByDate.get(dateKey) || [];
 
-            const isToday = isSameDay(currentDate, today);
+            const isToday = showToday && isSameDay(currentDate, today);
             const isStart =
               selectedStartDate && isSameDay(currentDate, selectedStartDate);
             const isEnd =

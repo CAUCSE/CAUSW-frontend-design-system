@@ -66,11 +66,11 @@ export const Vertical: Story = {
     >
       <Box>Blog</Box>
 
-      <Separator {...args} className="h-4" />
+      <Separator {...args} className="h-6" />
 
       <Box>Docs</Box>
 
-      <Separator {...args} className="h-4" />
+      <Separator {...args} className="h-6" />
 
       <Box>Source</Box>
     </Flex>
