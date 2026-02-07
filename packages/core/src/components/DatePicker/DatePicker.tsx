@@ -4,7 +4,7 @@ import { useFieldContext } from '../../hooks';
 import { mergeStyles } from '../../utils';
 import { Calendar, type CalendarProps } from '../Calendar';
 import { Dropdown } from '../Dropdown';
-import { datePicker } from './DatePicker.styles';
+import { datePicker, type DatePickerVariants } from './DatePicker.styles';
 import { CalendarIcon } from '@causw/icons';
 
 type DatePickerCalendarProps = Omit<
@@ -19,6 +19,7 @@ export interface DatePickerProps extends Omit<
   React.ComponentProps<'button'>,
   'value' | 'defaultValue' | 'onChange'
 > {
+  variant?: DatePickerVariants['variant'];
   error?: boolean;
   value?: Date;
   defaultValue?: Date;
@@ -38,6 +39,7 @@ export const DatePicker = ({
   onValueChange,
   placeholder = '날짜를 선택하세요',
   dateFormat = 'yyyy.MM.dd',
+  variant = 'white',
   disabled: disabledProp,
   type,
   contentClassName,
@@ -58,6 +60,7 @@ export const DatePicker = ({
   const selectedDate = isControlled ? value : uncontrolledValue;
   const hasValue = isValidDate(selectedDate);
   const { trigger, text, icon, content } = datePicker({
+    variant,
     hasValue,
     disabled,
     error,
