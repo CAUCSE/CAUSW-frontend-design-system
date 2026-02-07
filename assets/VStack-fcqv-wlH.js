@@ -1,0 +1,1 @@
+import{j as o}from"./jsx-runtime-D_zvdyIk.js";import{S as r}from"./Stack-CZ3GKqMB.js";const t=({...a})=>o.jsx(r,{direction:"vertical",...a});t.displayName="VStack";t.__docgenInfo={description:"",methods:[],displayName:"VStack"};export{t as V};
