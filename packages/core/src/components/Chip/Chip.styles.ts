@@ -10,7 +10,7 @@ export const chip = tv({
     },
     size: {
       sm: 'px-2 py-1 typo-body-14-semibold',
-      md: 'px-[0.875rem] py-[0.375rem] typo-body-16-medium',
+      md: 'px-[0.75rem] py-[0.375rem] typo-body-15-medium',
     },
     disabled: {
       true: 'pointer-events-none',
