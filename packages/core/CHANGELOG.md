@@ -1,5 +1,15 @@
 # @causw/core
 
+## 0.0.16
+
+### Patch Changes
+
+- 409c873: [FEAT] 모바일 대응 PullToRefresh 및 Spinner 컴포넌트 구현
+- 4e6fd61: feat: 글로벌 버튼 포커스 스타일 변경
+- c689077: chip 디자인 변경사항 반영
+- 66d061e: Skeleton Component 추가
+- 2763de0: 모달 컴포넌트 디자인 변경사항 반영, btn & cta-btn cursor-pointer 적용
+
 ## 0.0.15
 
 ### Patch Changes
