@@ -90,7 +90,7 @@ export const DatePicker = ({
   };
 
   return (
-    <Dropdown open={open} onOpenChange={handleOpenChange}>
+    <Dropdown modal={false} open={open} onOpenChange={handleOpenChange}>
       <Dropdown.Trigger asChild>
         <button
           ref={triggerRef}
@@ -112,6 +112,9 @@ export const DatePicker = ({
       <Dropdown.Content
         align="start"
         sideOffset={8}
+        collisionPadding={16}
+        avoidCollisions
+        sticky="always"
         className={content({ className: contentClassName })}
       >
         <Calendar
