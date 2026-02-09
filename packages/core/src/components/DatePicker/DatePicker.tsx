@@ -6,6 +6,7 @@ import { Calendar, type CalendarProps } from '../Calendar';
 import { Dropdown } from '../Dropdown';
 import { datePicker, type DatePickerVariants } from './DatePicker.styles';
 import { CalendarIcon } from '@causw/icons';
+import { Text } from '../Text';
 
 type DatePickerCalendarProps = Omit<
   CalendarProps,
@@ -59,9 +60,8 @@ export const DatePicker = ({
 
   const selectedDate = isControlled ? value : uncontrolledValue;
   const hasValue = isValidDate(selectedDate);
-  const { trigger, text, icon, content } = datePicker({
+  const { trigger, icon, content } = datePicker({
     variant,
-    hasValue,
     disabled,
     error,
   });
@@ -100,7 +100,12 @@ export const DatePicker = ({
           className={trigger({ className })}
           {...props}
         >
-          <span className={text()}>{displayValue}</span>
+          <Text
+            typography="body-16-regular"
+            textColor={hasValue ? 'gray-700' : 'gray-400'}
+          >
+            {displayValue}
+          </Text>
           <CalendarIcon
             size={20}
             color="gray-400"
