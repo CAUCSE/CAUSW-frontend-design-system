@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.1
+
+### Patch Changes
+
+- b66bcbf: time, info, search, arrow-right 아이콘 추가
+
 ## 1.0.0
 
 ### Major Changes
