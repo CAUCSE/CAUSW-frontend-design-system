@@ -5,7 +5,7 @@ export const separator = tv({
   variants: {
     orientation: {
       horizontal: 'h-px w-full my-2',
-      vertical: 'h-full w-px mx-2 self-stretch',
+      vertical: 'h-full w-px mx-2',
     },
   },
   defaultVariants: {

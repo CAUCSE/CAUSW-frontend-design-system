@@ -1,0 +1,36 @@
+import type { MonoIconProps } from '../types';
+import { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from '../types';
+
+export const Search = ({
+  size = DEFAULT_SIZE,
+  active = false,
+  color,
+  title,
+  ...props
+}: MonoIconProps) => {
+  const resolvedColor = color
+    ? ICON_TOKEN_COLORS[color]
+    : active
+      ? MONO_COLORS.active
+      : MONO_COLORS.inactive;
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      width={size}
+      height={size}
+      fill={resolvedColor}
+      color={resolvedColor}
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <path d="M8.55295 17.105C10.4506 17.1048 12.2937 16.4695 13.7884 15.3004L17.7812 19.2929C18.1717 19.6834 18.8048 19.6834 19.1954 19.2929L19.2928 19.1955C19.6834 18.8049 19.6834 18.1718 19.2928 17.7812L15.3002 13.7888C16.4699 12.2939 17.1056 10.4506 17.1059 8.55249C17.1059 3.83686 13.2688 0 8.55295 0C3.83707 0 0 3.83686 0 8.55249C0 13.2681 3.83707 17.105 8.55295 17.105ZM8.55295 2.13812C12.0907 2.13812 14.9677 5.01497 14.9677 8.55249C14.9677 12.09 12.0907 14.9669 8.55295 14.9669C5.01523 14.9669 2.13824 12.09 2.13824 8.55249C2.13824 5.01497 5.01523 2.13812 8.55295 2.13812Z" />
+    </svg>
+  );
+};
+
+Search.displayName = 'Search';
