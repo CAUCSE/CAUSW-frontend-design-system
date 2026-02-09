@@ -122,6 +122,7 @@ export const DatePicker = ({
           defaultMonth={hasValue ? selectedDate : new Date()}
           selectedStartDate={hasValue ? selectedDate : undefined}
           showToday={false}
+          size="sm"
           enableHover
           onDateClick={handleDateClick}
           {...calendarProps}
