@@ -6,6 +6,7 @@ export { Book } from './Book';
 export { CalendarIcon } from './CalendarIcon';
 export { Call } from './Call';
 export { Camera } from './Camera';
+export { Checkbox } from './Checkbox';
 export { ChevronLeft } from './ChevronLeft';
 export { ChevronRight } from './ChevronRight';
 export { Close } from './Close';
