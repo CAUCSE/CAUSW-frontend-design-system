@@ -177,6 +177,7 @@ function convertToJsxAttributes(content: string): string {
   return content
     .replace(/fill-rule=/g, 'fillRule=')
     .replace(/clip-rule=/g, 'clipRule=')
+    .replace(/clip-path=/g, 'clipPath=')
     .replace(/fill-opacity=/g, 'fillOpacity=')
     .replace(/stroke-width=/g, 'strokeWidth=')
     .replace(/stroke-linecap=/g, 'strokeLinecap=')
