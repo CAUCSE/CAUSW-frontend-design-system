@@ -1,5 +1,12 @@
 # @causw/icons
 
+## 1.0.2
+
+### Patch Changes
+
+- 65a932c: present, baby, hospital 아이콘 추가
+- c2b3df8: Fix SVG clip-path attribute conversion for React compatibility.
+
 ## 1.0.1
 
 ### Patch Changes
