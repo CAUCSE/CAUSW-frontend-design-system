@@ -1,3 +1,4 @@
+export { BabyColored } from './BabyColored';
 export { BellColored } from './BellColored';
 export { BuildingColored } from './BuildingColored';
 export { CaldendarIconColored } from './CaldendarIconColored';
@@ -8,11 +9,13 @@ export { FlagColored } from './FlagColored';
 export { FlowerColored } from './FlowerColored';
 export { GearColored } from './GearColored';
 export { HeartColored } from './HeartColored';
+export { HospitalColored } from './HospitalColored';
 export { LoadingColored } from './LoadingColored';
 export { LockOpenColored } from './LockOpenColored';
 export { LockerColored } from './LockerColored';
 export { OfficialColored } from './OfficialColored';
 export { PenColored } from './PenColored';
+export { PresentColored } from './PresentColored';
 export { QuestionColored } from './QuestionColored';
 export { ScholarColored } from './ScholarColored';
 export { SpeakerColored } from './SpeakerColored';
