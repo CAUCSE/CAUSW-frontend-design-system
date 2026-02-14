@@ -25,6 +25,7 @@ const meta = {
         'body-16-regular',
         'body-15-semibold',
         'body-15-medium',
+        'body-15-regular',
         'body-14-semibold',
         'body-14-medium',
         'body-14-regular',
@@ -203,6 +204,7 @@ export const AllTypographyPresets: Story = {
       <Text typography="body-16-regular">body-16-regular</Text>
       <Text typography="body-15-semibold">body-15-semibold</Text>
       <Text typography="body-15-medium">body-15-medium</Text>
+      <Text typography="body-15-regular">body-15-regular</Text>
       <Text typography="body-14-semibold">body-14-semibold</Text>
       <Text typography="body-14-medium">body-14-medium</Text>
       <Text typography="body-14-regular">body-14-regular</Text>

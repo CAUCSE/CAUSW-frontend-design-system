@@ -17,6 +17,7 @@ export const text = tv({
       'body-16-regular': 'typo-body-16-regular',
       'body-15-semibold': 'typo-body-15-semibold',
       'body-15-medium': 'typo-body-15-medium',
+      'body-15-regular': 'typo-body-15-regular',
       'body-14-semibold': 'typo-body-14-semibold',
       'body-14-medium': 'typo-body-14-medium',
       'body-14-regular': 'typo-body-14-regular',
