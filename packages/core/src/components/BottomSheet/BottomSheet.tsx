@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { Drawer } from 'vaul';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
 import { bottomSheet, HeaderAlign } from './BottomSheet.styles';
@@ -40,14 +40,14 @@ const BottomSheetRoot = ({
         onClose: () => handleOpenChange(false),
       }}
     >
-      <DialogPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
         {children}
-      </DialogPrimitive.Root>
+      </Drawer.Root>
     </BottomSheetContext.Provider>
   );
 };
 
-const BottomSheetTrigger = DialogPrimitive.Trigger;
+const BottomSheetTrigger = Drawer.Trigger;
 
 const BottomSheetHandle = () => {
   const { handle } = bottomSheet();
@@ -58,18 +58,18 @@ const BottomSheetContent = ({
   children,
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) => {
+}: React.ComponentProps<typeof Drawer.Content>) => {
   const { content, overlay } = bottomSheet();
 
   return (
-    <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className={overlay()} />
+    <Drawer.Portal>
+      <Drawer.Overlay className={overlay()} />
 
-      <DialogPrimitive.Content className={content({ className })} {...props}>
+      <Drawer.Content className={content({ className })} {...props}>
         <BottomSheetHandle />
         <div className="w-full">{children}</div>
-      </DialogPrimitive.Content>
-    </DialogPrimitive.Portal>
+      </Drawer.Content>
+    </Drawer.Portal>
   );
 };
 
@@ -86,11 +86,11 @@ const BottomSheetHeader = ({
   return (
     <div className={header({ className })}>
       {title && (
-        <DialogPrimitive.Title asChild>
+        <Drawer.Title asChild>
           <Text as="h2" typography="subtitle-18-bold">
             {title}
           </Text>
-        </DialogPrimitive.Title>
+        </Drawer.Title>
       )}
     </div>
   );

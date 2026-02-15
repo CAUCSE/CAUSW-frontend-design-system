@@ -2,17 +2,11 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const bottomSheet = tv({
   slots: {
-    overlay: [
-      'fixed inset-0 z-bottomsheet',
-      'data-[state=open]:animate-overlay-show',
-      'data-[state=closed]:animate-overlay-hide',
-    ],
+    overlay: ['fixed inset-0 z-bottomsheet'],
     content: [
       'fixed bottom-0 z-bottomsheet flex w-full flex-col items-center gap-8',
       'rounded-t-2xl bg-white px-6 py-3.5 pb-10',
       'shadow-[0_-2px_30px_0_rgba(51,53,61,0.30)]',
-      'data-[state=open]:animate-content-show',
-      'data-[state=closed]:animate-content-hide',
     ],
     handle: 'h-1 w-11 rounded-full bg-gray-200',
     header: 'text-left',
