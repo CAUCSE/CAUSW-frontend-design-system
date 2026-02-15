@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer } from '../Drawer/Drawer';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
 import { bottomSheet, HeaderAlign } from './BottomSheet.styles';
@@ -40,14 +40,14 @@ const BottomSheetRoot = ({
         onClose: () => handleOpenChange(false),
       }}
     >
-      <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
         {children}
-      </Drawer.Root>
+      </DialogPrimitive.Root>
     </BottomSheetContext.Provider>
   );
 };
 
-const BottomSheetTrigger = Drawer.Trigger;
+const BottomSheetTrigger = DialogPrimitive.Trigger;
 
 const BottomSheetHandle = () => {
   const { handle } = bottomSheet();
@@ -58,17 +58,18 @@ const BottomSheetContent = ({
   children,
   className,
   ...props
-}: React.ComponentProps<typeof Drawer.Content>) => {
-  const { content } = bottomSheet();
-  return (
-    <Drawer.Portal>
-      <Drawer.Overlay />
+}: React.ComponentProps<typeof DialogPrimitive.Content>) => {
+  const { content, overlay } = bottomSheet();
 
-      <Drawer.Content className={content({ className })} {...props}>
+  return (
+    <DialogPrimitive.Portal>
+      <DialogPrimitive.Overlay className={overlay()} />
+
+      <DialogPrimitive.Content className={content({ className })} {...props}>
         <BottomSheetHandle />
         <div className="w-full">{children}</div>
-      </Drawer.Content>
-    </Drawer.Portal>
+      </DialogPrimitive.Content>
+    </DialogPrimitive.Portal>
   );
 };
 
@@ -85,11 +86,11 @@ const BottomSheetHeader = ({
   return (
     <div className={header({ className })}>
       {title && (
-        <Drawer.Title asChild>
+        <DialogPrimitive.Title asChild>
           <Text as="h2" typography="subtitle-18-bold">
             {title}
           </Text>
-        </Drawer.Title>
+        </DialogPrimitive.Title>
       )}
     </div>
   );
