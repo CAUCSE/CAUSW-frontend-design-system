@@ -11,6 +11,7 @@ import { Button } from '../Button';
 import { TextArea } from '../TextArea';
 import { Field } from '../Field';
 import { Flex } from '../Flex';
+import { BottomSheet } from '../BottomSheet';
 
 const meta = {
   title: 'Components/Dialog',
@@ -478,4 +479,41 @@ export const ResponsiveFullscreen: Story = {
       </Dialog>
     );
   },
+};
+
+export const Problem: Story = {
+  render: () => (
+    <>
+      <Dialog>
+        <Dialog.Trigger>
+          <CTAButton color="blue">Open Dialog (Playground)</CTAButton>
+        </Dialog.Trigger>
+        <Dialog.Content>
+          <div className="flex h-32 flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-center">
+            <Text typography="body-16-regular" textColor="gray-400">
+              Arbitrary content area
+            </Text>
+            <Text typography="body-16-regular" textColor="gray-400">
+              (Use VStack, HStack, etc.)
+            </Text>
+          </div>
+        </Dialog.Content>
+      </Dialog>
+      <BottomSheet>
+        <BottomSheet.Trigger>
+          <CTAButton color="blue">Open BottomSheet (Playground)</CTAButton>
+        </BottomSheet.Trigger>
+        <BottomSheet.Content>
+          <div className="flex h-32 flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-center">
+            <Text typography="body-16-regular" textColor="gray-400">
+              Arbitrary content area
+            </Text>
+            <Text typography="body-16-regular" textColor="gray-400">
+              (Use VStack, HStack, etc.)
+            </Text>
+          </div>
+        </BottomSheet.Content>
+      </BottomSheet>
+    </>
+  ),
 };
