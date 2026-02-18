@@ -1,6 +1,7 @@
 export { BabyColored } from './BabyColored';
 export { BellColored } from './BellColored';
 export { BuildingColored } from './BuildingColored';
+export { CafeteriaColored } from './CafeteriaColored';
 export { CaldendarIconColored } from './CaldendarIconColored';
 export { CommentColored } from './CommentColored';
 export { DocumentColored } from './DocumentColored';
