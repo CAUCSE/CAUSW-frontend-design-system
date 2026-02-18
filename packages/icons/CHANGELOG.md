@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.3
+
+### Patch Changes
+
+- ad33e5e: check 아이콘 추가
+
 ## 1.0.2
 
 ### Patch Changes

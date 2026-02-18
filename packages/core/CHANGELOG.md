@@ -1,5 +1,13 @@
 # @causw/core
 
+## 0.0.19
+
+### Patch Changes
+
+- 7f078d8: BottomSheet & Dialog 스타일 충돌 해결 및 Pan 기능 추가
+- Updated dependencies [ad33e5e]
+  - @causw/icons@1.0.3
+
 ## 0.0.18
 
 ### Patch Changes
