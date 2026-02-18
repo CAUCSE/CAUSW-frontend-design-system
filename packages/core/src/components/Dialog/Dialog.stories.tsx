@@ -11,6 +11,7 @@ import { Button } from '../Button';
 import { TextArea } from '../TextArea';
 import { Field } from '../Field';
 import { Flex } from '../Flex';
+import { BottomSheet } from '../BottomSheet';
 
 const meta = {
   title: 'Components/Dialog',

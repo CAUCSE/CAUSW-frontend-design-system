@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer } from '../Drawer/Drawer';
+import { Drawer } from 'vaul';
 import { Text } from '../Text';
 import { BottomSheetContext, useBottomSheet } from '../../hooks';
 import { bottomSheet, HeaderAlign } from './BottomSheet.styles';
@@ -59,10 +59,11 @@ const BottomSheetContent = ({
   className,
   ...props
 }: React.ComponentProps<typeof Drawer.Content>) => {
-  const { content } = bottomSheet();
+  const { content, overlay } = bottomSheet();
+
   return (
     <Drawer.Portal>
-      <Drawer.Overlay />
+      <Drawer.Overlay className={overlay()} />
 
       <Drawer.Content className={content({ className })} {...props}>
         <BottomSheetHandle />
