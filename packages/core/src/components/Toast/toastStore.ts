@@ -26,7 +26,7 @@ const dispatch = (message: string, type: ToastType, options?: ToastOptions) => {
   const id = genId();
   const newToast = { id, message, type, ...options };
 
-  memoryState = [newToast];
+  memoryState = [...memoryState, newToast];
   notify();
   return id;
 };
@@ -40,6 +40,7 @@ export const useToastStore = () => {
       };
     },
     () => memoryState,
+    () => [],
   );
 };
 
