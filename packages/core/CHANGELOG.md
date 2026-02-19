@@ -1,5 +1,12 @@
 # @causw/core
 
+## 0.0.20
+
+### Patch Changes
+
+- 9b6d47a: bottomNav 색상 수정
+- 89e506f: Toaster export 추가
+
 ## 0.0.19
 
 ### Patch Changes
