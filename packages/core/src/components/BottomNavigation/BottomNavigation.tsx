@@ -24,12 +24,13 @@ const BottomNavigationRoot = ({
   children,
   selected,
   onSelectChange,
+  className,
   ...props
 }: BottomNavigationRootProps) => {
   const { root } = bottomNavigation();
   return (
     <BottomNavigationContext.Provider value={{ selected, onSelectChange }}>
-      <Primitive.nav className={root()} {...props}>
+      <Primitive.nav className={root({ className })} {...props}>
         {children}
       </Primitive.nav>
     </BottomNavigationContext.Provider>
@@ -49,6 +50,7 @@ interface BottomNavigationItemProps
 const BottomNavigationItem = ({
   selected,
   value,
+  className,
   children,
   onClick,
   ...props
@@ -78,7 +80,7 @@ const BottomNavigationItem = ({
     <BottomNavigationItemContext.Provider value={{ selected: isSelected }}>
       <Primitive.button
         type="button"
-        className={item()}
+        className={item({ className })}
         onClick={handleClick}
         {...props}
       >
@@ -96,6 +98,7 @@ interface BottomNavigationIconProps
 const BottomNavigationIcon = ({
   children,
   selected,
+  className,
   ...props
 }: BottomNavigationIconProps) => {
   const itemContext = useBottomNavigationItemContext();
@@ -104,7 +107,7 @@ const BottomNavigationIcon = ({
   const { icon } = bottomNavigation({ selected: isSelected, ...props });
 
   return (
-    <Primitive.svg asChild className={icon()} {...props}>
+    <Primitive.svg asChild className={icon({ className })} {...props}>
       {children}
     </Primitive.svg>
   );
@@ -118,6 +121,7 @@ interface BottomNavigationLabelProps
 const BottomNavigationLabel = ({
   children,
   selected,
+  className,
   ...props
 }: BottomNavigationLabelProps) => {
   const itemContext = useBottomNavigationItemContext();
@@ -126,7 +130,7 @@ const BottomNavigationLabel = ({
   const { label } = bottomNavigation({ selected: isSelected, ...props });
 
   return (
-    <Primitive.span className={label()} {...props}>
+    <Primitive.span className={label({ className })} {...props}>
       {children}
     </Primitive.span>
   );
