@@ -1,3 +1,5 @@
+'use client';
+
 import { Toast, ToastProvider, ToastViewport } from './Toast';
 import { useToastStore, toast, ToastType } from './toastStore';
 import { SuccessColored, ErrorColored, LoadingColored } from '@causw/icons';
