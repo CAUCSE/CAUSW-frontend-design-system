@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.21
+
+### Patch Changes
+
+- 7fe742a: toast 내부 내부 하이드레이션 에러 대응
+
 ## 0.0.20
 
 ### Patch Changes
