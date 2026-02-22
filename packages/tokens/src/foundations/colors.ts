@@ -27,7 +27,7 @@ export const colors = {
     400: '#3ED06C',
   },
   white: {
-    main: '#FFEFEF',
+    main: '#FFFFFF',
   },
   black: {
     main: '#000000',

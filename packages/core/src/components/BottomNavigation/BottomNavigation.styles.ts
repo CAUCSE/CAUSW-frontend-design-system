@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const bottomNavigation = tv({
   slots: {
-    root: 'fixed bg-white right-0 bottom-0 left-0 z-sticky flex h-15 items-center justify-between border-t border-gray-200 px-12 py-2 pb-safe',
+    root: 'fixed bg-white right-0 bottom-0 left-0 z-sticky flex h-15 items-center justify-between  px-12 py-2 pb-safe shadow-[0_-2px_10px_0_rgba(0,0,0,0.08)]',
     item: 'group flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-colors',
     icon: 'w-5 h-5',
     label: 'typo-caption-12-semibold text-center',

@@ -1,10 +1,14 @@
 export { BabyColored } from './BabyColored';
 export { BellColored } from './BellColored';
+export { BellGrayColored } from './BellGrayColored';
 export { BuildingColored } from './BuildingColored';
 export { CafeteriaColored } from './CafeteriaColored';
 export { CaldendarIconColored } from './CaldendarIconColored';
+export { CalendarGrayColored } from './CalendarGrayColored';
 export { CommentColored } from './CommentColored';
+export { CommentGrayColored } from './CommentGrayColored';
 export { DocumentColored } from './DocumentColored';
+export { EnvelopeColored } from './EnvelopeColored';
 export { ErrorColored } from './ErrorColored';
 export { FlagColored } from './FlagColored';
 export { FlowerColored } from './FlowerColored';

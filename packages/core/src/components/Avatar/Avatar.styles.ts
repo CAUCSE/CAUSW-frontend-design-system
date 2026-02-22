@@ -9,25 +9,17 @@ export const avatar = tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'h-9 w-9 rounded-md',
-      },
-      sm: {
-        root: 'h-10 w-10 rounded-md',
-      },
-      md: {
-        root: 'h-11 w-11 rounded-md',
-      },
-      lg: {
-        root: 'h-15 w-15 rounded-lg',
-      },
-      xl: {
-        root: 'h-20 w-20 rounded-2xl',
-      },
+      '36': { root: 'h-9 w-9 rounded-md' },
+      '40': { root: 'h-10 w-10 rounded-md' },
+      '44': { root: 'h-11 w-11 rounded-md' },
+      '64': { root: 'h-16 w-16 rounded-lg' },
+      '80': { root: 'h-20 w-20 rounded-lg' },
+      '88': { root: 'h-22 w-22 rounded-xl' },
+      '120': { root: 'h-30 w-30 rounded-2xl' },
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: '44',
   },
 });
 

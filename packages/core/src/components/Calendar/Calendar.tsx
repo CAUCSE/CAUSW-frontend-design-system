@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   format,
   addMonths,
@@ -23,6 +23,7 @@ import { ChevronLeft, ChevronRight } from '@causw/icons';
 import {
   calendar,
   eventBarStyles,
+  type EventBarStylesVariants,
   type CalendarVariants,
 } from './Calendar.styles';
 import { mergeStyles } from '../../utils';
@@ -32,7 +33,7 @@ export type CalendarEvent = {
   title: string;
   startDate: string;
   endDate?: string;
-  type: keyof typeof eventBarStyles.variants;
+  type: NonNullable<EventBarStylesVariants['type']>;
 };
 
 export interface CalendarProps extends CalendarVariants {
@@ -100,7 +101,7 @@ export const Calendar = ({
   const handleNextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1));
 
   const eventsByDate = useMemo(() => {
-    const map = new Map<string, CalendarEvent[]>();
+    const map = new Map<string, (CalendarEvent | null)[]>();
     const mStart = startOfMonth(currentMonth);
     const mEnd = endOfMonth(currentMonth);
 
@@ -109,16 +110,47 @@ export const Calendar = ({
       return start <= mEnd && end >= mStart;
     });
 
+    relevantEvents.sort((a, b) => {
+      const aRange = getEventRange(a);
+      const bRange = getEventRange(b);
+      const aDur = differenceInCalendarDays(aRange.end, aRange.start);
+      const bDur = differenceInCalendarDays(bRange.end, bRange.start);
+      if (bDur !== aDur) return bDur - aDur;
+      return aRange.start.getTime() - bRange.start.getTime();
+    });
+
     for (const event of relevantEvents) {
       const { start, end } = getEventRange(event);
       let d = start < mStart ? mStart : start;
       const eventEndDate = end > mEnd ? mEnd : end;
 
-      while (d <= eventEndDate) {
-        const dateKey = formatDateStr(d);
-        const dailyEvents = map.get(dateKey) ?? [];
-        map.set(dateKey, [...dailyEvents, event]);
-        d = addDays(d, 1);
+      let slot = 0;
+      let found = false;
+      while (!found) {
+        let isFree = true;
+        let tempD = new Date(d);
+        while (tempD <= eventEndDate) {
+          const dateKey = formatDateStr(tempD);
+          const dailySlots = map.get(dateKey) || [];
+          if (dailySlots[slot]) {
+            isFree = false;
+            break;
+          }
+          tempD = addDays(tempD, 1);
+        }
+        if (isFree) found = true;
+        else slot++;
+      }
+
+      let assignD = new Date(d);
+      while (assignD <= eventEndDate) {
+        const dateKey = formatDateStr(assignD);
+        const dailySlots = map.get(dateKey) || [];
+
+        while (dailySlots.length <= slot) dailySlots.push(null);
+        dailySlots[slot] = event;
+        map.set(dateKey, dailySlots);
+        assignD = addDays(assignD, 1);
       }
     }
     return map;
@@ -223,12 +255,19 @@ export const Calendar = ({
                 </span>
                 <Flex className={eventList()}>
                   {daysEvents.map((ev, idx) => {
-                    const { start, end } = getEventRange(ev);
+                    if (!ev) {
+                      return (
+                        <div
+                          key={`empty-${idx}`}
+                          className={eventItemHeight()}
+                        />
+                      );
+                    }
 
+                    const { start, end } = getEventRange(ev);
                     const currentDayIndex = getDay(currentDate);
                     const weekStart = subDays(currentDate, currentDayIndex);
                     const weekEnd = addDays(currentDate, 6 - currentDayIndex);
-
                     const segmentStart = start < weekStart ? weekStart : start;
                     const segmentEnd = end > weekEnd ? weekEnd : end;
                     const segmentDuration =
@@ -238,47 +277,51 @@ export const Calendar = ({
                       segmentStart,
                     );
 
-                    const targetIndex = Math.floor((segmentDuration - 1) / 2);
-                    const isRenderCell = indexInSegment === targetIndex;
-
                     const startDateKey = formatDateStr(start);
                     const endDateKey = formatDateStr(end);
                     const isStartEvent = dateKey === startDateKey;
                     const isEndEvent = dateKey === endDateKey;
                     const isSingleDay = startDateKey === endDateKey;
+                    const blockPosition = isSingleDay
+                      ? 'single'
+                      : isStartEvent
+                        ? 'start'
+                        : isEndEvent
+                          ? 'end'
+                          : 'middle';
+                    const {
+                      wrapper: eventWrapper,
+                      bgBar,
+                      textLayer,
+                      textSpan,
+                    } = eventBarStyles({
+                      type: ev.type,
+                      position: blockPosition,
+                    });
 
                     return (
                       <div
                         key={`${ev.id}-${idx}`}
-                        className={mergeStyles([
-                          'relative w-full',
+                        className={mergeStyles(
+                          eventWrapper(),
                           eventItemHeight(),
-                          eventBarStyles.variants[ev.type],
-                          isSingleDay
-                            ? 'mx-[2px] !w-[calc(100%-4px)] rounded-[4px]'
-                            : '',
-                          !isSingleDay && isStartEvent
-                            ? 'mr-0 ml-[2px] !w-[calc(100%-2px)] rounded-l-[4px] rounded-r-none'
-                            : '',
-                          !isSingleDay && isEndEvent
-                            ? 'mr-[2px] ml-0 !w-[calc(100%-2px)] rounded-l-none rounded-r-[4px]'
-                            : '',
-                          !isSingleDay && !isStartEvent && !isEndEvent
-                            ? 'mx-0 w-full rounded-none'
-                            : '',
-                        ])}
+                        )}
                         onClick={(e) => {
                           e.stopPropagation();
                           onEventClick?.(ev);
                         }}
                       >
-                        {isRenderCell && (
-                          <div className={eventBarStyles.textWrapper}>
-                            <span className="block w-full truncate px-1 text-center">
-                              {ev.title}
-                            </span>
-                          </div>
-                        )}
+                        <div className={bgBar()} />
+
+                        <div
+                          className={textLayer()}
+                          style={{
+                            width: `calc(${segmentDuration} * 100%)`,
+                            left: `calc(-${indexInSegment} * 100%)`,
+                          }}
+                        >
+                          <span className={textSpan()}>{ev.title}</span>
+                        </div>
                       </div>
                     );
                   })}

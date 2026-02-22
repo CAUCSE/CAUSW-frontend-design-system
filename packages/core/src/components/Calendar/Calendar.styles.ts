@@ -113,18 +113,26 @@ export const calendar = tv({
 
 export type CalendarVariants = VariantProps<typeof calendar>;
 
-export const eventBarStyles = {
-  textWrapper: `
-    absolute top-0 left-0 w-full h-full
-    flex items-center justify-center
-    text-[11px] font-medium tracking-[-0.02em] leading-tight
-    select-none pointer-events-none
-    z-10
-    whitespace-nowrap
-  `,
-  variants: {
-    holiday: 'bg-red-100 text-red-400',
-    event: 'bg-gray-100 text-gray-600',
-    important: 'bg-blue-100 text-blue-600',
+export const eventBarStyles = tv({
+  slots: {
+    wrapper: 'relative w-full',
+    bgBar: 'absolute inset-0',
+    textLayer:
+      'absolute top-0 left-0 w-full h-full flex items-center justify-center text-[11px] font-medium tracking-[-0.02em] leading-tight select-none pointer-events-none z-10 whitespace-nowrap !bg-transparent',
+    textSpan: 'block w-[95%] mx-auto truncate px-2   text-center',
   },
-} as const;
+  variants: {
+    type: {
+      holiday: { bgBar: 'bg-red-100', textLayer: 'text-red-400' },
+      event: { bgBar: 'bg-gray-100', textLayer: 'text-gray-600' },
+      important: { bgBar: 'bg-blue-100', textLayer: 'text-blue-600' },
+    },
+    position: {
+      single: { bgBar: 'mx-[2px] rounded-[4px]' },
+      start: { bgBar: 'mr-0 ml-[2px] rounded-l-[4px] rounded-r-none' },
+      end: { bgBar: 'mr-[2px] ml-0 rounded-l-none rounded-r-[4px]' },
+      middle: { bgBar: 'mx-0 rounded-none' },
+    },
+  },
+});
+export type EventBarStylesVariants = VariantProps<typeof eventBarStyles>;
