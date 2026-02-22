@@ -6,6 +6,7 @@ export { CafeteriaColored } from './CafeteriaColored';
 export { CaldendarIconColored } from './CaldendarIconColored';
 export { CalendarGrayColored } from './CalendarGrayColored';
 export { CommentColored } from './CommentColored';
+export { CommentGrayColored } from './CommentGrayColored';
 export { DocumentColored } from './DocumentColored';
 export { EnvelopeColored } from './EnvelopeColored';
 export { ErrorColored } from './ErrorColored';
