@@ -1,5 +1,15 @@
 # @causw/core
 
+## 0.0.22
+
+### Patch Changes
+
+- cf28fe0: add misssing icons, optimize calendar evnet text alignment, edit main white hex color, add bottom nav shadow
+- db9b000: toast 로직 export 제거
+- Updated dependencies [cf28fe0]
+  - @causw/tokens@0.0.13
+  - @causw/icons@1.0.4
+
 ## 0.0.21
 
 ### Patch Changes
