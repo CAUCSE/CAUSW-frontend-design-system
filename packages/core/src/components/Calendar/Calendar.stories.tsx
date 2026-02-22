@@ -47,6 +47,13 @@ const mockEvents: CalendarEvent[] = [
     type: 'event',
   },
   { id: 8, title: '팀 회의', startDate: '2025-10-23', type: 'event' },
+  {
+    id: 9,
+    title: 'text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-11',
+    endDate: '2025-10-23',
+    type: 'event',
+  },
 ];
 
 export const Default_Responsive: Story = {
