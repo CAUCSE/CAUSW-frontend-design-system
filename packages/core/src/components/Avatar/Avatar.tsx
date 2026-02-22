@@ -3,7 +3,10 @@ import * as React from 'react';
 import { Primitive, PrimitiveProps } from '../Primitive';
 import { avatar, AvatarVariants } from './Avatar.styles';
 import { mergeStyles } from '../../utils';
-import DEFAULT_AVATAR_SRC from '../../assets/avatar/default.jpeg';
+import defaultAvatar1 from '../../assets/avatar/defaultAvatar1.svg';
+import defaultAvatar2 from '../../assets/avatar/defaultAvatar2.svg';
+import defaultAvatar3 from '../../assets/avatar/defaultAvatar3.svg';
+import defaultAvatar4 from '../../assets/avatar/defaultAvatar4.svg';
 
 export interface AvatarProps
   extends
@@ -16,7 +19,7 @@ export interface AvatarProps
 }
 
 export const Avatar = ({
-  size = 'md',
+  size = '44',
   src,
   alt,
   className,
@@ -24,6 +27,16 @@ export const Avatar = ({
   ...props
 }: AvatarProps) => {
   const [hasError, setHasError] = React.useState(false);
+  const defaultAvatars = [
+    defaultAvatar1,
+    defaultAvatar2,
+    defaultAvatar3,
+    defaultAvatar4,
+  ];
+  const randomDefault = React.useMemo(
+    () => defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)],
+    [],
+  );
   const { root, image, fallback: fallbackStyle } = avatar({ size });
 
   React.useEffect(() => {
@@ -59,11 +72,7 @@ export const Avatar = ({
         />
       ) : (
         (renderFallback() ?? (
-          <img
-            src={DEFAULT_AVATAR_SRC}
-            alt="default avatar"
-            className={image()}
-          />
+          <img src={randomDefault} alt="default avatar" className={image()} />
         ))
       )}
     </Primitive.span>

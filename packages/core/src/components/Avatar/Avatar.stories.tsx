@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar } from './Avatar';
-
 const SAMPLE_SRC = 'https://avatars.githubusercontent.com/u/54893898?v=4';
 const WRONG_SRC = 'https://example.com/wrong-image.jpg';
 const StarIcon = () => (
@@ -23,17 +22,23 @@ const meta: Meta<typeof Avatar> = {
 
 export default meta;
 type Story = StoryObj<typeof Avatar>;
+export const ProfileWithImage: Story = {
+  render: () => <Avatar src={SAMPLE_SRC} size="80" />,
+};
+
 export const Default: Story = {
-  render: () => <Avatar size="md" />,
+  render: () => <Avatar size="44" />,
 };
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Avatar size="xs" src={SAMPLE_SRC} />
-      <Avatar size="sm" src={SAMPLE_SRC} />
-      <Avatar size="md" src={SAMPLE_SRC} />
-      <Avatar size="lg" src={SAMPLE_SRC} />
-      <Avatar size="xl" src={SAMPLE_SRC} />
+      <Avatar size="36" />
+      <Avatar size="40" />
+      <Avatar size="44" />
+      <Avatar size="64" />
+      <Avatar size="80" />
+      <Avatar size="88" />
+      <Avatar size="120" />
     </div>
   ),
 };
