@@ -1,5 +1,13 @@
 # @causw/icons
 
+## 1.0.4
+
+### Patch Changes
+
+- cf28fe0: add misssing icons, optimize calendar evnet text alignment, edit main white hex color, add bottom nav shadow
+- Updated dependencies [cf28fe0]
+  - @causw/tokens@0.0.13
+
 ## 1.0.3
 
 ### Patch Changes

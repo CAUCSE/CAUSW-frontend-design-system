@@ -1,5 +1,11 @@
 # @causw/tokens
 
+## 0.0.13
+
+### Patch Changes
+
+- cf28fe0: add misssing icons, optimize calendar evnet text alignment, edit main white hex color, add bottom nav shadow
+
 ## 0.0.12
 
 ### Patch Changes

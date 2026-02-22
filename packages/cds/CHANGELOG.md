@@ -1,5 +1,15 @@
 # @causw/design-system
 
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies [cf28fe0]
+- Updated dependencies [db9b000]
+  - @causw/tokens@0.0.13
+  - @causw/icons@1.0.4
+  - @causw/core@0.0.22
+
 ## 0.0.25
 
 ### Patch Changes
