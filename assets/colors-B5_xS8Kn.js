@@ -1,0 +1,1 @@
+const F={blue:{100:"#EEF4FF",200:"#CADDFF",500:"#4F98FF",700:"#237EFF"},gray:{50:"#F9FAFB",100:"#F5F6F8",200:"#E9ECF2",300:"#CACED5",400:"#99A1AF",500:"#6A7282",600:"#4A5565",700:"#364153",800:"#1E2939",900:"#101828"},red:{100:"#FFEFEF",200:"#FFCACF",400:"#FD5C5F",500:"#DF0F12"},green:{400:"#3ED06C"},white:{main:"#FFFFFF"},black:{main:"#000000"}};export{F as c};
