@@ -184,7 +184,9 @@ function convertToJsxAttributes(content: string): string {
     .replace(/stroke-linejoin=/g, 'strokeLinejoin=')
     .replace(/stop-color=/g, 'stopColor=')
     .replace(/stop-opacity=/g, 'stopOpacity=')
-    .replace(/xmlns:xlink=/g, 'xmlnsXlink=');
+    .replace(/xmlns:xlink=/g, 'xmlnsXlink=')
+    .replace(/color-interpolation-filters=/g, 'colorInterpolationFilters=')
+    .replace(/flood-opacity=/g, 'floodOpacity=');
 }
 
 async function generateIcons(type: 'mono' | 'colored') {
