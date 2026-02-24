@@ -33,10 +33,13 @@ export const Avatar = ({
     defaultAvatar3,
     defaultAvatar4,
   ];
-  const randomDefault = React.useMemo(
-    () => defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)],
-    [],
-  );
+  const [randomDefault, setRandomDefault] = React.useState(defaultAvatars[0]);
+
+  React.useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
+    setRandomDefault(defaultAvatars[randomIndex]);
+  }, []);
+
   const { root, image, fallback: fallbackStyle } = avatar({ size });
 
   React.useEffect(() => {
