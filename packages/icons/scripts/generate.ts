@@ -145,34 +145,49 @@ function generateColoredComponent(
     .replace(/<\/svg>/, '')
     .trim();
 
-  return `import type { ColoredIconProps } from '../types';
+  return `import * as React from 'react';
+import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const ${componentName} = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="${viewBox}"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    ${innerContent}
-  </svg>
-);
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="${viewBox}"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      ${innerContent}
+    </svg>
+  );
+};
 
 ${componentName}.displayName = '${componentName}';
 `;
 }
-
 function convertToJsxAttributes(content: string): string {
   return content
     .replace(/fill-rule=/g, 'fillRule=')
