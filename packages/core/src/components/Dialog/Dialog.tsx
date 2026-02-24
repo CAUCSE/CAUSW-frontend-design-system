@@ -66,7 +66,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 export type DialogTitleProps = ComponentProps<typeof DialogPrimitive.Title>;
 
 const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
-  return <DialogPrimitive.Title {...props} />;
+  return <DialogPrimitive.Title className={className} {...props} />;
 };
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
@@ -75,14 +75,14 @@ export type DialogDescriptionProps = ComponentProps<
 >;
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
-  return <DialogPrimitive.Description {...props} />;
+  return <DialogPrimitive.Description className={className} {...props} />;
 };
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export type DialogFooterProps = ComponentProps<'div'> & PrimitiveProps;
 
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
-  return <Primitive.div {...props} />;
+  return <Primitive.div className={className} {...props} />;
 };
 DialogFooter.displayName = 'DialogFooter';
 
