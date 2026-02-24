@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.5
+
+### Patch Changes
+
+- 7896622: edit envelope icon js style
+
 ## 1.0.4
 
 ### Patch Changes
