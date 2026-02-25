@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.6
+
+### Patch Changes
+
+- 37d5777: dom에 중복으로 등록되는 svg로 인해 발생하는 이슈 핸들링
+
 ## 1.0.5
 
 ### Patch Changes

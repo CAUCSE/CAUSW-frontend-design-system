@@ -1,5 +1,13 @@
 # @causw/core
 
+## 0.0.24
+
+### Patch Changes
+
+- 3e749e0: dislog.tsx에 className return 수정
+- Updated dependencies [37d5777]
+  - @causw/icons@1.0.6
+
 ## 0.0.23
 
 ### Patch Changes
