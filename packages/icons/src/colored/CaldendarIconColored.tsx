@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const CaldendarIconColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 22 22"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <path d="M1 6.06452C1 4.92432 1.91839 4 3.05128 4H18.9487C20.0816 4 21 4.92432 21 6.06452V17.9355C21 19.0757 20.0816 20 18.9487 20H3.05128C1.91839 20 1 19.0757 1 17.9355V6.06452Z" fill="white"/>
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 22 22"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <path d="M1 6.06452C1 4.92432 1.91839 4 3.05128 4H18.9487C20.0816 4 21 4.92432 21 6.06452V17.9355C21 19.0757 20.0816 20 18.9487 20H3.05128C1.91839 20 1 19.0757 1 17.9355V6.06452Z" fill="white"/>
 <path d="M4 3C4 2.44772 4.44772 2 5 2C5.55228 2 6 2.44772 6 3V5C6 5.55228 5.55228 6 5 6C4.44772 6 4 5.55228 4 5V3Z" fill="#8EC6FF"/>
 <path d="M16 3C16 2.44772 16.4477 2 17 2C17.5523 2 18 2.44772 18 3V5C18 5.55228 17.5523 6 17 6C16.4477 6 16 5.55228 16 5V3Z" fill="#8EC6FF"/>
 <path d="M10 3C10 2.44772 10.4477 2 11 2C11.5523 2 12 2.44772 12 3V5C12 5.55228 11.5523 6 11 6C10.4477 6 10 5.55228 10 5V3Z" fill="#8EC6FF"/>
@@ -29,7 +44,8 @@ export const CaldendarIconColored = ({
 <stop offset="1" stopColor="#98CDFF"/>
 </linearGradient>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 CaldendarIconColored.displayName = 'CaldendarIconColored';

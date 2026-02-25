@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const SpeakerColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 22 22"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <path d="M7.99951 14.9995H4.16539C3.52135 14.9995 2.99951 14.5182 2.99951 13.9241V8.07493C2.99951 7.48086 3.52135 6.99951 4.16539 6.99951H7.99951V14.9995Z" fill="url(#paint0_linear_1797_7914)"/>
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 22 22"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <path d="M7.99951 14.9995H4.16539C3.52135 14.9995 2.99951 14.5182 2.99951 13.9241V8.07493C2.99951 7.48086 3.52135 6.99951 4.16539 6.99951H7.99951V14.9995Z" fill="url(#paint0_linear_1797_7914)"/>
 <path d="M7.99951 15.0555V6.94299L16.6748 2.10594C17.29 1.76304 17.9995 2.29037 17.9995 3.09158V18.9075C17.9995 19.7082 17.29 20.236 16.6748 19.8931L7.99951 15.0555Z" fill="#F9BEC3"/>
 <path d="M17.9995 7.99951H19.6005C20.3733 7.99951 20.9995 8.72154 20.9995 9.61263V12.3864C20.9995 13.2775 20.3733 13.9995 19.6005 13.9995H17.9995" fill="url(#paint1_linear_1797_7914)"/>
 <defs>
@@ -31,7 +46,8 @@ export const SpeakerColored = ({
 <stop offset="1" stopColor="#FD3848"/>
 </linearGradient>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 SpeakerColored.displayName = 'SpeakerColored';

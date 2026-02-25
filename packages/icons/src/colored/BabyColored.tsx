@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const BabyColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <g clipPath="url(#clip0_6475_36697)">
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <g clipPath="url(#clip0_6475_36697)">
 <path d="M3.65895 16.5004C5.67974 16.5004 7.3179 15.059 7.3179 13.2809C7.3179 11.5028 5.67974 10.0614 3.65895 10.0614C1.63817 10.0614 0 11.5028 0 13.2809C0 15.059 1.63817 16.5004 3.65895 16.5004Z" fill="url(#paint0_linear_6475_36697)"/>
 <path d="M20.341 16.5004C22.3617 16.5004 23.9999 15.059 23.9999 13.2809C23.9999 11.5028 22.3617 10.0614 20.341 10.0614C18.3202 10.0614 16.682 11.5028 16.682 13.2809C16.682 15.059 18.3202 16.5004 20.341 16.5004Z" fill="url(#paint1_linear_6475_36697)"/>
 <path d="M12 22.9838C17.9537 22.9838 22.7802 18.2846 22.7802 12.4879C22.7802 6.69113 17.9537 1.99194 12 1.99194C6.04629 1.99194 1.21985 6.69113 1.21985 12.4879C1.21985 18.2846 6.04629 22.9838 12 22.9838Z" fill="url(#paint2_linear_6475_36697)"/>
@@ -44,7 +59,8 @@ export const BabyColored = ({
 <rect width="24" height="24" fill="white"/>
 </clipPath>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 BabyColored.displayName = 'BabyColored';

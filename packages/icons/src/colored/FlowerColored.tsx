@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const FlowerColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <g clipPath="url(#clip0_2381_9305)">
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <g clipPath="url(#clip0_2381_9305)">
 <path d="M9.96565 12.0003C9.96565 11.9188 9.98052 11.8415 9.98944 11.7625C8.79485 11.345 7.3636 10.5471 6.15356 9.57842C3.51821 9.28646 1 9.80378 1 12.0003C1 14.1968 3.5188 14.7135 6.15415 14.4222C7.3636 13.4535 8.79485 12.6556 9.99003 12.2381C9.98052 12.1591 9.96625 12.0818 9.96625 12.0003H9.96565Z" fill="url(#paint0_linear_2381_9305)"/>
 <path d="M23.0011 12.0001C23.0011 9.80358 20.4823 9.28685 17.8469 9.57822C16.6535 10.5338 15.2437 11.324 14.0586 11.7456C14.0693 11.83 14.0842 11.9127 14.0842 11.9995C14.0842 12.0863 14.0693 12.1696 14.0586 12.2534C15.2437 12.675 16.6529 13.4652 17.8469 14.4208C20.4823 14.7127 23.0011 14.1954 23.0011 11.9989V12.0001Z" fill="url(#paint1_linear_2381_9305)"/>
 <path d="M12.025 9.94068C12.1011 9.94068 12.173 9.95495 12.2474 9.96327C12.6672 8.77404 13.461 7.35468 14.4225 6.15355C14.7144 3.51821 14.1971 1 12.0006 1C9.80406 1 9.28734 3.5188 9.5787 6.15355C10.5414 7.35587 11.3358 8.77761 11.755 9.96803C11.8442 9.95614 11.9322 9.94068 12.025 9.94068Z" fill="url(#paint2_linear_2381_9305)"/>
@@ -50,7 +65,8 @@ export const FlowerColored = ({
 <rect width="24" height="24" fill="white"/>
 </clipPath>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 FlowerColored.displayName = 'FlowerColored';

@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const EnvelopeColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 80 80"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <g clipPath="url(#clip0_6779_9436)">
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 80 80"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <g clipPath="url(#clip0_6779_9436)">
 <path d="M12.98 35.5542L17.7861 62.8111C18.1205 64.7078 19.1006 66.3071 20.43 67.4897L38.4995 47.0002L12.98 35.5542Z" fill="url(#paint0_linear_6779_9436)"/>
 <path d="M75.4855 57.7797C76.3306 56.2154 76.7042 54.3757 76.3698 52.479L71.5639 25.2237L50.9991 44.5003L75.4855 57.7797Z" fill="url(#paint1_linear_6779_9436)"/>
 <path d="M48.5 46.5005C45.7043 49.6202 45.1538 48.5005 42 48.5005L37.9694 47.158L20.4292 67.488C22.2036 69.0628 24.6164 69.8709 27.1143 69.4305L69.8646 61.8925C72.3642 61.4517 74.355 59.8671 75.4821 57.7807L51 44.5005L48.5 46.5005Z" fill="#F5FAFF"/>
@@ -57,7 +72,8 @@ export const EnvelopeColored = ({
 <rect width="80" height="80" fill="white"/>
 </clipPath>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 EnvelopeColored.displayName = 'EnvelopeColored';

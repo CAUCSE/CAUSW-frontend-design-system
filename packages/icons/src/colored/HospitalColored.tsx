@@ -1,24 +1,39 @@
+import * as React from 'react';
 import type { ColoredIconProps } from '../types';
 import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 export const HospitalColored = ({
   size = DEFAULT_SIZE,
   title,
   ...props
-}: ColoredIconProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
-    fill="none"
-    aria-hidden={title ? undefined : true}
-    aria-label={title}
-    role={title ? 'img' : undefined}
-    {...props}
-  >
-    {title && <title>{title}</title>}
-    <g clipPath="url(#clip0_6475_31849)">
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <g clipPath="url(#clip0_6475_31849)">
 <path d="M19.2792 6.00044H4.72013C4.10161 6.00044 3.59998 6.47753 3.59998 7.0658V21.0507C3.59998 21.6854 4.14096 22.1999 4.80824 22.1999H19.1917C19.859 22.1999 20.4 21.6854 20.4 21.0507V7.06524C20.4 6.47697 19.8983 5.99988 19.2798 5.99988L19.2792 6.00044Z" fill="url(#paint0_linear_6475_31849)"/>
 <path d="M8.36423 16.6308C8.5592 16.6308 8.71693 16.4731 8.71693 16.2782V14.8668C8.71693 14.6718 8.5592 14.5141 8.36423 14.5141H6.95268C6.75771 14.5141 6.59998 14.6718 6.59998 14.8668V16.2782C6.59998 16.4731 6.75771 16.6308 6.95268 16.6308H8.36423Z" fill="#E2E7EB"/>
 <path d="M8.36423 12.2899C8.5592 12.2899 8.71693 12.1322 8.71693 11.9373V10.5259C8.71693 10.3309 8.5592 10.1732 8.36423 10.1732H6.95268C6.75771 10.1732 6.59998 10.3309 6.59998 10.5259V11.9373C6.59998 12.1322 6.75771 12.2899 6.95268 12.2899H8.36423Z" fill="#E2E7EB"/>
@@ -44,7 +59,8 @@ export const HospitalColored = ({
 <rect width="24" height="24" fill="white"/>
 </clipPath>
 </defs>
-  </svg>
-);
+    </svg>
+  );
+};
 
 HospitalColored.displayName = 'HospitalColored';
