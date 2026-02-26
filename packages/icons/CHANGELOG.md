@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.7
+
+### Patch Changes
+
+- be8cbea: 브랜드 로고 관련 신규 아이콘 추가
+
 ## 1.0.6
 
 ### Patch Changes
