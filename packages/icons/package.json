@@ -35,6 +35,16 @@
         "types": "./dist/colored/index.d.cts",
         "default": "./dist/colored/index.cjs"
       }
+    },
+    "./brand-logo": {
+      "import": {
+        "types": "./dist/brand-logo/index.d.mts",
+        "default": "./dist/brand-logo/index.mjs"
+      },
+      "require": {
+        "types": "./dist/brand-logo/index.d.cts",
+        "default": "./dist/brand-logo/index.cjs"
+      }
     }
   },
   "files": [
@@ -44,6 +54,7 @@
     "generate": "tsx scripts/generate.ts",
     "generate:mono": "tsx scripts/generate.ts --mono",
     "generate:colored": "tsx scripts/generate.ts --colored",
+    "generate:brand-logo": "tsx scripts/generate.ts --brand-logo",
     "prebuild": "pnpm generate",
     "build": "tsdown",
     "dev": "tsdown --watch",

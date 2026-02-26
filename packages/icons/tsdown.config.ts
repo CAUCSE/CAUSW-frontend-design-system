@@ -1,7 +1,12 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  entry: ['./src/index.ts', './src/mono/index.ts', './src/colored/index.ts'],
+  entry: [
+    './src/index.ts',
+    './src/mono/index.ts',
+    './src/colored/index.ts',
+    './src/brand-logo/index.ts',
+  ],
   format: ['esm', 'cjs'],
   clean: true,
   dts: true,
