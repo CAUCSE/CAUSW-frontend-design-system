@@ -20,6 +20,7 @@ const TYPES_FILE = path.join(SRC_DIR, 'types.ts');
 interface CacheData {
   mono: string;
   colored: string;
+  brandLogo: string;
   generator: string;
   types: string;
 }
@@ -63,14 +64,15 @@ async function saveCache(cache: CacheData): Promise<void> {
 }
 
 async function computeCurrentHashes(): Promise<CacheData> {
-  const [mono, colored, generator, types] = await Promise.all([
+  const [mono, colored, brandLogo, generator, types] = await Promise.all([
     computeDirHash(path.join(SVG_DIR, 'mono')),
     computeDirHash(path.join(SVG_DIR, 'colored')),
+    computeDirHash(path.join(SVG_DIR, 'brand-logo')),
     computeFileHash(GENERATOR_FILE),
     computeFileHash(TYPES_FILE),
   ]);
 
-  return { mono, colored, generator, types };
+  return { mono, colored, brandLogo, generator, types };
 }
 
 function toPascalCase(str: string): string {
@@ -79,14 +81,23 @@ function toPascalCase(str: string): string {
     .replace(/^\w/, (c) => c.toUpperCase());
 }
 
+function sanitizeSvgContent(svgContent: string): string {
+  return svgContent
+    .replace(/<\?xml[\s\S]*?\?>/gi, '')
+    .replace(/<!DOCTYPE[\s\S]*?>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .trim();
+}
+
 function generateMonoComponent(
   componentName: string,
   svgContent: string,
 ): string {
-  const viewBoxMatch = svgContent.match(/viewBox="([^"]*)"/);
+  const sanitizedSvg = sanitizeSvgContent(svgContent);
+  const viewBoxMatch = sanitizedSvg.match(/viewBox="([^"]*)"/);
   const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24';
 
-  const innerContent = svgContent
+  const innerContent = sanitizedSvg
     .replace(/<svg[^>]*>/, '')
     .replace(/<\/svg>/, '')
     // fill, stroke 색상 제거
@@ -137,10 +148,11 @@ function generateColoredComponent(
   componentName: string,
   svgContent: string,
 ): string {
-  const viewBoxMatch = svgContent.match(/viewBox="([^"]*)"/);
+  const sanitizedSvg = sanitizeSvgContent(svgContent);
+  const viewBoxMatch = sanitizedSvg.match(/viewBox="([^"]*)"/);
   const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24';
 
-  const innerContent = svgContent
+  const innerContent = sanitizedSvg
     .replace(/<svg[^>]*>/, '')
     .replace(/<\/svg>/, '')
     .trim();
@@ -189,7 +201,46 @@ ${componentName}.displayName = '${componentName}';
 `;
 }
 function convertToJsxAttributes(content: string): string {
-  return content
+  const preprocessed = content.replace(
+    /style="mask-type:\s*([^";]+);?"/g,
+    'maskType="$1"',
+  );
+
+  const styleAsObject = preprocessed.replace(
+    /style="([^"]*)"/g,
+    (_match, styleValue: string) => {
+      const declarations = styleValue
+        .split(';')
+        .map((decl) => decl.trim())
+        .filter(Boolean);
+
+      if (declarations.length === 0) {
+        return '';
+      }
+
+      const styleEntries = declarations
+        .map((decl) => {
+          const colonIndex = decl.indexOf(':');
+          if (colonIndex === -1) return null;
+
+          const rawKey = decl.slice(0, colonIndex).trim();
+          const rawValue = decl.slice(colonIndex + 1).trim();
+          if (!rawKey || !rawValue) return null;
+
+          const camelKey = rawKey.replace(/-([a-z])/g, (_, ch) =>
+            ch.toUpperCase(),
+          );
+          return `${camelKey}: '${rawValue}'`;
+        })
+        .filter(Boolean)
+        .join(', ');
+
+      return styleEntries ? `style={{ ${styleEntries} }}` : '';
+    },
+  );
+
+  return styleAsObject
+    .replace(/xlink:href=/g, 'xlinkHref=')
     .replace(/fill-rule=/g, 'fillRule=')
     .replace(/clip-rule=/g, 'clipRule=')
     .replace(/clip-path=/g, 'clipPath=')
@@ -204,7 +255,7 @@ function convertToJsxAttributes(content: string): string {
     .replace(/flood-opacity=/g, 'floodOpacity=');
 }
 
-async function generateIcons(type: 'mono' | 'colored') {
+async function generateIcons(type: 'mono' | 'colored' | 'brand-logo') {
   const svgDir = path.join(SVG_DIR, type);
   const outDir = path.join(SRC_DIR, type);
 
@@ -220,9 +271,11 @@ async function generateIcons(type: 'mono' | 'colored') {
     const baseName = path.basename(file, '.svg');
     let componentName = toPascalCase(baseName);
 
-    // 모든 colored 아이콘에 Colored 접미사 추가
+    // colored/brand-logo 아이콘 접미사 규칙
     if (type === 'colored') {
       componentName = `${componentName}Colored`;
+    } else if (type === 'brand-logo' && !componentName.endsWith('Logo')) {
+      componentName = `${componentName}Logo`;
     }
 
     let componentCode =
@@ -254,10 +307,11 @@ async function main() {
   const args = process.argv.slice(2);
   const monoOnly = args.includes('--mono');
   const coloredOnly = args.includes('--colored');
+  const brandLogoOnly = args.includes('--brand-logo');
   const force = args.includes('--force');
 
   // 캐시 체크 (전체 생성 모드에서만)
-  if (!monoOnly && !coloredOnly && !force) {
+  if (!monoOnly && !coloredOnly && !brandLogoOnly && !force) {
     const [cachedHashes, currentHashes] = await Promise.all([
       loadCache(),
       computeCurrentHashes(),
@@ -267,6 +321,7 @@ async function main() {
       cachedHashes &&
       cachedHashes.mono === currentHashes.mono &&
       cachedHashes.colored === currentHashes.colored &&
+      cachedHashes.brandLogo === currentHashes.brandLogo &&
       cachedHashes.generator === currentHashes.generator &&
       cachedHashes.types === currentHashes.types
     ) {
@@ -279,18 +334,24 @@ async function main() {
 
   let monoExports: string[] = [];
   let coloredExports: string[] = [];
+  let brandLogoExports: string[] = [];
 
-  if (!coloredOnly) {
+  if (!coloredOnly && !brandLogoOnly) {
     monoExports = await generateIcons('mono');
     console.log(`[icons] mono: ${monoExports.length} icons`);
   }
 
-  if (!monoOnly) {
+  if (!monoOnly && !brandLogoOnly) {
     coloredExports = await generateIcons('colored');
     console.log(`[icons] colored: ${coloredExports.length} icons`);
   }
 
   if (!monoOnly && !coloredOnly) {
+    brandLogoExports = await generateIcons('brand-logo');
+    console.log(`[icons] brand-logo: ${brandLogoExports.length} icons`);
+  }
+
+  if (!monoOnly && !coloredOnly && !brandLogoOnly) {
     const mainIndex = `export type {
   MonoIconProps,
   ColoredIconProps,
@@ -302,6 +363,7 @@ export { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from './types';
 
 export * from './mono';
 export * from './colored';
+export * from './brand-logo';
 `;
 
     await fs.writeFile(path.join(SRC_DIR, 'index.ts'), mainIndex);
@@ -312,7 +374,7 @@ export * from './colored';
   }
 
   console.log(
-    `[icons] done (${monoExports.length + coloredExports.length} total)`,
+    `[icons] done (${monoExports.length + coloredExports.length + brandLogoExports.length} total)`,
   );
 }
 
