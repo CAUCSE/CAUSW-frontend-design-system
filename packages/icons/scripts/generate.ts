@@ -201,12 +201,7 @@ ${componentName}.displayName = '${componentName}';
 `;
 }
 function convertToJsxAttributes(content: string): string {
-  const preprocessed = content.replace(
-    /style="mask-type:\s*([^";]+);?"/g,
-    'maskType="$1"',
-  );
-
-  const styleAsObject = preprocessed.replace(
+  const styleAsObject = content.replace(
     /style="([^"]*)"/g,
     (_match, styleValue: string) => {
       const declarations = styleValue
