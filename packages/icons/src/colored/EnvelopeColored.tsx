@@ -46,8 +46,8 @@ export const EnvelopeColored = ({
 <path d="M68.9999 11.5092C69.2634 11.0239 69.8697 10.8442 70.3551 11.1077C70.8405 11.3711 71.0201 11.9774 70.7567 12.4628L67.0995 19.2002C66.9657 19.4468 66.735 19.6265 66.4628 19.6943C66.1905 19.7619 65.9018 19.7119 65.668 19.5568L61.9547 17.0899C61.4947 16.7843 61.369 16.1634 61.6746 15.7034C61.9802 15.2434 62.6012 15.1186 63.0612 15.4242L65.8635 17.2852L68.9999 11.5092Z" fill="#F5FAFF"/>
 </g>
 <defs>
-<filter id="filter0_d_6779_9436" x="8.33984" y="15.3115" width="67.2539" height="42.0303" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_d_6779_9436" x="8.33984" y="15.3115" width="67.2539" height="42.0303" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
 <feGaussianBlur stdDeviation="2"/>
