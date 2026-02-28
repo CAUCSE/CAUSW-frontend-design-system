@@ -39,7 +39,7 @@ export const calendar = tv({
     eventList: ['w-full flex flex-col gap-1'],
     eventItemHeight: 'min-h-[20px] h-auto flex-shrink-0 cursor-pointer',
     moreBadge:
-      'text-[11px] font-medium tracking-[-0.02em] leading-tight text-gray-500 select-none flex items-center justify-center py-[2px] rounded cursor-pointer hover:bg-gray-100 transition-colors w-[95%] mx-auto',
+      'text-[11px] font-medium tracking-[-0.02em] leading-tight cursor-default text-gray-500 select-none flex items-center justify-center py-[2px] rounded   w-[95%] mx-auto',
   },
 
   variants: {
