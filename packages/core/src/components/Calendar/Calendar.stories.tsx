@@ -26,6 +26,8 @@ const meta = {
   args: {
     onDateClick: fn() as unknown as (date: Date) => void,
     onEventClick: fn() as unknown as (event: CalendarEvent) => void,
+    onPrevMonth: fn() as unknown as (date: Date) => void,
+    onNextMonth: fn() as unknown as (date: Date) => void,
   },
 } satisfies Meta<typeof Calendar>;
 
@@ -49,9 +51,58 @@ const mockEvents: CalendarEvent[] = [
   { id: 8, title: '팀 회의', startDate: '2025-10-23', type: 'event' },
   {
     id: 9,
-    title: 'text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    title: '1text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
     startDate: '2025-10-11',
     endDate: '2025-10-23',
+    type: 'event',
+  },
+  {
+    id: 10,
+    title: '2text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-18',
+    endDate: '2025-10-26',
+    type: 'event',
+  },
+  {
+    id: 11,
+    title: '3text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-21',
+    endDate: '2025-10-26',
+    type: 'event',
+  },
+  {
+    id: 12,
+    title: '4text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-15',
+    endDate: '2025-10-27',
+    type: 'event',
+  },
+  {
+    id: 13,
+    title: '5text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-11',
+    endDate: '2025-10-22',
+    type: 'event',
+  },
+  {
+    id: 14,
+    title: '6text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-11',
+    endDate: '2025-10-23',
+    type: 'event',
+  },
+  {
+    id: 15,
+    title: '7text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-10-11',
+    endDate: '2025-11-03',
+    type: 'event',
+  },
+  {
+    id: 16,
+    title: '8text 긴 텍스트 테스트긴 텍스트 테스트 긴 텍스트 테스트',
+    startDate: '2025-11-01',
+    endDate: '2025-11-07',
     type: 'event',
   },
 ];
@@ -75,29 +126,6 @@ export const Fixed_MD: Story = {
 
 export const Fixed_LG: Story = {
   args: { ...Default_Responsive.args, size: 'lg' },
-};
-
-const manyEvents: CalendarEvent[] = Array.from({ length: 10 }).map((_, i) => ({
-  id: `scroll-${i}`,
-  title: `스크롤 테스트 일정 ${i + 1}`,
-  startDate: '2025-10-15',
-  type: i % 2 === 0 ? 'event' : 'important',
-}));
-
-export const Scroll_Test: Story = {
-  args: {
-    ...Default_Responsive.args,
-    defaultMonth: new Date(2025, 9, 1),
-    events: [...mockEvents, ...manyEvents],
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '하루에 이벤트가 4개 이상일 경우, 영역이 늘어나지 않고 스크롤이 생기는지 확인합니다.',
-      },
-    },
-  },
 };
 
 export const Interactive_Range_Selection: Story = {
@@ -153,5 +181,28 @@ export const Interactive_Range_Selection: Story = {
           '시작일과 종료일을 클릭하면 파란색 범위가 그려지는 것을 테스트할 수 있습니다.',
       },
     },
+  },
+};
+export const MoveMonth: Story = {
+  render: (args) => {
+    const handlePrev = (date: Date) => {
+      console.log('스토리 레이어 - 이전 달:', date);
+      args.onPrevMonth?.(date);
+    };
+
+    const handleNext = (date: Date) => {
+      console.log('스토리 레이어 - 다음 달:', date);
+      args.onNextMonth?.(date);
+    };
+
+    return (
+      <Calendar {...args} onPrevMonth={handlePrev} onNextMonth={handleNext} />
+    );
+  },
+  args: {
+    className: 'border border-gray-100',
+    defaultMonth: new Date(2025, 9, 1),
+    today: new Date(2025, 9, 1),
+    events: mockEvents,
   },
 };

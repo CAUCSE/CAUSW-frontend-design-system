@@ -46,6 +46,8 @@ export interface CalendarProps extends CalendarVariants {
   selectedEndDate?: Date;
   onDateClick?: (date: Date) => void;
   onEventClick?: (event: CalendarEvent) => void;
+  onPrevMonth?: (date: Date) => void;
+  onNextMonth?: (date: Date) => void;
   enableHover?: boolean;
 }
 
@@ -72,6 +74,8 @@ export const Calendar = ({
   selectedEndDate,
   onDateClick,
   onEventClick,
+  onPrevMonth,
+  onNextMonth,
   enableHover = false,
 }: CalendarProps) => {
   const {
@@ -90,72 +94,105 @@ export const Calendar = ({
     cellEmpty,
     eventList,
     eventItemHeight,
+    moreBadge,
   } = calendar({ size, hoverEffect: enableHover });
 
   const [currentMonth, setCurrentMonth] = useState(defaultMonth);
+
+  const monthStart = useMemo(() => startOfMonth(currentMonth), [currentMonth]);
+  const monthEnd = useMemo(() => endOfMonth(currentMonth), [currentMonth]);
+
   const totalDays = getDaysInMonth(currentMonth);
   const startDayIndex = getDay(startOfMonth(currentMonth));
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const handlePrevMonth = () => setCurrentMonth((prev) => subMonths(prev, 1));
-  const handleNextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1));
-
+  const handlePrevMonth = () => {
+    const newDate = subMonths(currentMonth, 1);
+    setCurrentMonth(newDate);
+    onPrevMonth?.(newDate);
+  };
+  const handleNextMonth = () => {
+    const newDate = addMonths(currentMonth, 1);
+    setCurrentMonth(newDate);
+    onNextMonth?.(newDate);
+  };
   const eventsByDate = useMemo(() => {
     const map = new Map<string, (CalendarEvent | null)[]>();
-    const mStart = startOfMonth(currentMonth);
-    const mEnd = endOfMonth(currentMonth);
+    const mStart = subDays(monthStart, getDay(monthStart));
+    const mEnd = addDays(monthEnd, 6 - getDay(monthEnd));
 
-    const relevantEvents = events.filter((event) => {
-      const { start, end } = getEventRange(event);
-      return start <= mEnd && end >= mStart;
-    });
+    const weeks: { start: Date; end: Date }[] = [];
+    let curr = mStart;
+    while (curr <= mEnd) {
+      weeks.push({ start: curr, end: addDays(curr, 6) });
+      curr = addDays(curr, 7);
+    }
 
-    relevantEvents.sort((a, b) => {
-      const aRange = getEventRange(a);
-      const bRange = getEventRange(b);
-      const aDur = differenceInCalendarDays(aRange.end, aRange.start);
-      const bDur = differenceInCalendarDays(bRange.end, bRange.start);
-      if (bDur !== aDur) return bDur - aDur;
-      return aRange.start.getTime() - bRange.start.getTime();
-    });
+    for (const week of weeks) {
+      const { start: wStart, end: wEnd } = week;
 
-    for (const event of relevantEvents) {
-      const { start, end } = getEventRange(event);
-      let d = start < mStart ? mStart : start;
-      const eventEndDate = end > mEnd ? mEnd : end;
+      const weeklyEvents = events.filter((event) => {
+        const { start, end } = getEventRange(event);
+        return start <= wEnd && end >= wStart;
+      });
 
-      let slot = 0;
-      let found = false;
-      while (!found) {
-        let isFree = true;
-        let tempD = new Date(d);
-        while (tempD <= eventEndDate) {
-          const dateKey = formatDateStr(tempD);
-          const dailySlots = map.get(dateKey) || [];
-          if (dailySlots[slot]) {
-            isFree = false;
-            break;
+      weeklyEvents.sort((a, b) => {
+        const aRange = getEventRange(a);
+        const bRange = getEventRange(b);
+
+        const aSegStart = aRange.start < wStart ? wStart : aRange.start;
+        const bSegStart = bRange.start < wStart ? wStart : bRange.start;
+        const startDiff = aSegStart.getTime() - bSegStart.getTime();
+        if (startDiff !== 0) return startDiff;
+
+        const aIsSingle = aRange.start.getTime() === aRange.end.getTime();
+        const bIsSingle = bRange.start.getTime() === bRange.end.getTime();
+        if (aIsSingle && !bIsSingle) return -1;
+        if (!aIsSingle && bIsSingle) return 1;
+
+        const aDur = differenceInCalendarDays(aRange.end, aRange.start);
+        const bDur = differenceInCalendarDays(bRange.end, bRange.start);
+        if (aDur !== bDur) return bDur - aDur;
+
+        return a.id.toString().localeCompare(b.id.toString());
+      });
+
+      for (const event of weeklyEvents) {
+        const { start, end } = getEventRange(event);
+        const segStart = start < wStart ? wStart : start;
+        const segEnd = end > wEnd ? wEnd : end;
+
+        let slot = 0;
+        let found = false;
+        while (!found) {
+          let isFree = true;
+          let tempD = new Date(segStart);
+          while (tempD <= segEnd) {
+            const dateKey = formatDateStr(tempD);
+            const dailySlots = map.get(dateKey) || [];
+            if (dailySlots[slot]) {
+              isFree = false;
+              break;
+            }
+            tempD = addDays(tempD, 1);
           }
-          tempD = addDays(tempD, 1);
+          if (isFree) found = true;
+          else slot++;
         }
-        if (isFree) found = true;
-        else slot++;
-      }
 
-      let assignD = new Date(d);
-      while (assignD <= eventEndDate) {
-        const dateKey = formatDateStr(assignD);
-        const dailySlots = map.get(dateKey) || [];
-
-        while (dailySlots.length <= slot) dailySlots.push(null);
-        dailySlots[slot] = event;
-        map.set(dateKey, dailySlots);
-        assignD = addDays(assignD, 1);
+        let assignD = new Date(segStart);
+        while (assignD <= segEnd) {
+          const dateKey = formatDateStr(assignD);
+          const dailySlots = map.get(dateKey) || [];
+          while (dailySlots.length <= slot) dailySlots.push(null);
+          dailySlots[slot] = event;
+          map.set(dateKey, dailySlots);
+          assignD = addDays(assignD, 1);
+        }
       }
     }
     return map;
-  }, [currentMonth, events]);
-
+  }, [monthStart, monthEnd, events]);
   return (
     <Box className={wrapper({ className })}>
       <Box className={layoutContainer()}>
@@ -212,7 +249,9 @@ export const Calendar = ({
             );
             const dateKey = formatDateStr(currentDate);
 
-            const daysEvents = eventsByDate.get(dateKey) || [];
+            const rawDaysEvents = eventsByDate.get(dateKey) || [];
+            const daysEvents = rawDaysEvents.slice(0, 4);
+            const extraCount = rawDaysEvents.slice(4).filter(Boolean).length;
 
             const isToday = showToday && isSameDay(currentDate, today);
             const isStart =
@@ -268,8 +307,17 @@ export const Calendar = ({
                     const currentDayIndex = getDay(currentDate);
                     const weekStart = subDays(currentDate, currentDayIndex);
                     const weekEnd = addDays(currentDate, 6 - currentDayIndex);
-                    const segmentStart = start < weekStart ? weekStart : start;
-                    const segmentEnd = end > weekEnd ? weekEnd : end;
+
+                    const boundedWeekStart =
+                      weekStart < monthStart ? monthStart : weekStart;
+                    const boundedWeekEnd =
+                      weekEnd > monthEnd ? monthEnd : weekEnd;
+
+                    const segmentStart =
+                      start < boundedWeekStart ? boundedWeekStart : start;
+                    const segmentEnd =
+                      end > boundedWeekEnd ? boundedWeekEnd : end;
+
                     const segmentDuration =
                       differenceInCalendarDays(segmentEnd, segmentStart) + 1;
                     const indexInSegment = differenceInCalendarDays(
@@ -282,13 +330,15 @@ export const Calendar = ({
                     const isStartEvent = dateKey === startDateKey;
                     const isEndEvent = dateKey === endDateKey;
                     const isSingleDay = startDateKey === endDateKey;
-                    const blockPosition = isSingleDay
-                      ? 'single'
-                      : isStartEvent
-                        ? 'start'
-                        : isEndEvent
-                          ? 'end'
-                          : 'middle';
+
+                    const blockPosition: 'single' | 'start' | 'end' | 'middle' =
+                      isSingleDay
+                        ? 'single'
+                        : isStartEvent
+                          ? 'start'
+                          : isEndEvent
+                            ? 'end'
+                            : 'middle';
                     const {
                       wrapper: eventWrapper,
                       bgBar,
@@ -312,19 +362,24 @@ export const Calendar = ({
                         }}
                       >
                         <div className={bgBar()} />
-
-                        <div
-                          className={textLayer()}
-                          style={{
-                            width: `calc(${segmentDuration} * 100%)`,
-                            left: `calc(-${indexInSegment} * 100%)`,
-                          }}
-                        >
-                          <span className={textSpan()}>{ev.title}</span>
-                        </div>
+                        {indexInSegment === 0 && (
+                          <div
+                            className={textLayer()}
+                            style={{
+                              width: `calc(${segmentDuration} * 100%)`,
+                              left: 0,
+                            }}
+                          >
+                            <span className={textSpan()}>{ev.title}</span>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
+
+                  {extraCount > 0 && (
+                    <div className={moreBadge()}>+{extraCount}개</div>
+                  )}
                 </Flex>
               </Flex>
             );
