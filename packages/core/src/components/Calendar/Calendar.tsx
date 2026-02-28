@@ -98,9 +98,14 @@ export const Calendar = ({
   } = calendar({ size, hoverEffect: enableHover });
 
   const [currentMonth, setCurrentMonth] = useState(defaultMonth);
+
+  const monthStart = useMemo(() => startOfMonth(currentMonth), [currentMonth]);
+  const monthEnd = useMemo(() => endOfMonth(currentMonth), [currentMonth]);
+
   const totalDays = getDaysInMonth(currentMonth);
   const startDayIndex = getDay(startOfMonth(currentMonth));
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+
   const handlePrevMonth = () => {
     const newDate = subMonths(currentMonth, 1);
     setCurrentMonth(newDate);
@@ -113,10 +118,8 @@ export const Calendar = ({
   };
   const eventsByDate = useMemo(() => {
     const map = new Map<string, (CalendarEvent | null)[]>();
-    const cStart = startOfMonth(currentMonth);
-    const mStart = subDays(cStart, getDay(cStart));
-    const cEnd = endOfMonth(currentMonth);
-    const mEnd = addDays(cEnd, 6 - getDay(cEnd));
+    const mStart = subDays(monthStart, getDay(monthStart));
+    const mEnd = addDays(monthEnd, 6 - getDay(monthEnd));
 
     const weeks: { start: Date; end: Date }[] = [];
     let curr = mStart;
@@ -137,19 +140,16 @@ export const Calendar = ({
         const aRange = getEventRange(a);
         const bRange = getEventRange(b);
 
-        // 1순위: 시작일 (해당 주차 내에서의 시작점 기준)
         const aSegStart = aRange.start < wStart ? wStart : aRange.start;
         const bSegStart = bRange.start < wStart ? wStart : bRange.start;
         const startDiff = aSegStart.getTime() - bSegStart.getTime();
         if (startDiff !== 0) return startDiff;
 
-        // 2순위: 단일 일자(하루만 있는) 이벤트 먼저
         const aIsSingle = aRange.start.getTime() === aRange.end.getTime();
         const bIsSingle = bRange.start.getTime() === bRange.end.getTime();
         if (aIsSingle && !bIsSingle) return -1;
         if (!aIsSingle && bIsSingle) return 1;
 
-        // 3순위: 기간이 긴 순서
         const aDur = differenceInCalendarDays(aRange.end, aRange.start);
         const bDur = differenceInCalendarDays(bRange.end, bRange.start);
         if (aDur !== bDur) return bDur - aDur;
@@ -192,8 +192,7 @@ export const Calendar = ({
       }
     }
     return map;
-  }, [currentMonth, events]);
-
+  }, [monthStart, monthEnd, events]);
   return (
     <Box className={wrapper({ className })}>
       <Box className={layoutContainer()}>
@@ -305,16 +304,14 @@ export const Calendar = ({
                     }
 
                     const { start, end } = getEventRange(ev);
-                    const mStart = startOfMonth(currentMonth);
-                    const mEnd = endOfMonth(currentMonth);
-
                     const currentDayIndex = getDay(currentDate);
                     const weekStart = subDays(currentDate, currentDayIndex);
                     const weekEnd = addDays(currentDate, 6 - currentDayIndex);
 
                     const boundedWeekStart =
-                      weekStart < mStart ? mStart : weekStart;
-                    const boundedWeekEnd = weekEnd > mEnd ? mEnd : weekEnd;
+                      weekStart < monthStart ? monthStart : weekStart;
+                    const boundedWeekEnd =
+                      weekEnd > monthEnd ? monthEnd : weekEnd;
 
                     const segmentStart =
                       start < boundedWeekStart ? boundedWeekStart : start;
@@ -333,13 +330,15 @@ export const Calendar = ({
                     const isStartEvent = dateKey === startDateKey;
                     const isEndEvent = dateKey === endDateKey;
                     const isSingleDay = startDateKey === endDateKey;
-                    const blockPosition = isSingleDay
-                      ? 'single'
-                      : isStartEvent
-                        ? 'start'
-                        : isEndEvent
-                          ? 'end'
-                          : 'middle';
+
+                    const blockPosition: 'single' | 'start' | 'end' | 'middle' =
+                      isSingleDay
+                        ? 'single'
+                        : isStartEvent
+                          ? 'start'
+                          : isEndEvent
+                            ? 'end'
+                            : 'middle';
                     const {
                       wrapper: eventWrapper,
                       bgBar,
@@ -363,7 +362,6 @@ export const Calendar = ({
                         }}
                       >
                         <div className={bgBar()} />
-
                         {indexInSegment === 0 && (
                           <div
                             className={textLayer()}
