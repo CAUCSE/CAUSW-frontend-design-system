@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.26
+
+### Patch Changes
+
+- 2c10743: resolve calendar issue(remove shadow/events alignment/add prev&next month handler props)
+
 ## 0.0.25
 
 ### Patch Changes
