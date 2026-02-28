@@ -36,14 +36,10 @@ export const calendar = tv({
     dayNumber:
       'w-7 h-7 flex items-center justify-center rounded-full text-[15px] font-semibold leading-[1.6] tracking-[-0.02em] z-10 select-none transition-colors',
 
-    eventList: [
-      'w-full flex flex-col gap-1',
-      'max-h-[88px] overflow-y-auto',
-      '[&::-webkit-scrollbar]:hidden',
-      '[-ms-overflow-style:none]',
-      '[scrollbar-width:none]',
-    ],
+    eventList: ['w-full flex flex-col gap-1'],
     eventItemHeight: 'min-h-[20px] h-auto flex-shrink-0 cursor-pointer',
+    moreBadge:
+      'text-[11px] font-medium tracking-[-0.02em] leading-tight text-gray-500 select-none flex items-center justify-center py-[2px] rounded cursor-pointer hover:bg-gray-100 transition-colors w-[95%] mx-auto',
   },
 
   variants: {
