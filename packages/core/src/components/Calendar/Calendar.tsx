@@ -46,6 +46,8 @@ export interface CalendarProps extends CalendarVariants {
   selectedEndDate?: Date;
   onDateClick?: (date: Date) => void;
   onEventClick?: (event: CalendarEvent) => void;
+  onPrevMonth?: (date: Date) => void;
+  onNextMonth?: (date: Date) => void;
   enableHover?: boolean;
 }
 
@@ -72,6 +74,8 @@ export const Calendar = ({
   selectedEndDate,
   onDateClick,
   onEventClick,
+  onPrevMonth,
+  onNextMonth,
   enableHover = false,
 }: CalendarProps) => {
   const {
@@ -97,10 +101,16 @@ export const Calendar = ({
   const totalDays = getDaysInMonth(currentMonth);
   const startDayIndex = getDay(startOfMonth(currentMonth));
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
-
-  const handlePrevMonth = () => setCurrentMonth((prev) => subMonths(prev, 1));
-  const handleNextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1));
-
+  const handlePrevMonth = () => {
+    const newDate = subMonths(currentMonth, 1);
+    setCurrentMonth(newDate);
+    onPrevMonth?.(newDate);
+  };
+  const handleNextMonth = () => {
+    const newDate = addMonths(currentMonth, 1);
+    setCurrentMonth(newDate);
+    onNextMonth?.(newDate);
+  };
   const eventsByDate = useMemo(() => {
     const map = new Map<string, (CalendarEvent | null)[]>();
     const cStart = startOfMonth(currentMonth);
