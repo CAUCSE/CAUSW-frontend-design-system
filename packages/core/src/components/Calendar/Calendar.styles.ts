@@ -10,7 +10,7 @@ const SPACING = {
 export const calendar = tv({
   slots: {
     wrapper: [
-      'bg-white rounded-[20px] shadow-sm border border-gray-100 flex flex-col items-center gap-2',
+      'bg-white rounded-[20px] border border-gray-100 flex flex-col items-center gap-2',
       'w-full min-w-[328px] max-w-[804px]',
       'py-4 px-2 md:py-10',
     ],
