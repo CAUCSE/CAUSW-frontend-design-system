@@ -50,6 +50,10 @@ export const NoProfile: Story = {
   render: () => <Avatar src="" />,
 };
 
+export const RestrictedProfile: Story = {
+  render: () => <Avatar src={SAMPLE_SRC} isRestricted={true} />,
+};
+
 export const WrongProfileWithFallback: Story = {
   render: () => <Avatar src={WRONG_SRC} fallback="Fd" />, // Changed Fallback to Fd to match slicing logic better or general usage
 };

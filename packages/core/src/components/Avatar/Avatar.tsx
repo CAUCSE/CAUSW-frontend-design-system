@@ -7,6 +7,7 @@ import defaultAvatar1 from '../../assets/avatar/defaultAvatar1.svg';
 import defaultAvatar2 from '../../assets/avatar/defaultAvatar2.svg';
 import defaultAvatar3 from '../../assets/avatar/defaultAvatar3.svg';
 import defaultAvatar4 from '../../assets/avatar/defaultAvatar4.svg';
+import restrictedAvatar from '../../assets/avatar/restrictedAvatar.svg';
 
 export interface AvatarProps
   extends
@@ -16,6 +17,7 @@ export interface AvatarProps
   src?: string;
   alt?: string;
   fallback?: React.ReactNode;
+  isRestricted?: boolean;
 }
 
 export const Avatar = ({
@@ -24,6 +26,7 @@ export const Avatar = ({
   alt,
   className,
   fallback,
+  isRestricted = false,
   ...props
 }: AvatarProps) => {
   const [hasError, setHasError] = React.useState(false);
@@ -47,7 +50,10 @@ export const Avatar = ({
   }, [src]);
 
   const isValidSrc =
-    typeof src === 'string' && src.trim().length > 0 && !hasError;
+    !isRestricted &&
+    typeof src === 'string' &&
+    src.trim().length > 0 &&
+    !hasError;
 
   const renderFallback = () => {
     if (fallback == null) return null;
@@ -64,7 +70,13 @@ export const Avatar = ({
 
   return (
     <Primitive.span className={mergeStyles(root(), className)} {...props}>
-      {isValidSrc ? (
+      {isRestricted ? (
+        <img
+          src={restrictedAvatar}
+          alt="blocked user avatar"
+          className={image()}
+        />
+      ) : isValidSrc ? (
         <img
           src={src}
           alt={alt ?? 'user profile'}

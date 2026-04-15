@@ -69,6 +69,11 @@
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
   },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.27.4"
+    }
+  },
   "lint-staged": {
     "packages/**/*.{ts,tsx}": [
       "eslint --fix",
