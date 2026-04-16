@@ -1,19 +1,15 @@
 import * as React from 'react';
 
 import { Primitive, PrimitiveProps } from '../Primitive';
-import { avatar, AvatarVariants } from './Avatar.styles';
-import { mergeStyles } from '../../utils';
-import defaultAvatar1 from '../../assets/avatar/defaultAvatar1.svg';
-import defaultAvatar2 from '../../assets/avatar/defaultAvatar2.svg';
-import defaultAvatar3 from '../../assets/avatar/defaultAvatar3.svg';
-import defaultAvatar4 from '../../assets/avatar/defaultAvatar4.svg';
+import { avatar, AvatarSizeProps } from './Avatar.styles';
+import { convertPxToRem, mergeStyles } from '../../utils';
 import restrictedAvatar from '../../assets/avatar/restrictedAvatar.svg';
 
 export interface AvatarProps
   extends
     Omit<React.ComponentPropsWithoutRef<'span'>, 'alt'>,
     PrimitiveProps,
-    AvatarVariants {
+    AvatarSizeProps {
   src?: string;
   alt?: string;
   fallback?: React.ReactNode;
@@ -21,33 +17,36 @@ export interface AvatarProps
 }
 
 export const Avatar = ({
-  size = '44',
+  size = 44,
   src,
   alt,
   className,
   fallback,
   isRestricted = false,
+  style,
   ...props
 }: AvatarProps) => {
   const [hasError, setHasError] = React.useState(false);
-  const defaultAvatars = [
-    defaultAvatar1,
-    defaultAvatar2,
-    defaultAvatar3,
-    defaultAvatar4,
-  ];
-  const [randomDefault, setRandomDefault] = React.useState(defaultAvatars[0]);
 
-  React.useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
-    setRandomDefault(defaultAvatars[randomIndex]);
-  }, []);
-
-  const { root, image, fallback: fallbackStyle } = avatar({ size });
+  const { root, image, fallback: fallbackStyle } = avatar();
 
   React.useEffect(() => {
     setHasError(false);
   }, [src]);
+
+  const sizeStyle = {
+    width: convertPxToRem(size),
+    height: convertPxToRem(size),
+  };
+
+  const rootRadiusClass =
+    size >= 120
+      ? 'rounded-2xl'
+      : size >= 88
+        ? 'rounded-xl'
+        : size >= 64
+          ? 'rounded-lg'
+          : 'rounded-md';
 
   const isValidSrc =
     !isRestricted &&
@@ -69,7 +68,11 @@ export const Avatar = ({
   };
 
   return (
-    <Primitive.span className={mergeStyles(root(), className)} {...props}>
+    <Primitive.span
+      className={mergeStyles(root(), rootRadiusClass, className)}
+      style={{ ...sizeStyle, ...style }}
+      {...props}
+    >
       {isRestricted ? (
         <img
           src={restrictedAvatar}
@@ -87,7 +90,11 @@ export const Avatar = ({
         />
       ) : (
         (renderFallback() ?? (
-          <img src={randomDefault} alt="default avatar" className={image()} />
+          <img
+            src={restrictedAvatar}
+            alt="default avatar"
+            className={image()}
+          />
         ))
       )}
     </Primitive.span>
