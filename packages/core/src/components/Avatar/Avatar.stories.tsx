@@ -23,22 +23,22 @@ const meta: Meta<typeof Avatar> = {
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 export const ProfileWithImage: Story = {
-  render: () => <Avatar src={SAMPLE_SRC} size="80" />,
+  render: () => <Avatar src={SAMPLE_SRC} size={80} />,
 };
 
 export const Default: Story = {
-  render: () => <Avatar size="44" />,
+  render: () => <Avatar size={44} />,
 };
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Avatar size="36" />
-      <Avatar size="40" />
-      <Avatar size="44" />
-      <Avatar size="64" />
-      <Avatar size="80" />
-      <Avatar size="88" />
-      <Avatar size="120" />
+      <Avatar src={SAMPLE_SRC} size={36} />
+      <Avatar src={SAMPLE_SRC} size={40} />
+      <Avatar src={SAMPLE_SRC} size={44} />
+      <Avatar src={SAMPLE_SRC} size={64} />
+      <Avatar src={SAMPLE_SRC} size={80} />
+      <Avatar src={SAMPLE_SRC} size={88} />
+      <Avatar src={SAMPLE_SRC} size={120} />
     </div>
   ),
 };
