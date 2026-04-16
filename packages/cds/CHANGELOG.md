@@ -1,5 +1,16 @@
 # @causw/design-system
 
+## 0.0.31
+
+### Patch Changes
+
+- 60c36ae: 아바타 컴포넌트 size props를 number 기반으로 변경, 기본 fallback 이미지를 로고 이미지로 변경
+- fbd59bf: vstack, hstack 타입 추론 제대로 되지 않는 이슈 핸들링
+- Updated dependencies [60c36ae]
+- Updated dependencies [fbd59bf]
+- Updated dependencies [e9eddc2]
+  - @causw/core@0.0.27
+
 ## 0.0.30
 
 ### Patch Changes

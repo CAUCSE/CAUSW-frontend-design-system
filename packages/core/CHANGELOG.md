@@ -1,5 +1,13 @@
 # @causw/core
 
+## 0.0.27
+
+### Patch Changes
+
+- 60c36ae: 아바타 컴포넌트 size props를 number 기반으로 변경, 기본 fallback 이미지를 로고 이미지로 변경
+- fbd59bf: vstack, hstack 타입 추론 제대로 되지 않는 이슈 핸들링
+- e9eddc2: Avatar 제한된 경우 프로필 사진 추가
+
 ## 0.0.26
 
 ### Patch Changes
