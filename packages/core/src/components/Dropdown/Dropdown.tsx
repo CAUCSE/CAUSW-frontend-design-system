@@ -13,17 +13,22 @@ const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
 
 export type DropdownContentProps = React.ComponentProps<
   typeof DropdownMenuPrimitive.Content
->;
+> & {
+  zIndex?: NonNullable<DropdownVariants['zIndex']>;
+  portalContainer?: HTMLElement | null;
+};
 
 const DropdownMenuContent = ({
   className,
   sideOffset = 4,
+  zIndex,
+  portalContainer,
   ref,
   ...props
 }: DropdownContentProps) => {
-  const { content } = dropdown();
+  const { content } = dropdown({ zIndex });
   return (
-    <DropdownMenuPortal>
+    <DropdownMenuPortal container={portalContainer ?? undefined}>
       <DropdownMenuPrimitive.Content
         ref={ref}
         sideOffset={sideOffset}

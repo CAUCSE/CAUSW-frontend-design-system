@@ -1,9 +1,10 @@
-import React, { useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { format } from 'date-fns';
 import { useFieldContext } from '../../hooks';
 import { mergeStyles } from '../../utils';
 import { Calendar, type CalendarProps } from '../Calendar';
 import { Dropdown } from '../Dropdown';
+import type { DropdownVariants } from '../Dropdown/Dropdown.styles';
 import { datePicker, type DatePickerVariants } from './DatePicker.styles';
 import { CalendarIcon } from '@causw/icons';
 import { Text } from '../Text';
@@ -28,6 +29,7 @@ export interface DatePickerProps extends Omit<
   placeholder?: string;
   dateFormat?: string;
   contentClassName?: string;
+  contentZIndex?: DropdownVariants['zIndex'];
   calendarProps?: DatePickerCalendarProps;
 }
 
@@ -44,12 +46,16 @@ export const DatePicker = ({
   disabled: disabledProp,
   type,
   contentClassName,
+  contentZIndex = 'popover',
   calendarProps,
   ...props
 }: DatePickerProps) => {
   const field = useFieldContext();
   const generatedId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
+    null,
+  );
   const [open, setOpen] = useState(false);
   const [calendarKey, setCalendarKey] = useState(0);
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
@@ -69,6 +75,13 @@ export const DatePicker = ({
   const displayValue = hasValue
     ? format(selectedDate, dateFormat)
     : placeholder;
+
+  useEffect(() => {
+    const dialogContainer = triggerRef.current?.closest('[role="dialog"]');
+    setPortalContainer(
+      dialogContainer instanceof HTMLElement ? dialogContainer : null,
+    );
+  }, []);
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (disabled) {
@@ -120,6 +133,8 @@ export const DatePicker = ({
         collisionPadding={16}
         avoidCollisions
         sticky="always"
+        zIndex={contentZIndex}
+        portalContainer={portalContainer}
         className={content({ className: contentClassName })}
       >
         <Calendar

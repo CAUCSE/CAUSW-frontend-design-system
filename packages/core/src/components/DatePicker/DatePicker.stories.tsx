@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { CTAButton } from '../CTAButton';
+import { Dialog } from '../Dialog';
 import { Field } from '../Field';
 import { DatePicker } from './DatePicker';
 
@@ -65,5 +67,20 @@ export const WithFieldError: Story = {
         올바른 날짜를 선택해주세요.
       </Field.ErrorDescription>
     </Field>
+  ),
+};
+
+export const InDialog: Story = {
+  render: (args) => (
+    <Dialog>
+      <Dialog.Trigger asChild>
+        <CTAButton>날짜 선택 열기</CTAButton>
+      </Dialog.Trigger>
+      <Dialog.Content maxWidth={420}>
+        <div className="space-y-4">
+          <DatePicker {...args} className="w-full" />
+        </div>
+      </Dialog.Content>
+    </Dialog>
   ),
 };
