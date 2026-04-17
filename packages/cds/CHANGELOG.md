@@ -1,5 +1,13 @@
 # @causw/design-system
 
+## 0.0.32
+
+### Patch Changes
+
+- 6208f24: datePicker,dropdown 컴포넌트 z인덱스 변경 가능한 구조로 refactor
+- Updated dependencies [6208f24]
+  - @causw/core@0.0.28
+
 ## 0.0.31
 
 ### Patch Changes
