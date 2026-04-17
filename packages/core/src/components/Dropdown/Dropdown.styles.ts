@@ -28,7 +28,7 @@ export const dropdown = tv({
     },
   },
   defaultVariants: {
-    zIndex: 'popover',
+    zIndex: 'dropdown',
     color: 'default',
   },
 });
