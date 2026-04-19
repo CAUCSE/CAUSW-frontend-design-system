@@ -182,3 +182,39 @@ export const LongContent: Story = {
     </BottomSheet>
   ),
 };
+
+export const DisableSwipeGesture: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**제스처 비활성화(Disable Swipe Gesture)** 예제입니다.
+
+- \`dismissible={false}\`를 통해 사용자의 스와이프(드래그) 제스처로 BottomSheet를 닫을 수 없도록 합니다.
+- 의도하지 않은 닫힘을 방지하거나, 특정 플로우를 강제해야 하는 경우에 유용합니다.
+- 이 경우 시트를 닫기 위해서는 버튼 클릭 등 명시적인 액션이 필요합니다.
+        `,
+      },
+    },
+  },
+  render: (args) => (
+    <BottomSheet {...args} dismissible={false}>
+      <BottomSheet.Trigger asChild>
+        <button className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200">
+          Open
+        </button>
+      </BottomSheet.Trigger>
+
+      <BottomSheet.Content>
+        <BottomSheet.Header title="제스처 비활성화" />
+        <BottomSheet.Body className="pt-2 pb-24">
+          이 바텀시트는 스와이프로 닫을 수 없습니다.
+          <br /> 버튼을 눌러 닫아주세요.
+        </BottomSheet.Body>
+        <BottomSheet.Footer>
+          <ExampleCloseButton />
+        </BottomSheet.Footer>
+      </BottomSheet.Content>
+    </BottomSheet>
+  ),
+};
