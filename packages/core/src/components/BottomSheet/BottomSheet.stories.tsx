@@ -42,10 +42,15 @@ const meta: Meta<typeof BottomSheet> = {
       action: 'onOpenChange',
       description: '시트가 열리거나 닫힐 때 호출되는 콜백입니다.',
     },
+    dismissible: {
+      control: 'boolean',
+      description: '스와이프 제스처로 시트를 닫을 수 있는지 여부입니다.',
+    },
   },
   args: {
     headerAlign: 'left',
     defaultOpen: false,
+    dismissible: true,
   },
 };
 
