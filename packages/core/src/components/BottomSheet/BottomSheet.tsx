@@ -10,6 +10,7 @@ interface BottomSheetRootProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   headerAlign?: HeaderAlign;
+  dismissible?: boolean;
 }
 
 const BottomSheetRoot = ({
@@ -18,6 +19,7 @@ const BottomSheetRoot = ({
   defaultOpen = false,
   onOpenChange,
   headerAlign = 'left',
+  dismissible = true,
 }: BottomSheetRootProps) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
 
@@ -40,7 +42,11 @@ const BottomSheetRoot = ({
         onClose: () => handleOpenChange(false),
       }}
     >
-      <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <Drawer.Root
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+        dismissible={dismissible}
+      >
         {children}
       </Drawer.Root>
     </BottomSheetContext.Provider>
