@@ -6,7 +6,7 @@ import { uniquifySvgIds } from '../uniqueSvgIds';
 const useIsoLayoutEffect =
   typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
-export const BlindqLogo = ({
+export const BlinqLogo = ({
   size = DEFAULT_SIZE,
   title,
   ...props
@@ -60,4 +60,4 @@ export const BlindqLogo = ({
   );
 };
 
-BlindqLogo.displayName = 'BlindqLogo';
+BlinqLogo.displayName = 'BlinqLogo';

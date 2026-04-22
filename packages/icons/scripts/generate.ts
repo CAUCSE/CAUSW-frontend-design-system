@@ -234,20 +234,24 @@ function convertToJsxAttributes(content: string): string {
     },
   );
 
-  return styleAsObject
-    .replace(/xlink:href=/g, 'xlinkHref=')
-    .replace(/fill-rule=/g, 'fillRule=')
-    .replace(/clip-rule=/g, 'clipRule=')
-    .replace(/clip-path=/g, 'clipPath=')
-    .replace(/fill-opacity=/g, 'fillOpacity=')
-    .replace(/stroke-width=/g, 'strokeWidth=')
-    .replace(/stroke-linecap=/g, 'strokeLinecap=')
-    .replace(/stroke-linejoin=/g, 'strokeLinejoin=')
-    .replace(/stop-color=/g, 'stopColor=')
-    .replace(/stop-opacity=/g, 'stopOpacity=')
-    .replace(/xmlns:xlink=/g, 'xmlnsXlink=')
-    .replace(/color-interpolation-filters=/g, 'colorInterpolationFilters=')
-    .replace(/flood-opacity=/g, 'floodOpacity=');
+  return styleAsObject.replace(
+    /(\s)([a-zA-Z_:][\w:.-]*)(=)/g,
+    (_match, leadingWhitespace: string, rawKey: string, equals: string) => {
+      if (
+        rawKey.startsWith('aria-') ||
+        rawKey.startsWith('data-') ||
+        (!rawKey.includes('-') && !rawKey.includes(':'))
+      ) {
+        return `${leadingWhitespace}${rawKey}${equals}`;
+      }
+
+      const camelKey = rawKey.replace(/[-:]([a-zA-Z])/g, (_, ch: string) =>
+        ch.toUpperCase(),
+      );
+
+      return `${leadingWhitespace}${camelKey}${equals}`;
+    },
+  );
 }
 
 async function generateIcons(type: 'mono' | 'colored' | 'brand-logo') {
