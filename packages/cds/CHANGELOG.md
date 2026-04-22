@@ -1,5 +1,15 @@
 # @causw/design-system
 
+## 0.0.33
+
+### Patch Changes
+
+- f23673c: 아이콘 생성 스크립트 정규식 기반으로 변경 및 typo 변경
+- Updated dependencies [f23673c]
+- Updated dependencies [e329fd3]
+  - @causw/icons@1.0.8
+  - @causw/core@0.0.29
+
 ## 0.0.32
 
 ### Patch Changes
