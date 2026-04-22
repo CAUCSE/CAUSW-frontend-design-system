@@ -20,7 +20,7 @@ export const Check = ({
       viewBox="0 0 15 11"
       width={size}
       height={size}
-      fill="none"
+      fill={resolvedColor}
       color={resolvedColor}
       aria-hidden={title ? undefined : true}
       aria-label={title}
@@ -28,7 +28,7 @@ export const Check = ({
       {...props}
     >
       {title && <title>{title}</title>}
-      <path d="M1.5 5.5L5.5 9.5L13.5 1.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M1.5 5.5L5.5 9.5L13.5 1.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 };

@@ -1,5 +1,5 @@
 export { AppleLogo } from './AppleLogo';
-export { BlindqLogo } from './BlindqLogo';
+export { BlinqLogo } from './BlinqLogo';
 export { DaumCafeLogo } from './DaumCafeLogo';
 export { FacebookLogo } from './FacebookLogo';
 export { GithubLogo } from './GithubLogo';
