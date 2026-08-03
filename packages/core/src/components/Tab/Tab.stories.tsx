@@ -121,6 +121,45 @@ export const Chip: Story = {
   },
 };
 
+export const Plain: Story = {
+  render: () => {
+    const OPTIONS = [
+      { value: 'alumni-contacts', label: '동문수첩' },
+      { value: 'community', label: '소통' },
+    ] as const;
+
+    type TabValue = (typeof OPTIONS)[number]['value'];
+
+    const [value, setValue] = React.useState<TabValue>('alumni-contacts');
+
+    return (
+      <div>
+        <Tab.Root
+          variant="plain"
+          value={value}
+          onValueChange={(val) =>
+            setValue(val as 'alumni-contacts' | 'community')
+          }
+        >
+          <Tab.List className="px-1 py-2">
+            {OPTIONS.map((opt) => (
+              <Tab.TabItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </Tab.TabItem>
+            ))}
+          </Tab.List>
+
+          <Tab.Content value={value}>
+            <ContentBox>
+              <Text>{`선택된 탭: ${value}`}</Text>
+            </ContentBox>
+          </Tab.Content>
+        </Tab.Root>
+      </div>
+    );
+  },
+};
+
 export const CombinedTabs: Story = {
   render: () => {
     const [main, setMain] = React.useState<'all' | 'my'>('all');

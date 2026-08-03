@@ -10,7 +10,7 @@ export const tabs = tv({
       underline: {
         list: 'border-b border-gray-200',
         item: [
-          'flex-1 min-w-fit px-3 py-3 text-center border-b-2 typo-subtitle-16-bold',
+          'flex-1 min-w-fit p-2 text-center border-b-2 typo-body-15-semibold',
           'hover:border-gray-500 hover:text-gray-500',
           'aria-selected:border-gray-700 aria-selected:text-gray-700',
           'aria-[selected=false]:border-transparent aria-[selected=false]:text-gray-300',
@@ -24,6 +24,15 @@ export const tabs = tv({
           'aria-selected:bg-gray-700 aria-selected:text-white',
           'aria-[selected=false]:bg-white aria-[selected=false]:text-gray-600',
           'aria-[selected=false]:hover:bg-gray-200 aria-[selected=false]:active:bg-gray-200',
+        ].join(' '),
+      },
+      plain: {
+        list: 'gap-3',
+        item: [
+          'typo-subtitle-20-bold',
+          'aria-selected:text-gray-700',
+          'aria-[selected=false]:text-gray-300',
+          'aria-[selected=false]:hover:text-gray-400 aria-[selected=false]:active:text-gray-400',
         ].join(' '),
       },
     },
