@@ -1,12 +1,12 @@
 addReviewers: true
 addAssignees: false
 reviewers:
-  - kyh0726
-  - yugenius0213
   - gomx3
   - Head-ddy
-  - iris-starry
   - MlNTYS
+  - clue31415
+  - fresh-woo
+  - plamingo509
 numberOfReviewers: 2
 useReviewGroups: false
 skipKeywords:
