@@ -1,7 +1,7 @@
 import type { MonoIconProps } from '../types';
 import { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from '../types';
 
-export const ListOutline = ({
+export const ListOutlineTwo = ({
   size = DEFAULT_SIZE,
   active = false,
   color,
@@ -29,10 +29,9 @@ export const ListOutline = ({
     >
       {title && <title>{title}</title>}
       <rect fill="none" x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor"/>
-      <line fill="none" x1="1.15009" y1="4.47156" x2="10.8499" y2="4.47156" stroke="currentColor"/>
-      <line fill="none" x1="1.15009" y1="7.53986" x2="10.8499" y2="7.53986" stroke="currentColor"/>
+      <line fill="none" x1="1.15015" y1="6.02431" x2="10.85" y2="6.02431" stroke="currentColor"/>
     </svg>
   );
 };
 
-ListOutline.displayName = 'ListOutline';
+ListOutlineTwo.displayName = 'ListOutlineTwo';
