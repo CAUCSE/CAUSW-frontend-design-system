@@ -20,6 +20,7 @@ export { Heart } from './Heart';
 export { Home } from './Home';
 export { Info } from './Info';
 export { Link } from './Link';
+export { ListOutline } from './ListOutline';
 export { Mail } from './Mail';
 export { Menu } from './Menu';
 export { Message } from './Message';
