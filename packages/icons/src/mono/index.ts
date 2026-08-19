@@ -1,6 +1,7 @@
 export { ArrowDown } from './ArrowDown';
 export { ArrowRight } from './ArrowRight';
 export { Bell } from './Bell';
+export { BellOutline } from './BellOutline';
 export { Board } from './Board';
 export { Book } from './Book';
 export { CalendarIcon } from './CalendarIcon';
