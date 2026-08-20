@@ -29,8 +29,8 @@ export const ListOutlineThree = ({
     >
       {title && <title>{title}</title>}
       <rect fill="none" x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor"/>
-      <line fill="none" x1="1.15009" y1="4.47156" x2="10.8499" y2="4.47156" stroke="currentColor"/>
-      <line fill="none" x1="1.15009" y1="7.53986" x2="10.8499" y2="7.53986" stroke="currentColor"/>
+<line fill="none" x1="1.15009" y1="4.47156" x2="10.8499" y2="4.47156" stroke="currentColor"/>
+<line fill="none" x1="1.15009" y1="7.53986" x2="10.8499" y2="7.53986" stroke="currentColor"/>
     </svg>
   );
 };

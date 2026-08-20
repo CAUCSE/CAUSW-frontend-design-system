@@ -29,7 +29,7 @@ export const ListOutlineTwo = ({
     >
       {title && <title>{title}</title>}
       <rect fill="none" x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor"/>
-      <line fill="none" x1="1.15015" y1="6.02431" x2="10.85" y2="6.02431" stroke="currentColor"/>
+<line fill="none" x1="1.15015" y1="6.02431" x2="10.85" y2="6.02431" stroke="currentColor"/>
     </svg>
   );
 };
