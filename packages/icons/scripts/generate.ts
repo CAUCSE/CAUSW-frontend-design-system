@@ -106,7 +106,7 @@ function generateMonoComponent(
   // 래퍼 svg의 fill={resolvedColor}를 상속받아 안쪽이 채워져 보인다.
   // 그런 요소에는 명시적으로 fill="none"을 붙여 색 상속을 막는다.
   innerContent = innerContent.replace(
-    /<(path|line|circle|ellipse|rect|polyline|polygon)\b((?:(?!\/?>).)*)(\/?)>/g,
+    /<(path|line|circle|ellipse|rect|polyline|polygon)\b([^>]*)(\/?)>/g,
     (match, tag, attrs, selfClose) =>
       /\bstroke=/.test(attrs) && !/\bfill=/.test(attrs)
         ? `<${tag} fill="none"${attrs}${selfClose}>`
