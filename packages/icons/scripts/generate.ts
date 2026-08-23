@@ -97,11 +97,25 @@ function generateMonoComponent(
   const viewBoxMatch = sanitizedSvg.match(/viewBox="([^"]*)"/);
   const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24';
 
-  const innerContent = sanitizedSvg
+  let innerContent = sanitizedSvg
     .replace(/<svg[^>]*>/, '')
     .replace(/<\/svg>/, '')
-    // fill, stroke 색상 제거
-    .replace(/fill="[^"]+"/g, '')
+    .trim();
+
+  // stroke만 있고 fill이 없는 도형(체크 표시 등)은 원본 그대로 두면
+  // 래퍼 svg의 fill={resolvedColor}를 상속받아 안쪽이 채워져 보인다.
+  // 그런 요소에는 명시적으로 fill="none"을 붙여 색 상속을 막는다.
+  innerContent = innerContent.replace(
+    /<(path|line|circle|ellipse|rect|polyline|polygon)\b([^>]*)(\/?)>/g,
+    (match, tag, attrs, selfClose) =>
+      /\bstroke=/.test(attrs) && !/\bfill=/.test(attrs)
+        ? `<${tag} fill="none"${attrs}${selfClose}>`
+        : match,
+  );
+
+  innerContent = innerContent
+    // fill, stroke 색상 제거 (fill="none"은 stroke 전용 도형을 위해 보존)
+    .replace(/fill="(?!none")[^"]+"/g, '')
     .replace(/stroke="#[A-Fa-f0-9]+"/g, 'stroke="currentColor"')
     .trim();
 

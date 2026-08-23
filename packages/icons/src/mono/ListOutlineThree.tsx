@@ -1,7 +1,7 @@
 import type { MonoIconProps } from '../types';
 import { DEFAULT_SIZE, MONO_COLORS, ICON_TOKEN_COLORS } from '../types';
 
-export const Check = ({
+export const ListOutlineThree = ({
   size = DEFAULT_SIZE,
   active = false,
   color,
@@ -17,7 +17,7 @@ export const Check = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 15 11"
+      viewBox="0 0 12 12"
       width={size}
       height={size}
       fill={resolvedColor}
@@ -28,9 +28,11 @@ export const Check = ({
       {...props}
     >
       {title && <title>{title}</title>}
-      <path fill="none" d="M1.5 5.5L5.5 9.5L13.5 1.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      <rect fill="none" x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor"/>
+<line fill="none" x1="1.15009" y1="4.47156" x2="10.8499" y2="4.47156" stroke="currentColor"/>
+<line fill="none" x1="1.15009" y1="7.53986" x2="10.8499" y2="7.53986" stroke="currentColor"/>
     </svg>
   );
 };
 
-Check.displayName = 'Check';
+ListOutlineThree.displayName = 'ListOutlineThree';

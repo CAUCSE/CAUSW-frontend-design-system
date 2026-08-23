@@ -1,6 +1,7 @@
 export { ArrowDown } from './ArrowDown';
 export { ArrowRight } from './ArrowRight';
 export { Bell } from './Bell';
+export { BellOutline } from './BellOutline';
 export { Board } from './Board';
 export { Book } from './Book';
 export { CalendarIcon } from './CalendarIcon';
@@ -19,6 +20,8 @@ export { Heart } from './Heart';
 export { Home } from './Home';
 export { Info } from './Info';
 export { Link } from './Link';
+export { ListOutlineThree } from './ListOutlineThree';
+export { ListOutlineTwo } from './ListOutlineTwo';
 export { Mail } from './Mail';
 export { Menu } from './Menu';
 export { Message } from './Message';
