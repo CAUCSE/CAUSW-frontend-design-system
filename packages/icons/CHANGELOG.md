@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.9
+
+### Patch Changes
+
+- 0518301: outline 벨/리스트(2단, 3단) 아이콘 추가 및 stroke 전용 아이콘 생성 문제 대응
+
 ## 1.0.8
 
 ### Patch Changes
