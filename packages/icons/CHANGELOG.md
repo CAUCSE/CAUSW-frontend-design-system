@@ -1,5 +1,11 @@
 # @causw/icons
 
+## 1.0.10
+
+### Patch Changes
+
+- 3b3d460: Add Share2 icon
+
 ## 1.0.9
 
 ### Patch Changes
