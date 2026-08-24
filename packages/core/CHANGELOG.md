@@ -1,5 +1,12 @@
 # @causw/core
 
+## 0.0.32
+
+### Patch Changes
+
+- Updated dependencies [9cd1756]
+  - @causw/icons@1.0.10
+
 ## 0.0.31
 
 ### Patch Changes
