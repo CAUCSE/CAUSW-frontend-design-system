@@ -33,5 +33,6 @@ export { Recent } from './Recent';
 export { Search } from './Search';
 export { Setting } from './Setting';
 export { Share } from './Share';
+export { Share2 } from './Share2';
 export { Time } from './Time';
 export { Vote } from './Vote';
