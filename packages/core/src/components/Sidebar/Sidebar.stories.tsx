@@ -5,7 +5,7 @@ import { Sidebar } from './Sidebar';
 import { Box } from '../Box';
 import { Flex } from '../Flex';
 import { VStack } from '../VStack';
-import { Bell, Board, Book, Contacts, Home } from '@causw/icons';
+import { Bell, Board, Contacts, Home, Setting } from '@causw/icons';
 
 const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
@@ -50,7 +50,7 @@ export const Default: Story = {
             </Sidebar.Item>
             <Sidebar.Item value="profile">
               <Sidebar.ItemIcon>
-                <Book />
+                <Setting />
               </Sidebar.ItemIcon>
               <Sidebar.ItemText>내 정보</Sidebar.ItemText>
             </Sidebar.Item>
