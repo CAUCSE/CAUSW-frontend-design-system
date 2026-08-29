@@ -23,12 +23,13 @@ const SidebarRoot = ({
   children,
   selected,
   onSelectChange,
+  className,
   ...props
 }: SidebarProps) => {
   const { root } = sidebar();
   return (
     <SidebarContext.Provider value={{ selected, onSelectChange }}>
-      <Primitive.nav className={root()} {...props}>
+      <Primitive.nav className={root({ className })} {...props}>
         {children}
       </Primitive.nav>
     </SidebarContext.Provider>
@@ -40,10 +41,14 @@ export interface SidebarHeaderProps
   extends ComponentProps<'div'>, PrimitiveProps {
   children: React.ReactNode;
 }
-const SidebarHeader = ({ children, ...props }: SidebarHeaderProps) => {
+const SidebarHeader = ({
+  children,
+  className,
+  ...props
+}: SidebarHeaderProps) => {
   const { header } = sidebar();
   return (
-    <Primitive.div className={header()} {...props}>
+    <Primitive.div className={header({ className })} {...props}>
       {children}
     </Primitive.div>
   );
@@ -55,10 +60,14 @@ interface SidebarContentProps extends ComponentProps<'div'>, PrimitiveProps {
   children: React.ReactNode;
 }
 
-const SidebarContent = ({ children, ...props }: SidebarContentProps) => {
+const SidebarContent = ({
+  children,
+  className,
+  ...props
+}: SidebarContentProps) => {
   const { content } = sidebar();
   return (
-    <Primitive.div className={content()} {...props}>
+    <Primitive.div className={content({ className })} {...props}>
       {children}
     </Primitive.div>
   );
@@ -76,6 +85,7 @@ interface SidebarItemProps
 const SidebarItem = ({
   selected,
   value,
+  className,
   children,
   onClick,
   ...props
@@ -105,7 +115,7 @@ const SidebarItem = ({
     <SidebarItemContext.Provider value={{ selected: isSelected }}>
       <Primitive.button
         type="button"
-        className={item()}
+        className={item({ className })}
         onClick={handleClick}
         {...props}
       >
@@ -117,22 +127,30 @@ const SidebarItem = ({
 
 interface SidebarItemIconProps
   extends SVGProps<SVGSVGElement>, PrimitiveProps {}
-const SidebarItemIcon = ({ children, ...props }: SidebarItemIconProps) => {
+const SidebarItemIcon = ({
+  children,
+  className,
+  ...props
+}: SidebarItemIconProps) => {
   const itemContext = useSidebarItemContext();
   const { icon } = sidebar({ selected: itemContext.selected });
   return (
-    <Primitive.svg asChild className={icon()} {...props}>
+    <Primitive.svg asChild className={icon({ className })} {...props}>
       {children}
     </Primitive.svg>
   );
 };
 
 interface SidebarItemTextProps extends ComponentProps<'span'>, PrimitiveProps {}
-const SidebarItemText = ({ children, ...props }: SidebarItemTextProps) => {
+const SidebarItemText = ({
+  children,
+  className,
+  ...props
+}: SidebarItemTextProps) => {
   const itemContext = useSidebarItemContext();
   const { text } = sidebar({ selected: itemContext.selected });
   return (
-    <Primitive.span className={text()} {...props}>
+    <Primitive.span className={text({ className })} {...props}>
       {children}
     </Primitive.span>
   );
@@ -142,10 +160,14 @@ const SidebarItemText = ({ children, ...props }: SidebarItemTextProps) => {
 interface SidebarFooterProps extends ComponentProps<'div'>, PrimitiveProps {
   children: React.ReactNode;
 }
-const SidebarFooter = ({ children, ...props }: SidebarFooterProps) => {
+const SidebarFooter = ({
+  children,
+  className,
+  ...props
+}: SidebarFooterProps) => {
   const { footer } = sidebar();
   return (
-    <Primitive.div className={footer()} {...props}>
+    <Primitive.div className={footer({ className })} {...props}>
       {children}
     </Primitive.div>
   );

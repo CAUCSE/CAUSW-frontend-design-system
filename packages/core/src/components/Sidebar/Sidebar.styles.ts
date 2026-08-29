@@ -1,26 +1,25 @@
-import { tv, VariantProps } from 'tailwind-variants';
+import { tv, type VariantProps } from 'tailwind-variants';
 
 export const sidebar = tv({
   slots: {
-    root: 'flex h-screen w-65 flex-col bg-white border-r border-gray-100',
-    header: 'px-2.5 py-8',
-    content: 'flex-1 overflow-y-auto px-2.5 py-2',
-    footer: 'border-t border-gray-100 px-4 py-4',
-    item: 'group w-full flex items-center gap-2 px-4.5 py-2 rounded-sm text-md transition-colors',
+    root: 'flex h-[1000px] w-[68px] shrink-0 flex-col items-start gap-8 border-r border-gray-200 bg-white px-3 pt-[120px]',
+    header: 'w-full',
+    content: 'flex flex-1 flex-col items-start gap-8',
+    footer: 'w-full',
+    item: 'group flex w-11 flex-col items-center gap-1 rounded-md py-1 text-center transition-colors',
     badge: 'ml-auto px-2 py-0.5 text-sm rounded-sm bg-red-100 text-red-400',
-    icon: 'w-4.5 h-4.5',
-    text: 'text-md',
+    icon: 'h-5 w-5',
+    text: 'typo-caption-12-semibold leading-none',
   },
   variants: {
     selected: {
       true: {
-        item: 'bg-gray-100',
-        text: 'text-gray-700 typo-subtitle-16-bold',
+        text: 'text-gray-700',
         icon: 'fill-gray-600',
       },
       false: {
         item: 'hover:bg-gray-50 active:bg-gray-50',
-        text: 'typo-body-16-medium text-gray-500 group-hover:text-gray-700 group-active:text-gray-700',
+        text: 'text-gray-400 group-hover:text-gray-700 group-active:text-gray-700',
         icon: 'fill-gray-300 group-hover:fill-gray-600 group-active:fill-gray-600',
       },
     },
