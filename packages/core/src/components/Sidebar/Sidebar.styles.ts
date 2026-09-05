@@ -14,7 +14,7 @@ export const sidebar = tv({
   variants: {
     selected: {
       true: {
-        text: 'typo-caption-12-semibold text-gray-600',
+        text: 'typo-caption-12-medium text-gray-600',
         icon: 'fill-gray-600',
       },
       false: {
