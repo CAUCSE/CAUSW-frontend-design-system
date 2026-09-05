@@ -1,5 +1,12 @@
 # @causw/icons
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [8fa2abe]
+  - @causw/tokens@0.0.14
+
 ## 1.0.10
 
 ### Patch Changes
