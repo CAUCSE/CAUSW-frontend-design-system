@@ -36,7 +36,7 @@ export const Default: Story = {
               </Sidebar.ItemIcon>
               <Sidebar.ItemText>홈</Sidebar.ItemText>
             </Sidebar.Item>
-            <Sidebar.Item value="community">
+            <Sidebar.Item value="news">
               <Sidebar.ItemIcon>
                 <Board />
               </Sidebar.ItemIcon>
@@ -56,7 +56,7 @@ export const Default: Story = {
             </Sidebar.Item>
           </VStack>
 
-          <div className="w-full border-t border-gray-100" />
+          <div className="w-10 border-t border-gray-200" />
 
           <Sidebar.Item value="notifications">
             <Sidebar.ItemIcon>
@@ -69,7 +69,7 @@ export const Default: Story = {
         <Box className="flex-1 p-8">
           <Box className="text-xl font-bold">Active: {active}</Box>
           <Box className="mt-2 text-sm text-gray-500">
-            Custom content + Footer 포함 기본 예시
+            컴팩트 데스크톱 내비게이션 기본 예시
           </Box>
         </Box>
       </Flex>

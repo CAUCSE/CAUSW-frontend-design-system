@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { BottomNavigation } from './BottomNavigation';
 import { Box } from '../Box';
-import { Comment, Contacts, Home, Setting } from '@causw/icons';
+import { Board, Contacts, Home, Setting } from '@causw/icons';
 
 const meta: Meta<typeof BottomNavigation> = {
   title: 'Components/BottomNavigation',
@@ -39,9 +39,9 @@ export const Default: Story = {
             <BottomNavigation.Label>홈</BottomNavigation.Label>
           </BottomNavigation.Item>
 
-          <BottomNavigation.Item value="community">
+          <BottomNavigation.Item value="news">
             <BottomNavigation.Icon>
-              <Comment />
+              <Board />
             </BottomNavigation.Icon>
             <BottomNavigation.Label>소식</BottomNavigation.Label>
           </BottomNavigation.Item>
