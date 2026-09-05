@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { BottomNavigation } from './BottomNavigation';
 import { Box } from '../Box';
-import { Home, Pen, Contacts, Comment } from '@causw/icons';
+import { Board, Contacts, Home, Setting } from '@causw/icons';
 
 const meta: Meta<typeof BottomNavigation> = {
   title: 'Components/BottomNavigation',
@@ -39,18 +39,11 @@ export const Default: Story = {
             <BottomNavigation.Label>홈</BottomNavigation.Label>
           </BottomNavigation.Item>
 
-          <BottomNavigation.Item value="community">
+          <BottomNavigation.Item value="news">
             <BottomNavigation.Icon>
-              <Comment />
+              <Board />
             </BottomNavigation.Icon>
-            <BottomNavigation.Label>커뮤니티</BottomNavigation.Label>
-          </BottomNavigation.Item>
-
-          <BottomNavigation.Item value="write">
-            <BottomNavigation.Icon>
-              <Pen />
-            </BottomNavigation.Icon>
-            <BottomNavigation.Label>글쓰기</BottomNavigation.Label>
+            <BottomNavigation.Label>소식</BottomNavigation.Label>
           </BottomNavigation.Item>
 
           <BottomNavigation.Item value="directory">
@@ -58,6 +51,13 @@ export const Default: Story = {
               <Contacts />
             </BottomNavigation.Icon>
             <BottomNavigation.Label>동문수첩</BottomNavigation.Label>
+          </BottomNavigation.Item>
+
+          <BottomNavigation.Item value="profile">
+            <BottomNavigation.Icon>
+              <Setting />
+            </BottomNavigation.Icon>
+            <BottomNavigation.Label>내 정보</BottomNavigation.Label>
           </BottomNavigation.Item>
         </BottomNavigation>
       </Box>
