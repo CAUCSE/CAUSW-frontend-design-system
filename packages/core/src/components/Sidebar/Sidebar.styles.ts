@@ -2,7 +2,7 @@ import { tv, type VariantProps } from 'tailwind-variants';
 
 export const sidebar = tv({
   slots: {
-    root: 'flex h-[1000px] w-[68px] shrink-0 flex-col items-start gap-8 border-r border-gray-200 bg-white px-3 pt-[120px]',
+    root: 'flex h-screen w-[68px] shrink-0 flex-col items-start gap-8 border-r border-gray-200 bg-white px-3 pt-[120px]',
     header: 'w-full',
     content: 'flex flex-1 flex-col items-start gap-8',
     footer: 'w-full',

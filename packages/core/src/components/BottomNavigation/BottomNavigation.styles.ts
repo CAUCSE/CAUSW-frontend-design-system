@@ -3,9 +3,9 @@ import { tv, type VariantProps } from 'tailwind-variants';
 export const bottomNavigation = tv({
   slots: {
     root: 'fixed right-auto bottom-[max(16px,env(safe-area-inset-bottom))] left-1/2 z-sticky flex w-[calc(100%-32px)] max-w-[360px] -translate-x-1/2 items-center justify-center gap-8 rounded-[99px] bg-white px-4 py-1.5 shadow-[0_0_30px_0_rgba(51,53,61,0.16)]',
-    item: 'group flex flex-1 basis-0 flex-col items-center justify-center gap-1 py-1.5 text-xs transition-colors',
+    item: 'group flex w-10 flex-none flex-col items-center justify-center gap-1 text-xs transition-colors',
     icon: 'w-5 h-5',
-    label: 'typo-caption-12-semibold text-center',
+    label: 'typo-caption-12-semibold text-center whitespace-nowrap',
   },
   variants: {
     selected: {
