@@ -1,5 +1,12 @@
 # @causw/design-system
 
+## 0.0.38
+
+### Patch Changes
+
+- Updated dependencies [d60c50e]
+  - @causw/core@0.0.34
+
 ## 0.0.37
 
 ### Patch Changes

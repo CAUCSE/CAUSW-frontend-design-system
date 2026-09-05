@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.34
+
+### Patch Changes
+
+- d60c50e: Sidebar 선택 상태 텍스트 타이포그래피를 `typo-caption-12-semibold`에서 `typo-caption-12-medium`으로 변경
+
 ## 0.0.33
 
 ### Patch Changes
