@@ -14,7 +14,7 @@ export const dialog = tv({
     fullscreen: {
       true: {
         content:
-          'inset-0 top-0 left-0 w-full h-full max-w-none translate-x-0 translate-y-0 rounded-none sm:rounded-none data-[state=open]:slide-in-from-bottom-0 data-[state=closed]:slide-out-to-bottom-0',
+          'inset-0 top-0 left-0 w-full h-full max-w-none translate-x-0 translate-y-0 rounded-none sm:rounded-none data-[state=open]:slide-in-from-bottom-0 data-[state=closed]:slide-out-to-bottom-0 pb-[calc(1.5rem+var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))]',
       },
     },
   },
