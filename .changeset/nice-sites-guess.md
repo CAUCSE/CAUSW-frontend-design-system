@@ -1,5 +1,5 @@
 ---
-'@causw/design-system': patch
+'@causw/core': patch
 ---
 
 bottom sheet ui modification
