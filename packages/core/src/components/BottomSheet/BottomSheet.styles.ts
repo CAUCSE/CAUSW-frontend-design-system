@@ -2,13 +2,13 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const bottomSheet = tv({
   slots: {
-    overlay: ['fixed inset-0 z-bottomsheet'],
+    overlay: ['fixed inset-0 z-bottomsheet', 'bg-black/50'], //피그마에 지정된 색상이 없어서 임의로 설정함
     content: [
-      'fixed bottom-0 z-bottomsheet flex w-full flex-col items-center gap-8',
-      'rounded-t-2xl bg-white px-6 py-3.5 pb-[calc(2.5rem+var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))]',
-      'shadow-[0_-2px_30px_0_rgba(51,53,61,0.30)]',
+      'fixed bottom-[max(1rem,var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))] left-4 right-4 z-bottomsheet flex flex-col items-center gap-6',
+      'rounded-xl bg-white px-4 py-4',
+      'after:hidden',
     ],
-    handle: 'h-1 w-11 rounded-full bg-gray-200',
+    handle: '', //기존 handle 스타일 'h-1 w-11 rounded-full bg-gray-200',
     header: 'text-left',
     body: 'overflow-y-auto w-full',
     footer: 'w-full',
