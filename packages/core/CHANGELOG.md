@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.36
+
+### Patch Changes
+
+- 922f8d5: bottom sheet ui modification
+
 ## 0.0.35
 
 ### Patch Changes
