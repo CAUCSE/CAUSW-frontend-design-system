@@ -1,5 +1,12 @@
 # @causw/design-system
 
+## 0.0.41
+
+### Patch Changes
+
+- Updated dependencies [3ce80de]
+  - @causw/core@0.0.37
+
 ## 0.0.40
 
 ### Patch Changes
