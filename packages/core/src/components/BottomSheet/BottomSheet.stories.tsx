@@ -5,6 +5,7 @@ import { useBottomSheet } from '../../hooks';
 import { Stack } from '../Stack';
 import { Box } from '../Box';
 import { CTAButton } from '../CTAButton';
+import { Dialog } from '../Dialog';
 
 const meta: Meta<typeof BottomSheet> = {
   title: 'Components/BottomSheet',
@@ -221,5 +222,55 @@ export const DisableSwipeGesture: Story = {
         </BottomSheet.Footer>
       </BottomSheet.Content>
     </BottomSheet>
+  ),
+};
+
+export const NestedInModal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**다른 모달 위에 중첩(Nested in Modal)** 예제입니다.
+
+- \`BottomSheet\`는 기본적으로 \`z-bottomsheet\`(600) 레이어에서 렌더링되는데, 이미 \`z-modal\`(1000) 레이어의 \`Dialog\` 위에서 열리면 배경(overlay)이 \`Dialog\`보다 아래에 깔려 보이지 않습니다.
+- \`overlayClassName\`을 통해 overlay의 z-index를 바깥 모달과 맞춰주면(예: \`z-modal\`) 배경이 정상적으로 보입니다.
+- content의 z-index도 함께 맞춰야 시트 내용물 역시 바깥 모달에 가려지지 않습니다.
+        `,
+      },
+    },
+  },
+  render: (args) => (
+    <Dialog>
+      <Dialog.Trigger asChild>
+        <button className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200">
+          Open Modal
+        </button>
+      </Dialog.Trigger>
+
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Title>바깥 모달 (z-modal)</Dialog.Title>
+        <p className="text-sm text-gray-600">
+          이 모달 안에서 BottomSheet를 열어보세요.
+        </p>
+
+        <BottomSheet {...args}>
+          <BottomSheet.Trigger asChild>
+            <button className="cursor-pointer rounded-sm bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600 hover:text-gray-200">
+              Open BottomSheet
+            </button>
+          </BottomSheet.Trigger>
+
+          <BottomSheet.Content className="z-modal" overlayClassName="z-modal">
+            <BottomSheet.Header title="중첩된 바텀시트" />
+            <BottomSheet.Body>
+              overlayClassName 덕분에 배경이 바깥 모달보다 위에 보입니다.
+            </BottomSheet.Body>
+            <BottomSheet.Footer>
+              <ExampleCloseButton />
+            </BottomSheet.Footer>
+          </BottomSheet.Content>
+        </BottomSheet>
+      </Dialog.Content>
+    </Dialog>
   ),
 };
