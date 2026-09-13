@@ -1,5 +1,11 @@
 # @causw/core
 
+## 0.0.38
+
+### Patch Changes
+
+- 4e3e090: Remove unused BottomSheet handle element to fix extra top spacing above title
+
 ## 0.0.37
 
 ### Patch Changes
