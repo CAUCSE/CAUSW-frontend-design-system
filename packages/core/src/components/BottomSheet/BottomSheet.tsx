@@ -60,16 +60,23 @@ const BottomSheetHandle = () => {
   return <div className={handle()} />;
 };
 
+interface BottomSheetContentProps extends React.ComponentProps<
+  typeof Drawer.Content
+> {
+  overlayClassName?: string;
+}
+
 const BottomSheetContent = ({
   children,
   className,
+  overlayClassName,
   ...props
-}: React.ComponentProps<typeof Drawer.Content>) => {
+}: BottomSheetContentProps) => {
   const { content, overlay } = bottomSheet();
 
   return (
     <Drawer.Portal>
-      <Drawer.Overlay className={overlay()} />
+      <Drawer.Overlay className={overlay({ className: overlayClassName })} />
 
       <Drawer.Content className={content({ className })} {...props}>
         <BottomSheetHandle />
