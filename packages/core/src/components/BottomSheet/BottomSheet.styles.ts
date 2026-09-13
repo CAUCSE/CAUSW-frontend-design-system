@@ -8,7 +8,6 @@ export const bottomSheet = tv({
       'rounded-xl bg-white px-4 py-4',
       'after:hidden',
     ],
-    handle: '', //기존 handle 스타일 'h-1 w-11 rounded-full bg-gray-200',
     header: 'text-left',
     body: 'overflow-y-auto w-full',
     footer: 'w-full',

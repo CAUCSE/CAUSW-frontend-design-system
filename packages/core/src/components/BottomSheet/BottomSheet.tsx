@@ -55,11 +55,6 @@ const BottomSheetRoot = ({
 
 const BottomSheetTrigger = Drawer.Trigger;
 
-const BottomSheetHandle = () => {
-  const { handle } = bottomSheet();
-  return <div className={handle()} />;
-};
-
 interface BottomSheetContentProps extends React.ComponentProps<
   typeof Drawer.Content
 > {
@@ -79,7 +74,6 @@ const BottomSheetContent = ({
       <Drawer.Overlay className={overlay({ className: overlayClassName })} />
 
       <Drawer.Content className={content({ className })} {...props}>
-        <BottomSheetHandle />
         <div className="w-full">{children}</div>
       </Drawer.Content>
     </Drawer.Portal>
