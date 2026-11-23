@@ -8,9 +8,13 @@ CAUSW Design System의 디자인 토큰 패키지입니다.
 
 | 클래스 | 설명 |
 |--------|------|
-| `bg-blue-50`, `text-blue-500`, `border-blue-700` | Blue 계열 (#EEF4FF, #4F98FF, #237EFF) |
+| `bg-blue-100`, `text-blue-500`, `border-blue-700` | Blue 계열 (#EEF4FF, #4F98FF, #237EFF) |
 | `bg-gray-50` ~ `bg-gray-900` | Gray 계열 (9단계) |
 | `bg-red-100`, `bg-red-400` | Red 계열 |
+| `bg-green-400` | Green 계열 (#3ED06C) | 
+| `bg-orange-100` | Orange 계열 (#FFECD5) |
+| `bg-skyblue-100` | Skyblue 계열 (#D4F6FF) |
+| `bg-purple-100` | Purple 계열 (#EDE9FF) |
 | `bg-white-main`, `bg-black-main` | 흰색/검정색 |
 
 ```tsx
@@ -104,11 +108,15 @@ borderRadius.md  // '0.75rem'
 
 ```typescript
 const colors = {
-  blue: { 50: '#EEF4FF', 500: '#4F98FF', 700: '#237EFF' },
+  blue: { 100: '#EEF4FF', 200: '#CADDFF', 500: '#4F98FF', 700: '#237EFF' },
   gray: { 50: '#F9FAFB', 100: '#F5F6F8', 200: '#E9ECF2', 300: '#CACED5', 
          400: '#99A1AF', 500: '#6A7282', 600: '#4A5565', 700: '#364153', 
          800: '#1E2939', 900: '#101828' },
-  red: { 100: '#FFEFEF', 400: '#FD5C5F' },
+  red: { 100: '#FFEFEF', 200: '#FFCACF', 400: '#FD5C5F', 500: '#DF0F12' },
+  green: { 400: '#3ED06C' },
+  orange: { 100: '#FFECD5' },
+  skyblue: { 100: '#D4F6FF' },
+  purple: { 100: '#EDE9FF' },
   white: { main: '#FFFFFF' },
   black: { main: '#000000' },
 };
