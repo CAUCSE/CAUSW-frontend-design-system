@@ -10,6 +10,7 @@ import { VStack } from '../VStack';
 const meta = {
   title: 'Components/Calendar',
   component: Calendar,
+  subcomponents: { 'Calendar.Nav': Calendar.Nav },
   parameters: {
     layout: 'padded',
   },
@@ -19,7 +20,7 @@ const meta = {
     events: { control: 'object' },
     size: {
       control: 'radio',
-      options: ['sm', 'md', 'lg', undefined],
+      options: ['sm', 'md', undefined],
       description:
         'undefined(Auto)일 때는 화면 크기에 따라 반응형으로 동작합니다.',
     },
@@ -31,6 +32,7 @@ const meta = {
     onEventClick: fn() as unknown as (event: CalendarEvent) => void,
     onPrevMonth: fn() as unknown as (date: Date) => void,
     onNextMonth: fn() as unknown as (date: Date) => void,
+    onMonthChange: fn() as unknown as (date: Date) => void,
   },
 } satisfies Meta<typeof Calendar>;
 
@@ -270,4 +272,68 @@ export const WithBanner: Story = {
       },
     },
   },
+};
+
+export const WithStickyHeader: Story = {
+  args: {
+    ...Default_Responsive.args,
+    className: 'border-none',
+  },
+  render: (args) => {
+    const [month, setMonth] = useState(args.defaultMonth ?? new Date());
+
+    return (
+      // 홈화면 스크롤 컨테이너
+      <div className="h-140 overflow-y-auto rounded-lg border border-gray-100">
+        {/* 이 컨테이너가 sticky의 containing block이 되므로,
+            캘린더를 지나 아래 섹션까지 스크롤해도 헤더가 상단에 남는다. */}
+        <div className="mx-auto max-w-300">
+          <div className="z-sticky sticky top-0 bg-white md:static">
+            <Calendar.Nav
+              month={month}
+              onMonthChange={setMonth}
+              headerAction={
+                <div className="md:hidden">
+                  <button
+                    onClick={fn()}
+                    className="relative cursor-pointer hover:opacity-70"
+                  >
+                    <Bell color="gray-400" size={20} />
+                    <span className="absolute -top-0.5 -right-0.5 size-1.25 rounded-full bg-red-400" />
+                  </button>
+                </div>
+              }
+            />
+          </div>
+
+          <Calendar
+            {...args}
+            hideHeader
+            month={month}
+            onMonthChange={setMonth}
+          />
+
+          <div className="m-4 h-45 rounded-lg bg-gray-50" />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    viewport: {
+      options: {
+        mobile: {
+          name: 'Mobile (375px)',
+          styles: { width: '375px', height: '720px' },
+          type: 'mobile',
+        },
+      },
+    },
+    docs: {
+      description: {
+        story:
+          '홈화면처럼 캘린더 아래에 다른 컴포넌트가 이어지고, 월 표시 헤더가 상단에 계속 고정되어야 하는 경우입니다. Calendar에 `hideHeader`를 주고 `Calendar.Nav`를 홈화면 컨테이너의 직계 자식으로 올린 뒤 sticky를 걸면, 캘린더 영역을 지나 아래 섹션까지 스크롤해도 헤더가 남습니다. 월 상태는 `month`/`onMonthChange`로 Nav와 Calendar가 공유합니다. `md:static`이 걸려 있어 **768px 미만에서만 고정**되며, 그 이상에서는 일반 헤더처럼 함께 스크롤됩니다 — 확인을 위해 모바일 뷰포트로 열립니다.',
+      },
+    },
+  },
+  globals: { viewport: { value: 'mobile' } },
 };

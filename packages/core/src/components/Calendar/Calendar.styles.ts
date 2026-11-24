@@ -7,8 +7,10 @@ export const calendar = tv({
       'w-full min-w-[312px] md:min-w-[664px] max-w-[1200px]',
     ],
     layoutContainer: 'w-full',
-    header: `w-full flex items-center justify-start md:justify-center px-[20px] py-[8px] md:mx-auto md:px-0 md:py-[16px]`,
-    headerActions: 'ml-auto flex items-center',
+    header:
+      'relative w-full flex items-center justify-start md:justify-center bg-white px-[20px] py-[8px] md:mx-auto md:px-0 md:py-[16px]',
+    headerActions:
+      'ml-auto flex items-center md:absolute md:inset-y-0 md:right-[20px] md:ml-0',
     bannerArea: 'mx-4 mb-2',
 
     navGroup:
@@ -18,7 +20,7 @@ export const calendar = tv({
     navIcon: 'w-[6px] h-[10px]',
 
     caption:
-      'text-gray-700 text-[18px] md:text-[22px] font-bold leading-[1.6] tracking-[-0.02em] select-none',
+      'text-gray-700 text-[18px] md:text-[22px] font-bold leading-[1.6] tracking-[-0.02em] select-none whitespace-nowrap',
     gridHeader: 'w-full mb-0 px-2 gap-x-0 border-b border-gray-100',
     weekday:
       'h-[40px] flex items-center justify-center text-gray-400 text-[14px] font-normal leading-[1.6] tracking-[-0.02em] select-none',
@@ -32,15 +34,14 @@ export const calendar = tv({
 
     eventList: ['w-full flex flex-col gap-1'],
     eventItemHeight: 'min-h-[20px] h-auto flex-shrink-0 cursor-pointer',
-    moreBadge:
-      'text-[11px] font-medium tracking-[-0.02em] leading-tight cursor-default text-gray-500 select-none flex items-center justify-center py-[2px] rounded   w-[95%] mx-auto',
   },
 
   variants: {
     size: {
       sm: {
         wrapper: '!w-[312px] !max-w-none !min-w-0',
-        header: `!px-[20px] !py-[8px] md:!px-[20px] md:!py-[8px] !justify-start md:!justify-start`,
+        header:
+          '!px-[20px] !py-[8px] md:!px-[20px] md:!py-[8px] !justify-start md:!justify-start',
         navGroup:
           '!gap-[6px] md:!gap-[6px] !-translate-x-[10px] md:!-translate-x-[10px]',
         navButton: '!w-[26px] !h-[26px]',
@@ -50,7 +51,8 @@ export const calendar = tv({
       },
       md: {
         wrapper: '!w-[664px] !max-w-none !min-w-0',
-        header: `!mx-auto !px-0 !py-[16px] md:!mx-auto md:!px-0 md:!py-[16px] !justify-center md:!justify-center`,
+        header:
+          '!mx-auto !px-0 !py-[16px] md:!mx-auto md:!px-0 md:!py-[16px] !justify-center md:!justify-center',
         navGroup:
           '!gap-[14px] md:!gap-[14px] !-translate-x-0 md:!-translate-x-0',
         navButton: '!w-[26px] !h-[29px]',
