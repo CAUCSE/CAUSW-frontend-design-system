@@ -26,6 +26,15 @@ export const colors = {
   green: {
     400: '#3ED06C',
   },
+  orange: {
+    100: '#FFECD5',
+  },
+  skyblue: {
+    100: '#D4F6FF',
+  },
+  purple: {
+    100: '#EDE9FF',
+  },
   white: {
     main: '#FFFFFF',
   },

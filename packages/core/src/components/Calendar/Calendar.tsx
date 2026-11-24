@@ -8,10 +8,10 @@ import {
   addDays,
   subDays,
   getDay,
-  getDaysInMonth,
   isSameDay,
   isWithinInterval,
   differenceInCalendarDays,
+  isSameMonth,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -33,7 +33,7 @@ export type CalendarEvent = {
   title: string;
   startDate: string;
   endDate?: string;
-  type: NonNullable<EventBarStylesVariants['type']>;
+  color: NonNullable<EventBarStylesVariants['color']>;
 };
 
 export interface CalendarProps extends CalendarVariants {
@@ -49,6 +49,14 @@ export interface CalendarProps extends CalendarVariants {
   onPrevMonth?: (date: Date) => void;
   onNextMonth?: (date: Date) => void;
   enableHover?: boolean;
+  /** 월을 외부에서 제어할 때 사용. 넘기면 controlled로 동작한다. */
+  month?: Date;
+  /** controlled/uncontrolled 모두에서 월이 바뀔 때 호출 */
+  onMonthChange?: (date: Date) => void;
+  /** 내부 헤더를 숨긴다. Calendar.Nav를 밖으로 끌어올려 쓸 때 사용 */
+  hideHeader?: boolean;
+  headerAction?: React.ReactNode;
+  banner?: React.ReactNode;
 }
 
 const parseDateStr = (dateStr: string) => {
@@ -63,7 +71,60 @@ const getEventRange = (event: CalendarEvent) => {
   return { start, end };
 };
 
-export const Calendar = ({
+export interface CalendarNavProps extends Pick<CalendarVariants, 'size'> {
+  month: Date;
+  onMonthChange: (date: Date) => void;
+  headerAction?: React.ReactNode;
+  className?: string;
+}
+
+/**
+ * 월 표시 + 이전/다음 네비게이션
+ *
+ * Calendar 내부에서 쓰이지만, 모바일 홈화면처럼 헤더를 캘린더 밖으로 끌어올려
+ * sticky 고정해야 할 때 단독으로 사용할 수 있다.
+ * 이 경우 Calendar에 `hideHeader`와 `month`/`onMonthChange`를 함께 넘긴다.
+ */
+const CalendarNav = ({
+  month,
+  onMonthChange,
+  headerAction,
+  size,
+  className,
+}: CalendarNavProps) => {
+  const { header, headerActions, navGroup, navButton, navIcon, caption } =
+    calendar({ size });
+
+  return (
+    <Box className={header({ className })}>
+      <Flex className={navGroup()}>
+        <button
+          onClick={() => onMonthChange(subMonths(month, 1))}
+          className={navButton()}
+          type="button"
+          aria-label="이전 달"
+        >
+          <ChevronLeft color="gray-400" className={navIcon()} />
+        </button>
+        <span className={caption()}>
+          {format(month, 'yyyy년 M월', { locale: ko })}
+        </span>
+        <button
+          onClick={() => onMonthChange(addMonths(month, 1))}
+          className={navButton()}
+          type="button"
+          aria-label="다음 달"
+        >
+          <ChevronRight color="gray-400" className={navIcon()} />
+        </button>
+      </Flex>
+      {headerAction && <Box className={headerActions()}>{headerAction}</Box>}
+    </Box>
+  );
+};
+CalendarNav.displayName = 'Calendar.Nav';
+
+const CalendarRoot = ({
   className,
   events = [],
   defaultMonth = new Date(),
@@ -77,53 +138,61 @@ export const Calendar = ({
   onPrevMonth,
   onNextMonth,
   enableHover = false,
+  month,
+  onMonthChange,
+  hideHeader = false,
+  headerAction,
+  banner,
 }: CalendarProps) => {
   const {
     wrapper,
     layoutContainer,
-    header,
-    navContainerLeft,
-    navContainerRight,
-    navButton,
-    navIcon,
-    caption,
+    bannerArea,
     gridHeader,
     weekday,
     gridBody,
     cell,
-    cellEmpty,
+    cellSemiTransparent,
     eventList,
     eventItemHeight,
-    moreBadge,
   } = calendar({ size, hoverEffect: enableHover });
 
-  const [currentMonth, setCurrentMonth] = useState(defaultMonth);
+  const [uncontrolledMonth, setUncontrolledMonth] = useState(defaultMonth);
+  const isMonthControlled = month !== undefined;
+  const currentMonth = isMonthControlled ? month : uncontrolledMonth;
 
   const monthStart = useMemo(() => startOfMonth(currentMonth), [currentMonth]);
   const monthEnd = useMemo(() => endOfMonth(currentMonth), [currentMonth]);
 
-  const totalDays = getDaysInMonth(currentMonth);
-  const startDayIndex = getDay(startOfMonth(currentMonth));
+  const gridStart = useMemo(
+    () => subDays(monthStart, getDay(monthStart)),
+    [monthStart],
+  );
+  const gridEnd = useMemo(
+    () => addDays(monthEnd, 6 - getDay(monthEnd)),
+    [monthEnd],
+  );
+
+  const visibleDays = useMemo(() => {
+    const days: Date[] = [];
+    for (let d = gridStart; d <= gridEnd; d = addDays(d, 1)) days.push(d);
+    return days;
+  }, [gridStart, gridEnd]);
+
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const handlePrevMonth = () => {
-    const newDate = subMonths(currentMonth, 1);
-    setCurrentMonth(newDate);
-    onPrevMonth?.(newDate);
-  };
-  const handleNextMonth = () => {
-    const newDate = addMonths(currentMonth, 1);
-    setCurrentMonth(newDate);
-    onNextMonth?.(newDate);
+  const handleMonthChange = (next: Date) => {
+    if (!isMonthControlled) setUncontrolledMonth(next);
+    onMonthChange?.(next);
+    if (next < currentMonth) onPrevMonth?.(next);
+    else onNextMonth?.(next);
   };
   const eventsByDate = useMemo(() => {
     const map = new Map<string, (CalendarEvent | null)[]>();
-    const mStart = subDays(monthStart, getDay(monthStart));
-    const mEnd = addDays(monthEnd, 6 - getDay(monthEnd));
 
     const weeks: { start: Date; end: Date }[] = [];
-    let curr = mStart;
-    while (curr <= mEnd) {
+    let curr = gridStart;
+    while (curr <= gridEnd) {
       weeks.push({ start: curr, end: addDays(curr, 6) });
       curr = addDays(curr, 7);
     }
@@ -196,31 +265,16 @@ export const Calendar = ({
   return (
     <Box className={wrapper({ className })}>
       <Box className={layoutContainer()}>
-        <Grid columns={7} className={header()}>
-          <Flex className={navContainerLeft()}>
-            <button
-              onClick={handlePrevMonth}
-              className={navButton()}
-              type="button"
-            >
-              <ChevronLeft className={navIcon()} />
-            </button>
-          </Flex>
-          <Box className="col-span-5 flex items-center justify-center">
-            <span className={caption()}>
-              {format(currentMonth, 'yyyy년 M월', { locale: ko })}
-            </span>
-          </Box>
-          <Flex className={navContainerRight()}>
-            <button
-              onClick={handleNextMonth}
-              className={navButton()}
-              type="button"
-            >
-              <ChevronRight className={navIcon()} />
-            </button>
-          </Flex>
-        </Grid>
+        {!hideHeader && (
+          <CalendarNav
+            month={currentMonth}
+            onMonthChange={handleMonthChange}
+            headerAction={headerAction}
+            size={size}
+          />
+        )}
+
+        {banner && <Box className={bannerArea()}>{banner}</Box>}
 
         <Grid columns={7} className={gridHeader()}>
           {weekDays.map((day) => (
@@ -236,22 +290,12 @@ export const Calendar = ({
         </Grid>
 
         <Grid columns={7} className={gridBody()}>
-          {Array.from({ length: startDayIndex }).map((_, i) => (
-            <Box key={`empty-${i}`} className={cellEmpty()} />
-          ))}
-
-          {Array.from({ length: totalDays }).map((_, i) => {
-            const day = i + 1;
-            const currentDate = new Date(
-              currentMonth.getFullYear(),
-              currentMonth.getMonth(),
-              day,
-            );
+          {visibleDays.map((currentDate) => {
+            const day = currentDate.getDate();
             const dateKey = formatDateStr(currentDate);
+            const isCurrentDateInMonth = isSameMonth(currentDate, currentMonth);
 
-            const rawDaysEvents = eventsByDate.get(dateKey) || [];
-            const daysEvents = rawDaysEvents.slice(0, 4);
-            const extraCount = rawDaysEvents.slice(4).filter(Boolean).length;
+            const daysEvents = eventsByDate.get(dateKey) || [];
 
             const isToday = showToday && isSameDay(currentDate, today);
             const isStart =
@@ -271,6 +315,7 @@ export const Calendar = ({
             let selectionState:
               | 'none'
               | 'today'
+              | 'weekend'
               | 'selected'
               | 'range'
               | 'rangeStart'
@@ -279,14 +324,18 @@ export const Calendar = ({
             else if (isEnd) selectionState = 'selected';
             else if (isBetween) selectionState = 'range';
             else if (isToday) selectionState = 'today';
+            else if (getDay(currentDate) % 6 === 0) selectionState = 'weekend';
 
             return (
               <Flex
-                key={day}
+                key={dateKey}
                 direction="column"
                 align="center"
                 justify="start"
-                className={cell()}
+                className={mergeStyles(
+                  cell(),
+                  !isCurrentDateInMonth && cellSemiTransparent(),
+                )}
                 onClick={() => onDateClick?.(currentDate)}
               >
                 <span className={calendar({ selectionState }).dayNumber()}>
@@ -308,15 +357,8 @@ export const Calendar = ({
                     const weekStart = subDays(currentDate, currentDayIndex);
                     const weekEnd = addDays(currentDate, 6 - currentDayIndex);
 
-                    const boundedWeekStart =
-                      weekStart < monthStart ? monthStart : weekStart;
-                    const boundedWeekEnd =
-                      weekEnd > monthEnd ? monthEnd : weekEnd;
-
-                    const segmentStart =
-                      start < boundedWeekStart ? boundedWeekStart : start;
-                    const segmentEnd =
-                      end > boundedWeekEnd ? boundedWeekEnd : end;
+                    const segmentStart = start < weekStart ? weekStart : start;
+                    const segmentEnd = end > weekEnd ? weekEnd : end;
 
                     const segmentDuration =
                       differenceInCalendarDays(segmentEnd, segmentStart) + 1;
@@ -345,7 +387,8 @@ export const Calendar = ({
                       textLayer,
                       textSpan,
                     } = eventBarStyles({
-                      type: ev.type,
+                      size,
+                      color: ev.color,
                       position: blockPosition,
                     });
 
@@ -376,10 +419,6 @@ export const Calendar = ({
                       </div>
                     );
                   })}
-
-                  {extraCount > 0 && (
-                    <div className={moreBadge()}>+{extraCount}개</div>
-                  )}
                 </Flex>
               </Flex>
             );
@@ -389,4 +428,8 @@ export const Calendar = ({
     </Box>
   );
 };
-Calendar.displayName = 'Calendar';
+CalendarRoot.displayName = 'Calendar';
+
+export const Calendar = Object.assign(CalendarRoot, {
+  Nav: CalendarNav,
+});
