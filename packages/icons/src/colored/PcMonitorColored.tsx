@@ -1,0 +1,49 @@
+import * as React from 'react';
+import type { ColoredIconProps } from '../types';
+import { DEFAULT_SIZE } from '../types';
+import { uniquifySvgIds } from '../uniqueSvgIds';
+
+const useIsoLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
+export const PcMonitorColored = ({
+  size = DEFAULT_SIZE,
+  title,
+  ...props
+}: ColoredIconProps) => {
+  const ref = React.useRef<SVGSVGElement | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (ref.current) {
+      uniquifySvgIds(ref.current);
+    }
+  }, []);
+
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 18 18"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+      role={title ? 'img' : undefined}
+      {...props}
+    >
+      {title && <title>{title}</title>}
+      <path d="M1.37806 3.19391C1.37806 2.7797 1.71385 2.44391 2.12806 2.44391H15.9276C16.3418 2.44391 16.6776 2.7797 16.6776 3.19391V11.7785C16.6776 12.1927 16.3418 12.5285 15.9276 12.5285H2.12806C1.71385 12.5285 1.37806 12.1927 1.37806 11.7785V3.19391Z" fill="url(#paint0_linear_14588_2309)"/>
+<path d="M11.1798 13.9149V13.1639H6.876V13.9149C6.876 14.6475 6.29675 15.2198 6.00761 15.4417C5.71848 15.6636 5.37643 15.8249 5.37643 15.8249C5.17213 15.9559 5.2416 16.5119 5.4846 16.5119H12.5712C12.8138 16.5119 12.9292 15.9559 12.7249 15.8249C12.7249 15.8249 12.4791 15.6713 12.1993 15.4417C11.9194 15.2121 11.1798 14.6475 11.1798 13.9149Z" fill="#8A94A0"/>
+<path d="M2.097 13.7381H15.9584C16.3557 13.7381 16.6775 13.4159 16.6775 13.019V11.7869H1.3779V13.019C1.3779 13.4163 1.69965 13.7381 2.097 13.7381Z" fill="#AFB7C0"/>
+<defs>
+<linearGradient id="paint0_linear_14588_2309" x1="9.02784" y1="2.44391" x2="9.02784" y2="12.5285" gradientUnits="userSpaceOnUse">
+<stop stopColor="#57616C"/>
+<stop offset="1" stopColor="#363C43"/>
+</linearGradient>
+</defs>
+    </svg>
+  );
+};
+
+PcMonitorColored.displayName = 'PcMonitorColored';
