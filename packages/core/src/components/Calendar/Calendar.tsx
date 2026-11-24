@@ -8,10 +8,10 @@ import {
   addDays,
   subDays,
   getDay,
-  getDaysInMonth,
   isSameDay,
   isWithinInterval,
   differenceInCalendarDays,
+  isSameMonth,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -33,7 +33,7 @@ export type CalendarEvent = {
   title: string;
   startDate: string;
   endDate?: string;
-  type: NonNullable<EventBarStylesVariants['type']>;
+  color: NonNullable<EventBarStylesVariants['color']>;
 };
 
 export interface CalendarProps extends CalendarVariants {
@@ -49,6 +49,8 @@ export interface CalendarProps extends CalendarVariants {
   onPrevMonth?: (date: Date) => void;
   onNextMonth?: (date: Date) => void;
   enableHover?: boolean;
+  headerAction?: React.ReactNode;
+  banner?: React.ReactNode;
 }
 
 const parseDateStr = (dateStr: string) => {
@@ -77,13 +79,16 @@ export const Calendar = ({
   onPrevMonth,
   onNextMonth,
   enableHover = false,
+  headerAction,
+  banner,
 }: CalendarProps) => {
   const {
     wrapper,
     layoutContainer,
     header,
-    navContainerLeft,
-    navContainerRight,
+    headerActions,
+    bannerArea,
+    navGroup,
     navButton,
     navIcon,
     caption,
@@ -91,10 +96,9 @@ export const Calendar = ({
     weekday,
     gridBody,
     cell,
-    cellEmpty,
+    cellSemiTransparent,
     eventList,
     eventItemHeight,
-    moreBadge,
   } = calendar({ size, hoverEffect: enableHover });
 
   const [currentMonth, setCurrentMonth] = useState(defaultMonth);
@@ -102,8 +106,23 @@ export const Calendar = ({
   const monthStart = useMemo(() => startOfMonth(currentMonth), [currentMonth]);
   const monthEnd = useMemo(() => endOfMonth(currentMonth), [currentMonth]);
 
-  const totalDays = getDaysInMonth(currentMonth);
-  const startDayIndex = getDay(startOfMonth(currentMonth));
+  const gridStart = useMemo(
+    () => subDays(monthStart, getDay(monthStart)),
+    [monthStart],
+  );
+  const gridEnd = useMemo(
+    () => addDays(monthEnd, 6 - getDay(monthEnd)),
+    [monthEnd],
+  );
+
+  const visibleDays = useMemo(() => {
+    const days: Date[] = [];
+    for (let d = gridStart; d <= gridEnd; d = addDays(d, 1)) days.push(d);
+    return days;
+  }, [gridStart, gridEnd]);
+
+  // const totalDays = getDaysInMonth(currentMonth);
+  // const startDayIndex = getDay(startOfMonth(currentMonth));
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handlePrevMonth = () => {
@@ -118,12 +137,10 @@ export const Calendar = ({
   };
   const eventsByDate = useMemo(() => {
     const map = new Map<string, (CalendarEvent | null)[]>();
-    const mStart = subDays(monthStart, getDay(monthStart));
-    const mEnd = addDays(monthEnd, 6 - getDay(monthEnd));
 
     const weeks: { start: Date; end: Date }[] = [];
-    let curr = mStart;
-    while (curr <= mEnd) {
+    let curr = gridStart;
+    while (curr <= gridEnd) {
       weeks.push({ start: curr, end: addDays(curr, 6) });
       curr = addDays(curr, 7);
     }
@@ -196,31 +213,34 @@ export const Calendar = ({
   return (
     <Box className={wrapper({ className })}>
       <Box className={layoutContainer()}>
-        <Grid columns={7} className={header()}>
-          <Flex className={navContainerLeft()}>
+        <Box className={header()}>
+          <Flex className={navGroup()}>
             <button
               onClick={handlePrevMonth}
               className={navButton()}
               type="button"
             >
-              <ChevronLeft className={navIcon()} />
+              <ChevronLeft color="gray-400" className={navIcon()} />
             </button>
-          </Flex>
-          <Box className="col-span-5 flex items-center justify-center">
-            <span className={caption()}>
-              {format(currentMonth, 'yyyy년 M월', { locale: ko })}
-            </span>
-          </Box>
-          <Flex className={navContainerRight()}>
+            <Box className="col-span-5 flex items-center justify-center">
+              <span className={caption()}>
+                {format(currentMonth, 'yyyy년 M월', { locale: ko })}
+              </span>
+            </Box>
             <button
               onClick={handleNextMonth}
               className={navButton()}
               type="button"
             >
-              <ChevronRight className={navIcon()} />
+              <ChevronRight color="gray-400" className={navIcon()} />
             </button>
           </Flex>
-        </Grid>
+          {headerAction && (
+            <Box className={headerActions()}>{headerAction}</Box>
+          )}
+        </Box>
+
+        {banner && <Box className={bannerArea()}>{banner}</Box>}
 
         <Grid columns={7} className={gridHeader()}>
           {weekDays.map((day) => (
@@ -236,22 +256,15 @@ export const Calendar = ({
         </Grid>
 
         <Grid columns={7} className={gridBody()}>
-          {Array.from({ length: startDayIndex }).map((_, i) => (
-            <Box key={`empty-${i}`} className={cellEmpty()} />
-          ))}
-
-          {Array.from({ length: totalDays }).map((_, i) => {
-            const day = i + 1;
-            const currentDate = new Date(
-              currentMonth.getFullYear(),
-              currentMonth.getMonth(),
-              day,
-            );
+          {visibleDays.map((currentDate) => {
+            const day = currentDate.getDate();
             const dateKey = formatDateStr(currentDate);
+            const isCurrentDateInMonth = isSameMonth(currentDate, currentMonth);
 
-            const rawDaysEvents = eventsByDate.get(dateKey) || [];
-            const daysEvents = rawDaysEvents.slice(0, 4);
-            const extraCount = rawDaysEvents.slice(4).filter(Boolean).length;
+            const daysEvents = eventsByDate.get(dateKey) || [];
+            // const rawDaysEvents = eventsByDate.get(dateKey) || [];
+            // const daysEvents = rawDaysEvents.slice(0, 4);
+            // const extraCount = rawDaysEvents.slice(4).filter(Boolean).length;
 
             const isToday = showToday && isSameDay(currentDate, today);
             const isStart =
@@ -271,6 +284,7 @@ export const Calendar = ({
             let selectionState:
               | 'none'
               | 'today'
+              | 'weekend'
               | 'selected'
               | 'range'
               | 'rangeStart'
@@ -279,14 +293,18 @@ export const Calendar = ({
             else if (isEnd) selectionState = 'selected';
             else if (isBetween) selectionState = 'range';
             else if (isToday) selectionState = 'today';
+            else if (getDay(currentDate) % 6 === 0) selectionState = 'weekend';
 
             return (
               <Flex
-                key={day}
+                key={dateKey}
                 direction="column"
                 align="center"
                 justify="start"
-                className={cell()}
+                className={mergeStyles(
+                  cell(),
+                  !isCurrentDateInMonth && cellSemiTransparent(),
+                )}
                 onClick={() => onDateClick?.(currentDate)}
               >
                 <span className={calendar({ selectionState }).dayNumber()}>
@@ -308,15 +326,8 @@ export const Calendar = ({
                     const weekStart = subDays(currentDate, currentDayIndex);
                     const weekEnd = addDays(currentDate, 6 - currentDayIndex);
 
-                    const boundedWeekStart =
-                      weekStart < monthStart ? monthStart : weekStart;
-                    const boundedWeekEnd =
-                      weekEnd > monthEnd ? monthEnd : weekEnd;
-
-                    const segmentStart =
-                      start < boundedWeekStart ? boundedWeekStart : start;
-                    const segmentEnd =
-                      end > boundedWeekEnd ? boundedWeekEnd : end;
+                    const segmentStart = start < weekStart ? weekStart : start;
+                    const segmentEnd = end > weekEnd ? weekEnd : end;
 
                     const segmentDuration =
                       differenceInCalendarDays(segmentEnd, segmentStart) + 1;
@@ -345,7 +356,8 @@ export const Calendar = ({
                       textLayer,
                       textSpan,
                     } = eventBarStyles({
-                      type: ev.type,
+                      size,
+                      color: ev.color,
                       position: blockPosition,
                     });
 
@@ -377,9 +389,9 @@ export const Calendar = ({
                     );
                   })}
 
-                  {extraCount > 0 && (
+                  {/* {extraCount > 0 && (
                     <div className={moreBadge()}>+{extraCount}개</div>
-                  )}
+                  )} */}
                 </Flex>
               </Flex>
             );
